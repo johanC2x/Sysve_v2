@@ -10,7 +10,7 @@ class Sales extends Secure_area{
 
 	function index()
 	{
-		$this->_reload();
+		$this->load->view("sales/receipt",$data);
 	}
 
 	function item_search(){
