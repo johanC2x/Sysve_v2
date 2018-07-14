@@ -20,7 +20,8 @@ var travel = function () {
         customer_tarjtas_list: [],
         customer_description: '',
         action_form: "",
-        current_id: 0
+        current_id: 0,
+        current_service:-1
     };
 
     self.changeRow = function(idObj){
@@ -382,17 +383,18 @@ var travel = function () {
                     </tr>`;
         }else{
             for (var i = 0; i < self.list_comision.length; i++) {
+                var ammount = (self.list_comision[i].ammount !== '' && self.list_comision[i].ammount !== undefined) ? self.list_comision[i].ammount : '';
+                var monto = (self.list_comision[i].monto !== '' && self.list_comision[i].monto !== undefined) ? self.list_comision[i].monto : '';
+                
                 html += "<tr>";
                     html += "<td><center>"+ (i+1) +"</center></td>";
                     html += "<td><center>"+ self.list_comision[i].name +"</center></td>";
                     if(self.list_comision[i].name !== 'FEE'){
-                        html += "<td style='text-align: right;'>"+ self.list_comision[i].ammount +"</td>";    
+                        html += "<td style='text-align: right;'><center>"+ ammount +"</center></td>";    
                     }else{
                         html += "<td style='text-align: right;'>"+ '<input type="text" name="amount" size="8">' +"</td>";    
                     }
-                    
-                    html += "<td><center>"+ "" +"</center></td>";
-
+                    html += "<td><center>"+ monto +"</center></td>";
                     html += `<td>
                                 <center>
                                     <a href='javascript:void(0);' title='Eliminar' onclick='travel.removeComision(`+ i +`)' >
@@ -419,8 +421,8 @@ var travel = function () {
     };
 
     self.openComisionDetail = function(row){
+        self.current_service = row;
         $("#comision_obj_id").val(row);
-        console.log(travel.list_comision[row].key);
         data = travel.list_comision[row];
         operaciones = ['re-emision','reembolso', 'anulacion'];
         if(!$.inArray(travel.list_comision[row].key, operaciones)){
@@ -428,6 +430,7 @@ var travel = function () {
             $('#tipo_operacion').text(travel.list_comision[row].key);
         }else{
             document.getElementById("form_travel_comision_update").reset();
+            $("#travelid").val(row + 1);
             $("#modal_detail_comision").modal("show");
             monto_tabla = $('#table_customer_travel').find('tr:eq('+(row+1)+')').find('td:eq(2)').text();
             monto_detalle = data.monto_detalle || monto_tabla;
@@ -458,8 +461,6 @@ var travel = function () {
             $('#comision_code').val(data.comision_code);
             $('#comision_type_operator').val(data.comision_type_operator);
         }
-        
-        
     };
 
     self.modalCotizacion = function(){
@@ -1994,6 +1995,21 @@ var travel = function () {
                     }
                 }
             });
+        }
+    };
+
+    self.saveInfoService = function(){
+        var name_travel = $("#name_travel").val();
+        var total_servicios = $("#total_servicios").val();
+        var descripcion = $("#descripcion").val();
+        if(name_travel !== '' && total_servicios !== '' && descripcion !== ''){
+            var comision = self.list_comision[self.current_service];
+            comision.ammount = name_travel;
+            comision.monto = total_servicios;
+            comision.descripcion = descripcion;
+            self.list_comision[self.current_service] = comision;
+            self.makeTableComision();
+            $("#modal_detail_comision").modal("hide");
         }
     };
 
