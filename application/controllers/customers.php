@@ -337,7 +337,17 @@ class Customers extends Person_controller
 		if(!empty($id)){
 			$client = $this->Customer->getClient($id);
 			$data = json_decode($client->data);
-			//echo "<pre/>";print_r($data);exit();
+
+			//OBTENIENDO DATOS DE EMAIL
+			$email_pos = array_search('empresa', array_column($data->emails, 'type_email'));
+			$email_arr = $data->emails[$email_pos];
+			$email = (!empty($email_arr)) ? $email_arr->email : "";
+
+			//OBTENIENDO DATOS DE TELEFONO
+			$phone_pos = array_search('celular_personal', array_column($data->emails, 'type_phone'));
+			$phone_arr = $data->phones[$phone_pos];
+			$phone = (!empty($phone_arr)) ? $phone_arr->nro_phone : "";
+			
 			$cliente['datos']     = array(
 		    	'person_id'       => $client->id,
 	            'firstname'       => $client->firstname,
@@ -347,8 +357,8 @@ class Customers extends Person_controller
 				'last_name_casada'=> $client->last_name_casada,
 				'documents' 	  => $data->documents,
 				'description' 	  => $data->description,
-				'emails'		  => $data->emails,
-				'phones'	      => $data->phones,	  
+				'emails'		  => $email,
+				'phones'	      => $phone,	  
         	);
 		}
 		$this->load->view('customers/cotizar',$cliente, $data);
