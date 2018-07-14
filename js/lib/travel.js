@@ -430,8 +430,20 @@ var travel = function () {
             $('#tipo_operacion').text(travel.list_comision[row].key);
         }else{
             document.getElementById("form_travel_comision_update").reset();
-            $("#travelid").val(row + 1);
+            var cotizar = self.list_comision[row];
+            var name = (cotizar.name !== undefined && cotizar.name !== '') ? cotizar.name : '';
+            var ammount = (cotizar.ammount !== undefined && cotizar.ammount !== '') ? cotizar.ammount : '';
+            var monto = (cotizar.monto !== undefined && cotizar.monto !== '') ? cotizar.monto : '';
+            var descripcion = (cotizar.descripcion !== undefined && cotizar.descripcion !== '') ? cotizar.descripcion : '';
+            if(ammount !== '' && monto !== '' && descripcion !== ''){
+                $("#name_travel").val(ammount);
+                $("#total_servicios").val(monto);
+                $("#descripcion").val(descripcion);
+            }else{
+                $("#travelid").val(name);
+            }
             $("#modal_detail_comision").modal("show");
+            /*
             monto_tabla = $('#table_customer_travel').find('tr:eq('+(row+1)+')').find('td:eq(2)').text();
             monto_detalle = data.monto_detalle || monto_tabla;
             nombre_ruc = data.nombre_ruc || $('#customer_name').val();
@@ -460,6 +472,7 @@ var travel = function () {
             $('#incentivos_otros').val(data.comision_incentive_otros);
             $('#comision_code').val(data.comision_code);
             $('#comision_type_operator').val(data.comision_type_operator);
+            */
         }
     };
 
