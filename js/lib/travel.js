@@ -1798,6 +1798,67 @@ var travel = function () {
 */
 
 
+    self.listCotizacion = function(){
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:self.current_url+"index.php/customers/listClients",
+            success:function(response){
+                var res = JSON.parse(response);
+                if(res.success){
+                    var tbody = "";
+                    var data = res.data;
+                    //var data_client = JSON.parse(data.data);
+                    $("#table_clients tbody").empty();
+                    if(data.length > 0){
+                        for(var i = 0;i < data.length;i++){
+                            var id = data[i].id;
+                            var nombres = data[i].firstname + ' ' + data[i].middlename;
+                            var apellidos = data[i].lastname + ' ' + data[i].mother_lastname;
+                            var genero = (data[i].gender === 'M') ? 'MASCULINO' : 'FEMENINO';
+
+                            //BUSCANDO VALORES EN DATA DE CLIENTES
+                            var data_client = JSON.parse(data[i].data);
+                            
+                            var document = data_client.documents.find(x => x.type_document === "dni");
+                            var email = data_client.emails.find(x => x.type_email === "personal");
+                            var phones = data_client.phones.find(x => x.type_phone === "celular_personal");
+                            //VALIDANDO VALORES VACIOS
+                            var val_doc = (document !== undefined && document.nro_doc !== "") ? document.nro_doc : ("SIN DOCUMENTO").fontcolor("red");
+                            var val_email = (email !== undefined && email.email !== "") ? email.email : ("FALTA INFORMACION").fontcolor("red");
+                            var val_phone = (phones !== undefined && phones.nro_phone !== "") ? phones.nro_phone : ("FALTA INFORMACION").fontcolor("red");
+
+                            tbody += `<tr>
+                                        <td>`+nombres+`</td>
+                                        <td>`+apellidos+`</td>
+                                        <td>`+val_doc+`</td>
+                                        <td>`+genero+`</td>
+                                        <td>`+val_email+`</td>
+                                        <td>`+val_phone+`</td>
+                                        <td>
+                                            <center>
+                                                <a href="index.php/sales/document/`+ id +`" onclick="travel.addCoti(`+id+`);">
+                                                    Generar Documento
+                                                </a>
+                                            </center>
+                                        </td>
+                                    </tr>`;
+                        }
+                    }else{
+                        tbody = `<tr>
+                                    <td colspan="6">
+                                        <center>
+                                            NO SE ENCONTRARON RESULTADOS
+                                        </center>
+                                    </td>
+                                </tr>`;
+                    }
+                    $("#table_clients tbody").append(tbody);
+                }
+            }
+        });
+    };
+
     self.listClientsCoti = function(){
         $.ajax({
             type:'POST',
