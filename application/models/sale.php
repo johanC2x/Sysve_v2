@@ -19,6 +19,18 @@ class Sale extends CI_Model
 
 		return ($query->num_rows()==1);
 	}
+
+	function listServicios(){
+		$response = [];
+		$this->db->from('servicios');
+		$this->db->order_by("id", "desc");
+		$clients = $this->db->get();
+		foreach($clients->result() as $row){
+			$response[] = $row;
+		}
+		return $response;
+
+	}
 	
 	function update($sale_data, $sale_id)
 	{
