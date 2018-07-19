@@ -256,6 +256,15 @@ class Customers extends Person_controller
 		}
 	}
 
+	function listCotizacion(){
+		$response = $this->Customer->listCotizacion();
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
 	function getClient(){
 		$response = [];
 		if($this->input->post()){

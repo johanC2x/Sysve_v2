@@ -10,7 +10,114 @@ class Sales extends Secure_area{
 
 	function index()
 	{
-		$this->_reload();
+		$this->load->view("sales/receipt",$data);
+	}
+
+	function Venta($id = null, $cotizacion_id = null){
+		$cliente = [];
+		if(!empty($id)){
+			$client = $this->Customer->getClientCoti($id,$cotizacion_id);
+			$data = json_decode($client->data);
+
+
+
+			//OBTENIENDO DATOS DE EMAIL
+			$email_pos = array_search('empresa', array_column($data->emails, 'type_email'));
+			$email_arr = $data->emails[$email_pos];
+			$email = (!empty($email_arr)) ? $email_arr->email : "";
+
+			//OBTENIENDO DATOS DE TELEFONO
+			$phone_pos = array_search('celular_personal', array_column($data->emails, 'type_phone'));
+			$phone_arr = $data->phones[$phone_pos];
+			$phone = (!empty($phone_arr)) ? $phone_arr->nro_phone : "";
+			
+			$cliente['datos']     = array(
+		    	'person_id'       => $client->id,
+	            'firstname'       => $client->firstname,
+	            'middlename'      => $client->middlename,
+	            'lastname'        => $client->lastname,
+	            'mother_lastname' => $client->mother_lastname,
+				'last_name_casada'=> $client->last_name_casada,
+				'documents' 	  => $data->documents,
+				'description' 	  => $data->description,
+				'cotizacion_id'	  => $client->cotizacion_id,
+				'emails'		  => $email,
+				'phones'	      => $phone,	  
+        	);
+		}
+		$this->load->view('sales/venta',$cliente, $data);
+	}
+
+	function Document($id = null, $cotizacion_id = null){
+		$cliente = [];
+		if(!empty($id)){
+			$client = $this->Customer->getClientCoti($id,$cotizacion_id);
+			$data = json_decode($client->data);
+
+
+
+			//OBTENIENDO DATOS DE EMAIL
+			$email_pos = array_search('empresa', array_column($data->emails, 'type_email'));
+			$email_arr = $data->emails[$email_pos];
+			$email = (!empty($email_arr)) ? $email_arr->email : "";
+
+			//OBTENIENDO DATOS DE TELEFONO
+			$phone_pos = array_search('celular_personal', array_column($data->emails, 'type_phone'));
+			$phone_arr = $data->phones[$phone_pos];
+			$phone = (!empty($phone_arr)) ? $phone_arr->nro_phone : "";
+			
+			$cliente['datos']     = array(
+		    	'person_id'       => $client->id,
+	            'firstname'       => $client->firstname,
+	            'middlename'      => $client->middlename,
+	            'lastname'        => $client->lastname,
+	            'mother_lastname' => $client->mother_lastname,
+				'last_name_casada'=> $client->last_name_casada,
+				'documents' 	  => $data->documents,
+				'description' 	  => $data->description,
+				'cotizacion_id'	  => $client->cotizacion_id,
+				'emails'		  => $email,
+				'phones'	      => $phone,	  
+        	);
+		}
+		$this->load->view('sales/document',$cliente, $data);
+	}
+
+
+	 function getCotizacion($cotizacion_id){
+		$response = null;
+		$this->db->from('cotizaciones');
+		$this->db->where('cotizacion_id',$cotizacion_id);
+		$client = $this->db->get();
+		if($client->num_rows()==1){
+			$response = $client->row();
+		}
+		return $response;
+	 }
+
+	function listServicios(){
+		$response = $this->Sale->listServicios();
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+	function getServicios(){
+		$response = [];
+		if($this->input->post()){
+			$client_id = $this->input->post("id");
+			$result = $this->Customer->getClient($client_id);
+			if(!empty($result)){
+				$response = array('success'=>true,'data'=>$result);
+			}else{
+				$response = array('success'=>false);
+			}
+		}else{
+			$response = array('success'=>false);
+		}
+		echo json_encode($response);
 	}
 
 	function item_search(){
