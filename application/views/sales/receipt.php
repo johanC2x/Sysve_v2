@@ -9,7 +9,7 @@ if (isset($error_message)){
 
 <div id="title_bar">
     <div id="title" class="float_left">
-        Generar Documento
+        Venta
     </div>
 </div>
 <div class="input-group"> <span class="input-group-addon">Buscar</span>
@@ -20,13 +20,13 @@ if (isset($error_message)){
     <table class="table table-bordered" id="table_clients">
         <thead>
             <tr class="well">
-                <th><center>Nombres</center></th>
-                <th><center>Apellidos</center></th>
-                <th><center>Nro. DNI</center></th>
-                <th><center>Genero</center></th>
-                <th><center>Email</center></th>
-                <th><center>Teléfono</center></th>
-                <th><center>Acción</center></th>
+                <th><center>ID</center></th>
+                <th><center>Nro. Cotizacion</center></th>
+                <th><center>Asesor</center></th>
+                <th><center>Estatus</center></th>
+                <th><center>Fecha</center></th>
+                <th><center>Cliente</center></th>
+                <th colspan="2"><center>Acción</center></th>
             </tr>
         </thead>
         <tbody class="searchable">
