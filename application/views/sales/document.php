@@ -2,8 +2,7 @@
 
 <script src="<?php echo base_url();?>js/lib/travel.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
 
-
-
+ <?php echo $data; ?> 
  
 <script type="text/javascript">
 /* Funcion suma. */
@@ -18,7 +17,14 @@ function SumarAutomatico (valor) {
     // Escribir el resultado en una etiqueta "span".
     document.getElementById('MiTotal').innerHTML = TotalSuma;
 }
+function calcular() {
+    var precio=  parseFloat( document.getElementById("precio_no_tax").value);   
+    var tax = parseFloat( document.getElementById("tax").value);            
+    var total = document.getElementById("total").value = precio*tax*0.01 + precio;              
+}  
+
 </script>
+
 
 
 <div class="row">
@@ -37,6 +43,9 @@ function SumarAutomatico (valor) {
                     <input type="hidden" id="phones" name="phones" class="form-control" value="<?php echo $datos['phones']; ?>" disabled="true">
 
 
+
+
+
 <div class="row">
     <div class="col-md-12">
         <?php echo form_open('travel/cotizaciones'); ?>
@@ -49,7 +58,7 @@ function SumarAutomatico (valor) {
                   <div class="col-md-3">
                     <select id="cbo_comision_payment" name="cbo_comision_payment" class="form-control">
                         <option value="">Seleccionar Tipo de Documento</option>
-                        <option value="ticket">Ticket</option>
+                        <option value="ticket">Documento de Cobranza</option>
                         <option value="factura">Factura</option>
                         <option value="boleta">Boleta</option>
                     </select>
@@ -118,19 +127,19 @@ function SumarAutomatico (valor) {
                         </div>
                         <div class="col-md-2" class="form-group">
                             <label for="total_servicios">TUA:</label>
-                            <input type="number" name="total_servicios" id="total_servicios" name="height" step="0.1" class="form-control"/>
+                            <input type="text" id="precio_no_tax" class="form-control" name="price_notax" size="5" onkeyup="calcular();">
                         </div>
                         <div class="col-md-2" class="form-group">
                             <label for="code_travel">Otros:</label>
-                            <select class="form-control">
-                                <option>Opcion1</option>
-                                <option>Opcion1</option>
-                                <option>Opcion1</option>
-                            </select>
+                                <select class="form-control" name="tax" id="tax" onchange="calcular();">
+                                    <option value="0" selected>Ninguna</option>
+                                    <option value="16">16</option>
+                                    <option value="30">30</option>
+                                </select>
                         </div>
                         <div class="col-md-1" class="form-group">
                             <label for="name_travel">FEE:</label>
-                            <input type="text" name="name_travel" id="name_travel" class="form-control" />
+                            <input type="text" class="form-control" name="total" value="" id="total" size="3">
                         </div>
                         <div class="col-md-1" class="form-group">
                             <label for="name_travel">IGV:</label>
