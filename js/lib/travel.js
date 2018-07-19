@@ -1698,14 +1698,78 @@ var travel = function () {
                                         <td>
                                             <center>
                                                 <a href="javascript:void(0);" onclick="travel.getClient(`+id+`);">
-                                                    Editar
+                                                    <i class="fa fa-edit"></i>
                                                 </a>
                                             </center>
                                         </td>
                                         <td>
                                             <center>
                                                 <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
-                                                    Eliminar
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                    </tr>`;
+                        }
+                    }else{
+                        tbody = `<tr>
+                                    <td colspan="7">
+                                        <center>
+                                            NO SE ENCONTRARON RESULTADOS
+                                        </center>
+                                    </td>
+                                </tr>`;
+                    }
+                    $("#table_clients tbody").append(tbody);
+                }
+            }
+        });
+    };
+
+        self.listServicios = function(){
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:self.current_url+"index.php/sales/listServicios",
+            success:function(response){
+                var res = JSON.parse(response);
+                if(res.success){
+                    var tbody = "";
+                    var data = res.data;
+                    //var data_client = JSON.parse(data.data);
+                    $("#table_clients tbody").empty();
+                    if(data.length > 0){
+                        for(var i = 0;i < data.length;i++){
+                            var id = data[i].id;
+                            var cotizacion_id = data[i].cotizacion_id;
+                            var estatus = data[i].estatus;
+                            var asesor = data[i].asesor;
+                            var fecha = data[i].fecha;
+
+                          
+
+                            tbody += `<tr>
+                                        <td>
+                                            <center>
+                                                <input type="checkbox" name="check"/>
+                                            </center>
+                                        </td>
+                                        <td>`+cotizacion_id+`</td>
+                                        <td>`+estatus+`</td>
+                                        <td>`+asesor+`</td>
+                                        <td>`+id+`</td>
+                                        <td>`+fecha+`</td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(0);" onclick="travel.getServicios(`+id+`);">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
+                                                    <i class="fa fa-trash"></i>
                                                 </a>
                                             </center>
                                         </td>
@@ -1802,7 +1866,7 @@ var travel = function () {
         $.ajax({
             type:'POST',
             data:{},
-            url:self.current_url+"index.php/customers/listClients",
+            url:self.current_url+"index.php/customers/listCotizacion",
             success:function(response){
                 var res = JSON.parse(response);
                 if(res.success){
@@ -1812,33 +1876,32 @@ var travel = function () {
                     $("#table_clients tbody").empty();
                     if(data.length > 0){
                         for(var i = 0;i < data.length;i++){
-                            var id = data[i].id;
-                            var nombres = data[i].firstname + ' ' + data[i].middlename;
-                            var apellidos = data[i].lastname + ' ' + data[i].mother_lastname;
-                            var genero = (data[i].gender === 'M') ? 'MASCULINO' : 'FEMENINO';
-
-                            //BUSCANDO VALORES EN DATA DE CLIENTES
-                            var data_client = JSON.parse(data[i].data);
-                            
-                            var document = data_client.documents.find(x => x.type_document === "dni");
-                            var email = data_client.emails.find(x => x.type_email === "personal");
-                            var phones = data_client.phones.find(x => x.type_phone === "celular_personal");
-                            //VALIDANDO VALORES VACIOS
-                            var val_doc = (document !== undefined && document.nro_doc !== "") ? document.nro_doc : ("SIN DOCUMENTO").fontcolor("red");
-                            var val_email = (email !== undefined && email.email !== "") ? email.email : ("FALTA INFORMACION").fontcolor("red");
-                            var val_phone = (phones !== undefined && phones.nro_phone !== "") ? phones.nro_phone : ("FALTA INFORMACION").fontcolor("red");
+                            var id = data[i].id;                            
+                            var cliente_id = data[i].cliente_id;
+                            var cotizacion_id = data[i].cotizacion_id;                            
+                            var asesor = data[i].username.toUpperCase(); 
+                            var estat = data[i].estatus;                           
+                            var estatus = (data[i].estatus === 'C') ? ('COTIZADO').fontcolor("red") : ('VENDIDO').fontcolor("green");
+                            var fecha = data[i].fecha;
+                            var name_client = data[i].firstname + ' ' + data[i].middlename + ' ' + data[i].lastname + ' ' + data[i].mother_lastname;
 
                             tbody += `<tr>
-                                        <td>`+nombres+`</td>
-                                        <td>`+apellidos+`</td>
-                                        <td>`+val_doc+`</td>
-                                        <td>`+genero+`</td>
-                                        <td>`+val_email+`</td>
-                                        <td>`+val_phone+`</td>
+                                        <td>`+id+`</td>
+                                        <td>`+cotizacion_id+`</td>
+                                        <td>`+asesor+`</td>
+                                        <td>`+estatus+`</td>
+                                        <td>`+fecha+`</td>
+                                        <td>`+name_client+`</td>
                                         <td>
                                             <center>
-                                                <a href="index.php/sales/document/`+ id +`" onclick="travel.addCoti(`+id+`);">
-                                                    Generar Documento
+                                                <a href="index.php/sales/venta/?id=`+ cotizacion_id +`&estatus=`+ estat +`&name_client=`+name_client+`" onclick="travel.addCoti(`+cotizacion_id +`);"><i class="fa fa-shopping-cart"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <a href="index.php/sales/document/`+ cliente_id +'?'+ cotizacion_id +`" onclick="travel.addCoti(`+cliente_id+'?'+ cotizacion_id +`);">
+                                                    <i class="fa fa-file"></i>
                                                 </a>
                                             </center>
                                         </td>
@@ -1846,7 +1909,7 @@ var travel = function () {
                         }
                     }else{
                         tbody = `<tr>
-                                    <td colspan="6">
+                                    <td colspan="8">
                                         <center>
                                             NO SE ENCONTRARON RESULTADOS
                                         </center>
@@ -1859,7 +1922,7 @@ var travel = function () {
         });
     };
 
-    self.listClientsCoti = function(){
+        self.listClientsCoti = function(){
         $.ajax({
             type:'POST',
             data:{},
@@ -1928,6 +1991,76 @@ var travel = function () {
         self.cleanForm();
         self.action_form = self.current_url+"index.php/customers/saveClient";
         $("#modal_customer").modal("show");
+    };
+
+    self.getServicios = function(id){
+        $.ajax({
+            type:'POST',
+            data:{
+                id : id
+            },
+            url:self.current_url+"index.php/sales/getServicios",
+            success:function(res){
+                var response = JSON.parse(res);
+                if(response.success){
+                    self.action_form = self.current_url+"index.php/customers/updateClient";
+                    var data = response.data;
+                    var data_client = '';
+                    if(data.data != ''){
+                        var data_client = JSON.parse(data.data);
+                    }
+                    $("#client_id").val(id);
+                    $("#first_name").val(data.firstname);
+                    $("#midle_name").val(data.middlename);
+                    $("#last_name").val(data.lastname);
+                    $("#last_name_mothers").val(data.mother_lastname);
+                    $("#last_name_casada").val(data.last_name_casada);
+                    $("#gender").val(data.gender);
+                    $("#age").val(data.age);
+                    $("#user_date").val(data.fec_nac);
+                    console.log(data);
+                    //MAKE TABLE DOCUMENTS
+                    if(data_client != ''){
+                        self.customer_documents_list = data_client.documents;
+                        self.makeTableDocuments();
+                        //MAKE TABLE PASSPORT
+                        self.customer_passport_list = data_client.passport;
+                        self.makeTablePassport();
+                        //MAKE TABLE VISADO
+                        self.customer_visado_list = data_client.visado;
+                        self.makeTableVisado();
+                        //MAKE TABLE PHONES
+                        self.customer_phones_list = data_client.phones;
+                        self.makeTablePhones();
+                        //MAKE TABLE EMAILS
+                        self.customer_emails_list = data_client.emails;
+                        self.makeTableEmails();
+                        //MAKE TABLE CLIENTES FRECUENTES
+                        self.customer_frec_list = data_client.frec;
+                        self.makeTableFrec();
+                        //MAKE TABLE ADDRESS
+                        self.customer_address_list = data_client.address;
+                        self.makeTableAddress();
+                        //MAKE TABLE COMPANY
+                        self.customer_company_list = data_client.company;
+                        self.makeTableCompany();
+                        //MAKE TABLE CONTACT
+                        self.customer_contact_list = data_client.contact;
+                        self.makeTableContact();
+                        //MAKE TABLE CARDS
+                        self.customer_tarjtas_list = data_client.tarjtas;
+                        self.makeTableTarjetas();
+                        //MAKE TABLE FAMILIARES
+                        self.customer_familiares_list = data_client.familiares;
+                        self.makeTableDatosFamilares();
+                        console.log(data_client.description);
+                        $("#descripcion").val(data_client.description);
+                    }
+                    
+                    $("#modal_servicios").modal("show");
+                }
+            }
+        });
     };
 
     self.getClient = function(id){
