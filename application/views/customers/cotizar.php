@@ -19,7 +19,7 @@
                     $cotizacion_id = $asesor."-".$cadena."-".$fecha;
                 ?>
 
-        <h4 class="modal-title">Cotizacion Nro: <?php echo $cotizacion_id."-".$estatus; ?></h4>
+        <h4 class="modal-title">Cotizacion Nro: <span id="modal-title-coti"><?php echo $cotizacion_id."-".$estatus; ?></span></h4>
         </div>
     </div>
 </div>
@@ -123,13 +123,12 @@
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal">&times;</button>
                             <h3 class="modal-title">Se ha generado Nueva cotizacion</h3>
-                                <dir class="form-group">
-
-                            <button type="submit" class="btn btn-primary">Siguiente</button>                    
-                            <a class="btn btn-primary" href="javascript:void(0)" onClick="email=window.open('http://34.203.202.3/pruebamail?id=<?php echo $cotizacion_id;?>','buscador','scrollbars=yes,width=680,h eight=500'); return false;">Enviar Correo</a>
-                            <a class="a.active.botonete" href="javascript:void(0)" onClick="email.close()"></a>
-                            <a type="button" href="http://localhost/pdf/pdf.php?id=<?php echo $cotizacion_id;?>" class="btn btn-primary">Imprimir</a> 
-                                </dir>
+                            <dir class="form-group">
+                                <button id="btn_add_coti" type="button" class="btn btn-primary">Siguiente</button>                    
+                                <a class="btn btn-primary" href="javascript:void(0)" onClick="email=window.open('http://34.203.202.3/pruebamail?id=<?php echo $cotizacion_id;?>','buscador','scrollbars=yes,width=680,h eight=500'); return false;">Enviar Correo</a>
+                                <a class="a.active.botonete" href="javascript:void(0)" onClick="email.close()"></a>
+                                <a type="button" href="http://localhost/pdf/pdf.php?id=<?php echo $cotizacion_id;?>" class="btn btn-primary">Imprimir</a> 
+                            </dir>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -146,6 +145,11 @@
                     });
                     $("#btnFalla").click(function(){        
                         $('#modal_falla').modal('show');
+                    });
+                    $("#btn_add_coti").click(function(){
+                        if(travel.list_comision.length > 0){
+                            travel.saveAddCotizacion();
+                        }
                     });
                 });
             </script>
@@ -181,7 +185,10 @@
                 <tbody>
                     <tr>
                         <td colspan=2><span class="pull-right">MONTO TOTAL</span></td>
-                        <td><span class="pull-right"><?php echo number_format($sumador_total,2);?></span></td>
+                        <td>
+                            <span id="total_pago" class="pull-right">
+                            </span>
+                        </td>
                         <td></td>
                     </tr>
                 </tbody>
@@ -275,6 +282,9 @@
 <!-- ====================== -->
 <script type="text/javascript">
     $(document).ready(function(){
+
+        travel.current_url = "<?= base_url(); ?>";
+
         $(".error_comision").hide();
         travel.setTravelCode();
         $("#search_value").on('input', function () {

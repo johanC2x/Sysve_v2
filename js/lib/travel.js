@@ -21,7 +21,8 @@ var travel = function () {
         customer_description: '',
         action_form: "",
         current_id: 0,
-        current_service:-1
+        current_service:-1,
+        current_pay:0
     };
 
     self.changeRow = function(idObj){
@@ -2210,14 +2211,33 @@ var travel = function () {
         var total_servicios = $("#total_servicios").val();
         var descripcion = $("#descripcion").val();
         if(name_travel !== '' && total_servicios !== '' && descripcion !== ''){
+            self.current_pay = total_servicios;
             var comision = self.list_comision[self.current_service];
             comision.ammount = name_travel;
             comision.monto = total_servicios;
             comision.descripcion = descripcion;
             self.list_comision[self.current_service] = comision;
             self.makeTableComision();
+            $("#total_pago").text(self.current_pay);
             $("#modal_detail_comision").modal("hide");
         }
+    };
+
+    self.saveAddCotizacion = function(){
+        var code_coti = $("#modal-title-coti").text();
+        var person_id = $("#customer_documents").val();
+        $.ajax({
+            type:"POST",
+            url:self.current_url+"index.php/customers/saveCotizacion",
+            data:{
+                person_id:person_id,
+                code_coti:code_coti,
+                comisiones:JSON.stringify(self.list_comision)
+            },
+            success:function(res){
+                console.log(res);
+            }
+        });
     };
 
 	return self;

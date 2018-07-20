@@ -359,5 +359,16 @@ class Customer extends Person
 		return ($this->db->affected_rows() !== 1) ? false : true;
 	}
 
+	/* METODOS DE COTIZACION */
+	function addCotizacion($cotizaciones_data){
+		$success = $this->db->insert('cotizaciones',$cotizaciones_data);
+		return ($this->db->affected_rows() !== 1) ? false : true;
+	}
+
+	function addCotizacionService($cotizaciones_service_data){
+		$success = $this->db->insert('cotizaciones_servicios',$cotizaciones_service_data);
+		return ($this->db->affected_rows() !== 1) ? false : true;
+	}
+
 }
 ?>

@@ -458,5 +458,42 @@ class Customers extends Person_controller
 		$this->load->view('customers/mantenimiento', $data);
 	}
 
+	function saveCotizacion(){
+		if($this->input->post()){
+			$cliente_id = $this->input->post('person_id');
+			$cotizacion_id = $this->input->post('code_coti');
+			$user_id = $this->session->userdata["person_id"];
+			$cotizaciones_data = array(
+				'cliente_id' => $cliente_id,
+				'cotizacion_id' => $cotizacion_id,
+				'estatus' => 'C',
+				'asesor' => $user_id,
+				'fecha' => date('Y-m-d H:i:s')
+			);
+			$response = $this->Customer->addCotizacion($cotizaciones_data);
+			if(!empty($response) && (int)$response === 1){
+				$cotizaciones = json_decode($this->input->post('comisiones'));
+				foreach($cotizaciones as $cotizacion){
+					$cotizaciones_service_data = array(
+						'name' => $cotizacion->name,
+						'cotizacion_id' => $cotizacion_id,
+						'created_at' => date('Y-m-d H:i:s'),
+						'created_by' => $user_id,
+						'code' => $cotizacion->ammount,
+						'amount' => $cotizacion->monto
+					);
+					$response_coti = $this->Customer->addCotizacionService($cotizaciones_service_data);
+					if(empty($response) || (int)$response !== 1){
+						echo json_encode(array('success'=>false));
+						exit();
+					}
+				}
+				echo json_encode(array('success'=>true));
+			}else{
+				echo json_encode(array('success'=>false));
+			}
+		}
+	}
+
 }
 ?>
