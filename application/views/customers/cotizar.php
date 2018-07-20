@@ -80,16 +80,18 @@
                   <div class="col-md-3">
                     <select id="cbo_comision_payment" name="cbo_comision_payment" class="form-control">
                         <option value="">Seleccionar Tipo de Servicio</option>
-                        <option value="vuelo">Vuelo</option>
+                        <option value="vuelo">Boleto Aereo</option>
+                        <option value="vuelo">Boleto BT/IT</option>
                         <option value="hotel">Hotel</option>
                         <option value="auto">Auto</option>
-                        <option value="seguro">Seguro</option>
+                        <option value="seguro">Tarjetas de Asistencias</option>
                         <option value="paquete">Paquete</option>
-                        <option value="tours">Tours</option>
+                        <option value="paquetes_netos">Paquetes Netos</option>
+                        <option value="tours">Excursiones</option>
                         <option value="crucero">Crucero</option>
                         <option value="trenes">Trenes</option>
                         <option value="entradas">Entradas</option>
-                        <option value="vuelos_regresos">Vuelos de Regreso</option>
+                        <option value="gastos">Gastos Administrativos</option>
                         <option value="otros">Otros</option>
                     </select>
                   </div>
