@@ -360,6 +360,17 @@ class Customer extends Person
 	}
 
 	/* METODOS DE COTIZACION */
+	function getCotizacionBycode($cotizacion_code){
+		$response = null;
+		$this->db->from('cotizaciones');
+		$this->db->where('cotizacion_id',$cotizacion_code);
+		$cotizacion = $this->db->get();
+		if($cotizacion->num_rows()==1){
+			$response = $cotizacion->row();
+		}
+		return $response;
+	}
+
 	function addCotizacion($cotizaciones_data){
 		$success = $this->db->insert('cotizaciones',$cotizaciones_data);
 		return ($this->db->affected_rows() !== 1) ? false : true;

@@ -356,6 +356,11 @@ class Customers extends Person_controller
 			$phone_pos = array_search('celular_personal', array_column($data->emails, 'type_phone'));
 			$phone_arr = $data->phones[$phone_pos];
 			$phone = (!empty($phone_arr)) ? $phone_arr->nro_phone : "";
+
+			//OBTENIENDO DATOS DE DOCUMENTO
+			$document_pos = array_search('dni', array_column($data->documents, 'type_document'));
+			$document_arr = $data->documents[$document_pos];
+			$document = (!empty($document_arr)) ? $document_arr->nro_doc : "";
 			
 			$cliente['datos']     = array(
 		    	'person_id'       => $client->id,
@@ -364,7 +369,7 @@ class Customers extends Person_controller
 	            'lastname'        => $client->lastname,
 	            'mother_lastname' => $client->mother_lastname,
 				'last_name_casada'=> $client->last_name_casada,
-				'documents' 	  => $data->documents,
+				'documents' 	  => $document,
 				'description' 	  => $data->description,
 				'emails'		  => $email,
 				'phones'	      => $phone,	  
@@ -460,6 +465,7 @@ class Customers extends Person_controller
 
 	function saveCotizacion(){
 		if($this->input->post()){
+			$id = 0;
 			$cliente_id = $this->input->post('person_id');
 			$cotizacion_id = $this->input->post('code_coti');
 			$user_id = $this->session->userdata["person_id"];
@@ -471,16 +477,21 @@ class Customers extends Person_controller
 				'fecha' => date('Y-m-d H:i:s')
 			);
 			$response = $this->Customer->addCotizacion($cotizaciones_data);
+			$obj_cotizacion = $this->Customer->getCotizacionBycode($cotizacion_id);
+			if(!empty($obj_cotizacion)){
+				$id = $obj_cotizacion->id;
+			}
 			if(!empty($response) && (int)$response === 1){
 				$cotizaciones = json_decode($this->input->post('comisiones'));
 				foreach($cotizaciones as $cotizacion){
 					$cotizaciones_service_data = array(
 						'name' => $cotizacion->name,
-						'cotizacion_id' => $cotizacion_id,
+						'cotizacion_id' => $id,
 						'created_at' => date('Y-m-d H:i:s'),
 						'created_by' => $user_id,
 						'code' => $cotizacion->ammount,
-						'amount' => $cotizacion->monto
+						'amount' => $cotizacion->monto,
+						'data' => json_encode($cotizacion->childrens)
 					);
 					$response_coti = $this->Customer->addCotizacionService($cotizaciones_service_data);
 					if(empty($response) || (int)$response !== 1){

@@ -39,8 +39,7 @@
 
                   //      print_r($datos);
                      ?>
-
-                    <input type="text" id="customer_documents" name="customer_document" value="<?php echo $datos['person_id']; ?>" class="form-control" disabled />
+                    <input type="text" id="customer_documents" name="customer_document" value="<?php echo $datos["documents"] //echo $datos['person_id']; ?>" class="form-control" disabled/>
                 </div>
                 <div class="col-md-4" class="form-group">
                     <label>Nombres y Apellidos</label>
@@ -143,15 +142,18 @@
             <script language="JavaScript">
                 $(function() {
                     $("#btnExito").click(function(){        
-                        $('#modal_exito').modal('show');
+                        //$('#modal_exito').modal('show');
+                        if(travel.list_comision.length > 0){
+                            travel.saveAddCotizacion();
+                        }
                     });
                     $("#btnFalla").click(function(){        
                         $('#modal_falla').modal('show');
                     });
                     $("#btn_add_coti").click(function(){
-                        if(travel.list_comision.length > 0){
-                            travel.saveAddCotizacion();
-                        }
+                        // if(travel.list_comision.length > 0){
+                        //     travel.saveAddCotizacion();
+                        // }
                     });
                 });
             </script>
@@ -225,60 +227,116 @@
             <div class="modal-body">
                 <?php echo form_open('travel/updateDetailComision',array('id'=>'form_travel_comision_update')); ?>
                     <br/>
-                        <div class="col-md-3" class="form-group">
-                            <label for="code_travel">Servicio:</label>
-                            <input type="text" name="travelid" id="travelid" class="form-control" disabled/>
-                            <!-- value="<?php //echo $travelid ?>" -->
-                        </div>
-                            <div class="col-md-5" class="form-group">
-                            <label for="name_travel">Codigo:</label>
-                            <input type="text" name="name_travel" id="name_travel" class="form-control" />
-                        </div>
-                            <div class="col-md-4" class="form-group">
-                            <label for="total_servicios">Monto:</label>
-                            <!--
-                            <input type="text" id="total_servicios" name="total_servicios" class="form-control" />
-                            -->
-                            <input type="number" name="total_servicios" id="total_servicios" name="height" step="0.1" class="form-control"/>
-                        </div>
-
-
-                    <!-- =========== FORM ADDRESS ============ -->
+                    <div class="col-md-3" class="form-group">
+                        <label for="code_travel">Servicio:</label>
+                        <input type="text" name="travelid" id="travelid" class="form-control" disabled/>
+                    </div>
+                        <div class="col-md-5" class="form-group">
+                        <label for="name_travel">Codigo:</label>
+                        <input type="text" name="name_travel" id="name_travel" class="form-control" />
+                    </div>
+                    <div class="col-md-4" class="form-group">
+                        <label for="total_servicios">Monto:</label>
+                        <input type="number" name="total_servicios" id="total_servicios" name="height" step="0.1" class="form-control"/>
+                    </div>
                     <div class="col-md-12">
-                    <fieldset>
-                        <legend>&nbsp;</legend>
-                        <div class="form-group">
-                        <textarea id="descripcion" class="form-control" style="height: 250px;"></textarea>
-                        </div>
-                    </fieldset>
+                        <fieldset>
+                            <legend>&nbsp;</legend>
+                            <div class="form-group">
+                                <textarea id="descripcion" class="form-control" style="height: 250px;"></textarea>
+                            </div>
+                        </fieldset>
                     </div>
-                    <!-- ===================================== -->
-
-                    <!--
-                    <div class="form-group">
-                        <input type="file" name="">
+                    <div class="col-md-3">
+                        <select id="cbo_comision_payment_children" name="cbo_comision_payment_children" class="form-control">
+                            <option value="">Seleccionar Tipo de Servicio</option>
+                            <option value="vuelo">Boleto Aereo</option>
+                            <option value="vuelo">Boleto BT/IT</option>
+                            <option value="hotel">Hotel</option>
+                            <option value="auto">Auto</option>
+                            <option value="seguro">Tarjetas de Asistencias</option>
+                            <option value="paquete">Paquete</option>
+                            <option value="paquetes_netos">Paquetes Netos</option>
+                            <option value="tours">Excursiones</option>
+                            <option value="crucero">Crucero</option>
+                            <option value="trenes">Trenes</option>
+                            <option value="entradas">Entradas</option>
+                            <option value="gastos">Gastos Administrativos</option>
+                            <option value="otros">Otros</option>
+                        </select>
                     </div>
-                    -->
-                    <?php echo form_close(); ?>
-                    <div class="modal-footer">
-                        <div class="form-group">
-                            <button id="add_info_service" type="button" class="btn btn-primary">Aceptar</button> 
-                            <button type="button" onclick="travel.cancelRegisterCustomer();" class="btn btn-default" data-dismiss="modal">Cerrar</button>      
-                        </div>
+                    <div class="col-md-3">
+                        <input type="text" name="cbo_code_comision_payment_children" id="cbo_code_comision_payment_children" class="form-control"
+                            placeholder="Ingresar código"/>
                     </div>
-                </div>
+                    <div class="col-md-3">
+                        <input type="number" name="cbo_amount_comision_payment_children" id="cbo_amount_comision_payment_children" class="form-control"
+                            step="0.1" placeholder="Ingresar monto"/>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="button" id="btn_save_com_children" class="btn btn-primary" value="Agregar Sub-Servicio"/>
+                    </div>
+                    <br/><br/><br/>
+                    <div class="col-md-12">
+                        <table id="table_customer_travel_children" class="table table-hover table-bordered" >
+                            <thead>
+                                <tr>
+                                    <th class="col-md-1"><center>Nro.</center></th>
+                                    <th class="col-md-4"><center>Servicios</center></th>
+                                    <th class="col-md-4"><center>Codigo</center></th>
+                                    <th class="col-md-2"><center>Monto</center></th> 
+                                    <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td colspan="5">
+                                        <center>
+                                            No se registraron datos.
+                                        </center>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table class="table table-hover table-bordered" >
+                            <tbody>
+                                <tr>
+                                    <td colspan=2>
+                                        <span class="pull-right">MONTO TOTAL</span>
+                                    </td>
+                                    <td>
+                                        <span id="total_pago_children" class="pull-right"></span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                <?php echo form_close(); ?>
+            </div>
+            <div class="modal-footer">
+                <div class="form-group">
+                    <button id="add_info_service" type="button" class="btn btn-primary">Aceptar</button> 
+                    <button type="button" onclick="travel.cancelRegisterCustomer();" class="btn btn-default" data-dismiss="modal">Cerrar</button>      
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-
-
- 
-
-
-
+<!-- MODAL DE CONFIRMACIÓN -->
+<div id="modal_error" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <center>
+                    <h3 class="modal-title messages_modal">Operación Correcta</h3>
+                    <br/>
+                    <button type="button" class="btn btn-primary btn_success" data-dismiss="modal">Aceptar</button>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
 
 <?php $this->load->view("travel/modal"); ?>
 <!-- ====================== -->
@@ -289,12 +347,19 @@
 
         $(".error_comision").hide();
         travel.setTravelCode();
+        
         $("#search_value").on('input', function () {
            travel.setCustomerFilter();
         });
+
         $("#btn_save_com").click(function(){
             travel.addComision();
         });
+
+        $("#btn_save_com_children").click(function(){
+            travel.addComisionChildren();
+        });
+
         $(".btn_success").click(function(){
             location.reload();
         });
