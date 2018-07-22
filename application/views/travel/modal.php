@@ -896,6 +896,396 @@
   </div>
 </div>
 
+
+<!-------------MODAL VENTA----------->
+
+<div id="modal_servicios" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">TABLA DE SERVICIOS</h4>
+      </div>
+      <div class="modal-body">
+        <?php echo form_open('sales/saveService'); ?>
+          <div class="row">
+            <!-- =========== FORM DATOS DEL SERVICIO ============ -->
+            <div class="col-md-12">
+              <fieldset>
+                <legend>Servicio</legend>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="proveedor">Codigo</label>
+                    <input type="text" id="proveedor" name="proveedor" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="tarifa_neta">Monto</label>
+                    <input type="text" id="tarifa_neta" name="tarifa_neta" class="form-control">
+                  </div>  
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="comi_proveedor">Descripcion</label>
+                    <input type="text" id="comi_proveedor" name="comi_proveedor" class="form-control">
+                  </div>  
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="fee_proveedor">Servicio</label>
+                    <input type="text" id="fee_proveedor" name="fee_proveedor" class="form-control" name="">
+                  </div>  
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group" >
+                    <label for="fee_agencia">Observ.</label>
+                    <input type="text" id="fee_agencia" name="fee_agencia" class="form-control">
+                  </div>  
+                </div>
+
+              </fieldset>
+            </div>
+          </div>
+        </div>
+            <!-- ============FIN DATOS DEL SERVICIO========================= -->
+            <div id="messages" class="col-md-12"></div>
+      <div class="modal-body">
+          <div class="row">
+            <!-- =========== FORM DATOS CARGA DE TABLA ============ -->
+            <div class="col-md-12">
+              <fieldset>
+                <legend>Tabla</legend>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="proveedor">Proveedor</label>
+                    <input type="text" id="proveedor" name="proveedor" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="tarifa_neta">Tarifa Neta</label>
+                    <input type="text" id="tarifa_neta" name="tarifa_neta" class="form-control">
+                  </div>  
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="comi_proveedor">Com. Proveedor</label>
+                    <input type="text" id="comi_proveedor" name="comi_proveedor" class="form-control">
+                  </div>  
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="fee_proveedor">Fee Proveedor</label>
+                    <input type="text" id="fee_proveedor" name="fee_proveedor" class="form-control" name="">
+                  </div>  
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="fee_agencia">Fee Agencia</label>
+                    <input type="text" id="fee_agencia" name="fee_agencia" class="form-control">
+                  </div>  
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="tipo_boleto">Tipo de Boleto</label>
+                    <select class="form-control">
+                      <option id="tipo_boleto" value="boleto_aereo" >Boleto Aereo</option>
+                      <option id="tipo_boleto" value="boleto_bt" >Boleto BT</option>
+                    </select>
+                  </div>  
+                </div>
+              </fieldset>
+            </div>
+            <div class="col-md-12">
+              <fieldset>
+                <legend>Observaciones</legend>
+                <div class="form-group">
+                  <textarea id="descripcion" class="form-control" style="height: 50px;"></textarea>
+                </div>
+              </fieldset>
+            </div>
+            <!-- ===================================== -->
+            <div id="messages" class="col-md-12"></div>
+
+      </div>
+      </div>
+
+<dir class="modal-header" >
+<h4 class="modal-title">Datos Financieros del Servicio
+  <button type="button" class="btn btn-primary pull-right" id="mostrar" name="boton1" ><i class="fa fa-angle-down"></i>
+                </button>
+
+  <button type="button" class="btn btn-primary pull-right" id="ocultar" name="boton2" ><i class="fa fa-angle-up"></i>
+                </button>
+
+</h4>
+<input id="target" type="hidden">
+<div class="target" ><br>
+          <div class="main">
+              <div class="col-md-1" class="form-group">
+                      <label for="code_travel">Tarifa:</label>
+                      <input type="text" id="minumero1" onchange="SumarAutomatico(this.value);" class="form-control"/>
+              </div>
+              <div class="col-md-2" class="form-group">
+                      <label for="code_travel">QUUE:</label>
+                      <input type="text" id="minumero2" onchange="SumarAutomatico(this.value);" class="form-control"/>
+              </div>
+              <div class="col-md-2" class="form-group">
+                      <label for="name_travel">Imp. Extranjero:</label>
+                      <input type="text" id="minumero3" onchange="SumarAutomatico(this.value);" class="form-control" />
+              </div>
+              <div class="col-md-1" class="form-group">
+                                      <label for="code_travel">Otros:</label>
+                                      <input type="text" name="travelid" id="travelid" class="form-control" disabled/>
+                                      <!-- value="<?php //echo $travelid ?>" -->
+                                  </div>
+                                  <div class="col-md-2" class="form-group">
+                                      <label for="name_travel">IGV:</label>
+                                      <input type="text" name="name_travel" id="name_travel" class="form-control" />
+                                  </div>
+                                  <div class="col-md-2" class="form-group">
+                                      <label for="total_servicios">Extento FEE:</label>
+                                      <input type="checkbox" name="total_servicios" id="total_servicios" name="height" />
+                                  </div>
+                                  <div class="col-md-2" class="form-group">
+                                      <label for="total_servicios">Inafecto:</label>
+                                      <input type="checkbox" name="total_servicios" id="total_servicios" name="height" />
+                                  </div>
+                                  <br/ >
+          <span>Total FEE: </span> <span id="MiTotal"></span>
+          <span>TOTAL: </span> <span id="Total"></span>
+          </div>
+
+</dir>
+<div class="target" >
+<dir class="modal-header" >
+                        <div class="col-md-2" class="form-group">
+                            <label for="code_travel">CreditCard:</label>
+                            <input type="text" name="travelid" id="travelid" class="form-control" disabled/>
+                            <!-- value="<?php //echo $travelid ?>" -->
+                        </div>
+                            <div class="col-md-2" class="form-group">
+                            <label for="name_travel">Serv.Esp:</label>
+                            <input type="text" name="name_travel" id="name_travel" class="form-control" />
+                        </div>
+                        <div class="col-md-2" class="form-group">
+                            <label for="total_servicios">TUA:</label>
+                            <input type="text" id="precio_no_tax" class="form-control" name="price_notax" size="5" onkeyup="calcular();">
+                        </div>
+                        <div class="col-md-2" class="form-group">
+                            <label for="code_travel">Otros:</label>
+                                <select class="form-control" name="tax" id="tax" onchange="calcular();">
+                                    <option value="0" selected>Ninguna</option>
+                                    <option value="16">16</option>
+                                    <option value="30">30</option>
+                                </select>
+                        </div>
+                        <div class="col-md-1" class="form-group">
+                            <label for="name_travel">FEE:</label>
+                            <input type="text" class="form-control" name="total" value="" id="total" size="3">
+                        </div>
+                        <div class="col-md-1" class="form-group">
+                            <label for="name_travel">IGV:</label>
+                            <input type="text" name="name_travel" id="name_travel" class="form-control" />
+                        </div>
+                        <div class="col-md-2" class="form-group">
+                            <label for="name_travel">Total FEE:</label>
+                            <input type="text" name="name_travel" id="name_travel" class="form-control" />
+                        </div>
+</dir>
+<dir class="modal-header" >
+<h5 class="modal-title">Comision de la Agencia y el Vendedor</h5>
+                        <div class="col-md-2" class="form-group">
+                            <label for="code_travel">% Agencia:</label>
+                            <input type="text" name="travelid" id="travelid" class="form-control" disabled/>
+                            <!-- value="<?php //echo $travelid ?>" -->
+                        </div>
+                            <div class="col-md-2" class="form-group">
+                            <label for="name_travel">Igual a:</label>
+                            <input type="text" name="name_travel" id="name_travel" class="form-control" />
+                        </div>
+                        <div class="col-md-2" class="form-group">
+                            <label for="total_servicios">Over:</label>
+                            <input type="number" name="total_servicios" id="total_servicios" name="height" step="0.1" class="form-control"/>
+                        </div>
+                        <div class="col-md-2" class="form-group">
+                            <label for="code_travel">Igual a:</label>
+                            <input type="text" name="travelid" id="travelid" class="form-control" disabled/>
+                            <!-- value="<?php //echo $travelid ?>" -->
+                        </div>
+                        <div class="col-md-2" class="form-group">
+                            <label for="total_servicios">Inafecto:</label>
+                            <input type="checkbox" name="total_servicios" id="total_servicios" name="height" />
+                        </div>
+</dir>
+<dir class="modal-header" >
+                        <div class="col-md-2" class="form-group">
+                            <label for="code_travel">Vendedor:</label>
+                            <select class="form-control">
+                                <option>Opcion1</option>
+                                <option>Opcion1</option>
+                                <option>Opcion1</option>
+                            </select>
+                        </div>
+                            <div class="col-md-2" class="form-group">
+                            <label for="name_travel">Incentivo:</label>
+                            <input type="text" name="name_travel" id="name_travel" class="form-control" />
+                        </div>
+                        <div class="col-md-3" class="form-group">
+                            <label for="total_servicios">Incentivo Counter:</label>
+                            <input type="number" name="total_servicios" id="total_servicios" name="height" step="0.1" class="form-control"/>
+                        </div>
+</dir>
+<dir class="modal-header" >
+                        <div class="col-md-2" class="form-group">
+                            <label for="code_travel">% Vendedor:</label>
+                            <input type="text" name="travelid" id="travelid" class="form-control" disabled/>
+                            <!-- value="<?php //echo $travelid ?>" -->
+                        </div>
+                            <div class="col-md-2" class="form-group">
+                            <label for="name_travel">Igual a:</label>
+                            <input type="text" name="name_travel" id="name_travel" class="form-control" />
+                        </div>
+                        <div class="col-md-3" class="form-group">
+                            <label for="total_servicios">F.Salida:</label>
+                            <input type="date" name="total_servicios" id="total_servicios" name="height" step="0.1" class="form-control"/>
+                        </div>
+                        <div class="col-md-2" class="form-group">
+                            <label for="code_travel">Hora:</label>
+                            <input type="time" name="travelid" id="travelid" class="form-control"/>
+                            <!-- value="<?php //echo $travelid ?>" -->
+                        </div>
+</dir>
+<dir class="modal-header" >
+                        <div class="col-md-3" class="form-group">
+                            <label for="code_travel">Nro. Vuelo:</label>
+                            <input type="text" name="travelid" id="travelid" class="form-control" disabled/>
+                            <!-- value="<?php //echo $travelid ?>" -->
+                        </div>
+                            <div class="col-md-2" class="form-group">
+                            <label for="name_travel">Clase:</label>
+                            <input type="text" name="name_travel" id="name_travel" class="form-control" />
+                        </div>
+                        <div class="col-md-3" class="form-group">
+                            <label for="total_servicios">F.Retorno:</label>
+                            <input type="date" name="total_servicios" id="total_servicios" name="height" step="0.1" class="form-control"/>
+                        </div>
+                        <div class="col-md-2" class="form-group">
+                            <label for="code_travel">Hora:</label>
+                            <input type="text" name="travelid" id="travelid" class="form-control"/>
+                            <!-- value="<?php //echo $travelid ?>" -->
+                        </div>
+</dir>
+<dir class="modal-header" >
+<h5 class="modal-title">Observaciones</h5>
+                        <div class="col-md-2" class="form-group">
+                            <label for="code_travel">Observ.:</label>
+                            <input type="text" name="travelid" id="travelid" class="form-control" disabled/>
+                            <!-- value="<?php //echo $travelid ?>" -->
+                        </div>
+                            <div class="col-md-2" class="form-group">
+                            <label for="name_travel">F.Solicitada:</label>
+                            <input type="date" name="name_travel" id="name_travel" class="form-control" />
+                        </div>
+                        <div class="col-md-2" class="form-group">
+                            <label for="total_servicios">Monto:</label>
+                            <input type="number" name="total_servicios" id="total_servicios" name="height" step="0.1" class="form-control"/>
+                        </div>
+</dir>
+<dir class="modal-header" >
+<h5 class="modal-title">Forma de Pago a la Aerolinea o Mayorista</h5>
+                        <div class="col-md-3" class="form-group">
+                            <label for="code_travel">Mode de Pago:</label>
+                            <input type="text" name="travelid" id="travelid" class="form-control" disabled/>
+                            <!-- value="<?php //echo $travelid ?>" -->
+                        </div>
+                            <div class="col-md-2" class="form-group">
+                            <label for="name_travel">Contado:</label>
+                            <input type="text" name="name_travel" id="name_travel" class="form-control" />
+                        </div>
+                        <div class="col-md-2" class="form-group">
+                            <label for="total_servicios">Credito:</label>
+                            <input type="number" name="total_servicios" id="total_servicios" name="height" step="0.1" class="form-control"/>
+                        </div>
+</dir>
+<dir class="modal-header" >
+                        <div class="col-md-2" class="form-group">
+                            <label for="code_travel">Tarjeta:</label>
+                            <input type="text" name="travelid" id="travelid" class="form-control" disabled/>
+                            <!-- value="<?php //echo $travelid ?>" -->
+                        </div>
+                            <div class="col-md-3" class="form-group">
+                            <label for="name_travel">Nro. Cheque:</label>
+                            <input type="text" name="name_travel" id="name_travel" class="form-control" />
+                        </div>
+</dir>
+<dir class="modal-header" >
+<h5 class="modal-title">Estado del Boleto</h5>
+                        <div class="col-md-2" class="form-group">
+                            <label for="code_travel">% Agencia:</label>
+                            <input type="text" name="travelid" id="travelid" class="form-control" disabled/>
+                            <!-- value="<?php //echo $travelid ?>" -->
+                        </div>
+                            <div class="col-md-2" class="form-group">
+                            <label for="name_travel">Igual a:</label>
+                            <input type="text" name="name_travel" id="name_travel" class="form-control" />
+                        </div>
+                        <div class="col-md-2" class="form-group">
+                            <label for="total_servicios">Over:</label>
+                            <input type="number" name="total_servicios" id="total_servicios" name="height" step="0.1" class="form-control"/>
+                        </div>
+                        <div class="col-md-2" class="form-group">
+                            <label for="code_travel">Igual a:</label>
+                            <input type="text" name="travelid" id="travelid" class="form-control" disabled/>
+                            <!-- value="<?php //echo $travelid ?>" -->
+                        </div>
+                        <div class="col-md-2" class="form-group">
+                            <label for="total_servicios">Inafecto:</label>
+                            <input type="checkbox" name="total_servicios" id="total_servicios" name="height" />
+                        </div>
+</dir>
+</div> 
+    <div class="modal-footer">
+      <div class="form-group"></div>
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="button" onclick="travel.cancelRegisterCustomer();" class="btn btn-default" data-dismiss="modal">Cerrar</button>      
+    </div>
+          <?php echo form_close(); ?>
+</div>
+
+
+
+
+
+<script type="text/javascript">
+    $(document).ready(function(){
+    $("#mostrar").on( "click", function() {
+      $('#target').show(); //muestro mediante id
+      $('.target').show(); //muestro mediante clase
+     });
+    $("#ocultar").on( "click", function() {
+      $('#target').hide(); //oculto mediante id
+      $('.target').hide(); //muestro mediante clase
+    });
+  });
+
+</script>
+
+<script language="JavaScript">
+                $(function() {
+                    $("#btnExito").click(function(){        
+                        $('#modal_ticket').modal('show');
+                    });
+                    $("#btnFalla").click(function(){        
+                        $('#modal_falla').modal('show');
+                    });
+                    $("#print").click(function(){        
+                        $('#modal_print').modal('show');
+                    });
+                });
+</script>
+
 <script type="text/javascript">
 
 function isValidDate(day,month,year)
