@@ -11,6 +11,11 @@ class Sale extends CI_Model
 		return $this->db->get();
 	}
 
+	function insertService($service_data){
+		$success = $this->db->insert('servicios',$service_data);
+		return ($this->db->affected_rows() !== 1) ? false : true;
+	}
+
 	function exists($sale_id)
 	{
 		$this->db->from('sales');
@@ -20,18 +25,162 @@ class Sale extends CI_Model
 		return ($query->num_rows()==1);
 	}
 
-	function listServicios(){
-		$response = [];
-		$this->db->from('servicios');
-		$this->db->order_by("id", "desc");
+	function getServicios($servicio_id){
+		$response = null;
+		$this->db->from('clients');
+		$this->db->where('id',$servicio_id);
+		$this->db->where('deleted',0);
+		$client = $this->db->get();
+		if($client->num_rows()==1){
+			$response = $client->row();
+		}
+		return $response;
+	 }
+
+	function listServicios($cotizacion_id){
+		$response = null;
+		$this->db->from('cotizaciones_servicios');
+		$this->db->where('cotizacion_id', $cotizacion_id);
+		$this->db->order_by('id', 'desc');
 		$clients = $this->db->get();
 		foreach($clients->result() as $row){
 			$response[] = $row;
 		}
 		return $response;
-
 	}
-	
+
+	function listServiciosBoleto($cotizacion_id){
+		$response = null;
+		$this->db->from('cotizaciones_servicios');
+		$this->db->like('name', Boleto);
+		$this->db->where('cotizacion_id', $cotizacion_id);
+		$this->db->order_by('id', 'desc');
+		$clients = $this->db->get();
+		foreach($clients->result() as $row){
+			$response[] = $row;
+		}
+		return $response;
+	}
+
+	function listServiciosHotel($cotizacion_id){
+		$response = null;
+		$this->db->from('cotizaciones_servicios');
+		$this->db->where('name', Hotel);
+		$this->db->where('cotizacion_id', $cotizacion_id);
+		$this->db->order_by('id', 'desc');
+		$clients = $this->db->get();
+		foreach($clients->result() as $row){
+			$response[] = $row;
+		}
+		return $response;
+	}
+
+	function listServiciosAuto($cotizacion_id){
+		$response = null;
+		$this->db->from('cotizaciones_servicios');
+		$this->db->where('name', Auto);
+		$this->db->where('cotizacion_id', $cotizacion_id);
+		$this->db->order_by('id', 'desc');
+		$clients = $this->db->get();
+		foreach($clients->result() as $row){
+			$response[] = $row;
+		}
+		return $response;
+	}
+
+	function listServiciosTarjeta($cotizacion_id){
+		$response = null;
+		$this->db->from('cotizaciones_servicios');
+		$this->db->like('name', Tarjeta);
+		$this->db->where('cotizacion_id', $cotizacion_id);
+		$this->db->order_by('id', 'desc');
+		$clients = $this->db->get();
+		foreach($clients->result() as $row){
+			$response[] = $row;
+		}
+		return $response;
+	}
+
+	function listServiciosPaquete($cotizacion_id){
+		$response = null;
+		$this->db->from('cotizaciones_servicios');
+		$this->db->like('name', Paquete);
+		$this->db->where('cotizacion_id', $cotizacion_id);
+		$this->db->order_by('id', 'desc');
+		$clients = $this->db->get();
+		foreach($clients->result() as $row){
+			$response[] = $row;
+		}
+		return $response;
+	}
+
+	function listServiciosExcursion($cotizacion_id){
+		$response = null;
+		$this->db->from('cotizaciones_servicios');
+		$this->db->like('name', Excursion);
+		$this->db->where('cotizacion_id', $cotizacion_id);
+		$this->db->order_by('id', 'desc');
+		$clients = $this->db->get();
+		foreach($clients->result() as $row){
+			$response[] = $row;
+		}
+		return $response;
+	}
+
+	function listServiciosCrucero($cotizacion_id){
+		$response = null;
+		$this->db->from('cotizaciones_servicios');
+		$this->db->like('name', Crucero);
+		$this->db->where('cotizacion_id', $cotizacion_id);
+		$this->db->order_by('id', 'desc');
+		$clients = $this->db->get();
+		foreach($clients->result() as $row){
+			$response[] = $row;
+		}
+		return $response;
+	}
+
+	function listServiciosTren($cotizacion_id){
+		$response = null;
+		$this->db->from('cotizaciones_servicios');
+		$this->db->like('name', Tren);
+		$this->db->where('cotizacion_id', $cotizacion_id);
+		$this->db->order_by('id', 'desc');
+		$clients = $this->db->get();
+		foreach($clients->result() as $row){
+			$response[] = $row;
+		}
+		return $response;
+	}
+
+	function listServiciosEntrada($cotizacion_id){
+		$response = null;
+		$this->db->from('cotizaciones_servicios');
+		$this->db->like('name', Entrada);
+		$this->db->where('cotizacion_id', $cotizacion_id);
+		$this->db->order_by('id', 'desc');
+		$clients = $this->db->get();
+		foreach($clients->result() as $row){
+			$response[] = $row;
+		}
+		return $response;
+	}
+
+	function listServiciosOtro($cotizacion_id){
+		$response = null;
+		$this->db->from('cotizaciones_servicios');
+		$this->db->like('name', Otro);
+		$this->db->where('cotizacion_id', $cotizacion_id);
+		$this->db->order_by('id', 'desc');
+		$clients = $this->db->get();
+		foreach($clients->result() as $row){
+			$response[] = $row;
+		}
+		return $response;
+	}
+
+
+
 	function update($sale_data, $sale_id)
 	{
 		$this->db->where('sale_id', $sale_id);
