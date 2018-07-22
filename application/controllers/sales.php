@@ -84,7 +84,7 @@ class Sales extends Secure_area{
 	}
 
 
-	 function getCotizacion($cotizacion_id){
+	function getCotizacion($cotizacion_id){
 		$response = null;
 		$this->db->from('cotizaciones');
 		$this->db->where('cotizacion_id',$cotizacion_id);
@@ -95,8 +95,109 @@ class Sales extends Secure_area{
 		return $response;
 	 }
 
-	function listServicios(){
-		$response = $this->Sale->listServicios();
+  	function listServicios(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServicios($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosBoleto(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosBoleto($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosHotel(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosHotel($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosAuto(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosAuto($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosTarjeta(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosTarjeta($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosPaquete(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosPaquete($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosExcursion(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosExcursion($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosEntrada(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosEntrada($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosTren(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosTren($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosCrucero(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosCrucero($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosOtro(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosOtro($cotizacion_id);
 		if(!empty($response)){
 			echo json_encode(array('success'=>true,'data'=>$response));
 		}else{
@@ -107,8 +208,8 @@ class Sales extends Secure_area{
 	function getServicios(){
 		$response = [];
 		if($this->input->post()){
-			$client_id = $this->input->post("id");
-			$result = $this->Customer->getClient($client_id);
+			$servicio_id = $this->input->post("id");
+			$result = $this->Sale->getServicios($servicio_id);
 			if(!empty($result)){
 				$response = array('success'=>true,'data'=>$result);
 			}else{
@@ -119,6 +220,30 @@ class Sales extends Secure_area{
 		}
 		echo json_encode($response);
 	}
+
+	function saveService(){
+		if($this->input->post()){
+			$service_data = array(
+				'proveedor'=>$this->input->post('proveedor'),
+				'tarifa_neta'=>$this->input->post('tarifa_neta'),
+				'comi_proveedor'=>$this->input->post('comi_proveedor'),
+				'fee_agencia'=>$this->input->post('fee_agencia'),
+				'fee_proveedor'=>$this->input->post('fee_proveedor'),
+				'descripcion'=>$this->input->post('descripcion'),
+				'tipo_boleto'=>$this->input->post('tipo_boleto')
+			);
+			$response = $this->Sale->insertService($service_data);
+			if(!empty($response) && (int)$response === 1){
+				$this->load->view("sales/receipt",$service_data);
+				echo json_encode(array('success'=>true,'message'=>"Operación correcta"));
+			}else{
+				echo json_encode(array('success'=>false,'message'=>"Ha ocurrido un error interno"));
+			}
+		}else{
+			echo json_encode(array('success'=>false,'message'=>"No se ha enviado ningún registro"));
+		}
+	}
+
 
 	function item_search(){
 		$suggestions = $this->Item->get_item_search_suggestions(
