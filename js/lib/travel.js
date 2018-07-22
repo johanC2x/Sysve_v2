@@ -1847,7 +1847,7 @@ var travel = function () {
         });
     };
 
-        self.listServicios = function(){
+self.listServicios = function(){
         $.ajax({
             type:'POST',
             data:{},
@@ -1863,26 +1863,27 @@ var travel = function () {
                         for(var i = 0;i < data.length;i++){
                             var id = data[i].id;
                             var cotizacion_id = data[i].cotizacion_id;
-                            var estatus = data[i].estatus;
-                            var asesor = data[i].asesor;
-                            var fecha = data[i].fecha;
+                            var servicio = data[i].name;                            
+                            var codigo = data[i].code;
+                            var monto = data[i].amount;
+                            var fecha = data[i].created_at;
 
                           
 
                             tbody += `<tr>
                                         <td>
                                             <center>
-                                                <input type="checkbox" name="check"/>
+                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
                                             </center>
                                         </td>
                                         <td>`+cotizacion_id+`</td>
-                                        <td>`+estatus+`</td>
-                                        <td>`+asesor+`</td>
-                                        <td>`+id+`</td>
+                                        <td>`+servicio+`</td>
+                                        <td>`+codigo+`</td>
+                                        <td>`+monto+`</td>
                                         <td>`+fecha+`</td>
                                         <td>
                                             <center>
-                                                <a href="javascript:void(0);" onclick="travel.getServicios(`+id+`);">
+                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
                                             </center>
@@ -1911,6 +1912,631 @@ var travel = function () {
         });
     };
 
+
+self.listServiciosVenta = function(){
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:self.current_url+"index.php/sales/listServiciosBoleto",
+            success:function(response){
+                var res = JSON.parse(response);
+                if(res.success){
+                    var tbody = "";
+                    var data = res.data;
+                    //var data_client = JSON.parse(data.data);
+                    $("#table_boleto tbody").empty();
+                    if(data.length > 0){
+                        for(var i = 0;i < data.length;i++){
+                            var id = data[i].id;
+                            var cotizacion_id = data[i].cotizacion_id;
+                            var servicio = data[i].name;                            
+                            var codigo = data[i].code;
+                            var monto = data[i].amount;
+                            var fecha = data[i].created_at;
+
+                          
+
+                            tbody += `<tr>
+                                        <td>
+                                            <center>
+                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
+                                            </center>
+                                        </td>
+                                        <td>`+cotizacion_id+`</td>
+                                        <td>`+servicio+`</td>
+                                        <td>`+codigo+`</td>
+                                        <td>`+monto+`</td>
+                                        <td>`+fecha+`</td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                    </tr>`;
+                        }
+                    }else{
+                        tbody = `<tr>
+                                    <td colspan="7">
+                                        <center>
+                                            NO SE ENCONTRARON RESULTADOS
+                                        </center>
+                                    </td>
+                                </tr>`;
+                    }
+                    $("#table_boleto tbody").append(tbody);
+                }
+            }
+        });
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:self.current_url+"index.php/sales/listServiciosHotel",
+            success:function(response){
+                var res = JSON.parse(response);
+                if(res.success){
+                    var tbody = "";
+                    var data = res.data;
+                    //var data_client = JSON.parse(data.data);
+                    $("#table_hotel tbody").empty();
+                    if(data.length > 0){
+                        for(var i = 0;i < data.length;i++){
+                            var id = data[i].id;
+                            var cotizacion_id = data[i].cotizacion_id;
+                            var servicio = data[i].name;                            
+                            var codigo = data[i].code;
+                            var monto = data[i].amount;
+                            var fecha = data[i].created_at;
+
+                          
+
+                            tbody += `<tr>
+                                        <td>
+                                            <center>
+                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
+                                            </center>
+                                        </td>
+                                        <td>`+cotizacion_id+`</td>
+                                        <td>`+servicio+`</td>
+                                        <td>`+codigo+`</td>
+                                        <td>`+monto+`</td>
+                                        <td>`+fecha+`</td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                    </tr>`;
+                        }
+                    }else{
+                        tbody = `<tr>
+                                    <td colspan="7">
+                                        <center>
+                                            NO SE ENCONTRARON RESULTADOS
+                                        </center>
+                                    </td>
+                                </tr>`;
+                    }
+                    $("#table_hotel tbody").append(tbody);
+                }
+            }
+        });
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:self.current_url+"index.php/sales/listServiciosAuto",
+            success:function(response){
+                var res = JSON.parse(response);
+                if(res.success){
+                    var tbody = "";
+                    var data = res.data;
+                    //var data_client = JSON.parse(data.data);
+                    $("#table_auto tbody").empty();
+                    if(data.length > 0){
+                        for(var i = 0;i < data.length;i++){
+                            var id = data[i].id;
+                            var cotizacion_id = data[i].cotizacion_id;
+                            var servicio = data[i].name;                            
+                            var codigo = data[i].code;
+                            var monto = data[i].amount;
+                            var fecha = data[i].created_at;
+
+                          
+
+                            tbody += `<tr>
+                                        <td>
+                                            <center>
+                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
+                                            </center>
+                                        </td>
+                                        <td>`+cotizacion_id+`</td>
+                                        <td>`+servicio+`</td>
+                                        <td>`+codigo+`</td>
+                                        <td>`+monto+`</td>
+                                        <td>`+fecha+`</td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                    </tr>`;
+                        }
+                    }else{
+                        tbody = `<tr>
+                                    <td colspan="7">
+                                        <center>
+                                            NO SE ENCONTRARON RESULTADOS
+                                        </center>
+                                    </td>
+                                </tr>`;
+                    }
+                    $("#table_auto tbody").append(tbody);
+                }
+            }
+        });
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:self.current_url+"index.php/sales/listServiciosTarjeta",
+            success:function(response){
+                var res = JSON.parse(response);
+                if(res.success){
+                    var tbody = "";
+                    var data = res.data;
+                    //var data_client = JSON.parse(data.data);
+                    $("#table_tarjeta tbody").empty();
+                    if(data.length > 0){
+                        for(var i = 0;i < data.length;i++){
+                            var id = data[i].id;
+                            var cotizacion_id = data[i].cotizacion_id;
+                            var servicio = data[i].name;                            
+                            var codigo = data[i].code;
+                            var monto = data[i].amount;
+                            var fecha = data[i].created_at;
+
+                          
+
+                            tbody += `<tr>
+                                        <td>
+                                            <center>
+                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
+                                            </center>
+                                        </td>
+                                        <td>`+cotizacion_id+`</td>
+                                        <td>`+servicio+`</td>
+                                        <td>`+codigo+`</td>
+                                        <td>`+monto+`</td>
+                                        <td>`+fecha+`</td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                    </tr>`;
+                        }
+                    }else{
+                        tbody = `<tr>
+                                    <td colspan="7">
+                                        <center>
+                                            NO SE ENCONTRARON RESULTADOS
+                                        </center>
+                                    </td>
+                                </tr>`;
+                    }
+                    $("#table_tarjeta tbody").append(tbody);
+                }
+            }
+        });
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:self.current_url+"index.php/sales/listServiciosPaquete",
+            success:function(response){
+                var res = JSON.parse(response);
+                if(res.success){
+                    var tbody = "";
+                    var data = res.data;
+                    //var data_client = JSON.parse(data.data);
+                    $("#table_paquete tbody").empty();
+                    if(data.length > 0){
+                        for(var i = 0;i < data.length;i++){
+                            var id = data[i].id;
+                            var cotizacion_id = data[i].cotizacion_id;
+                            var servicio = data[i].name;                            
+                            var codigo = data[i].code;
+                            var monto = data[i].amount;
+                            var fecha = data[i].created_at;
+
+                          
+
+                            tbody += `<tr>
+                                        <td>
+                                            <center>
+                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
+                                            </center>
+                                        </td>
+                                        <td>`+cotizacion_id+`</td>
+                                        <td>`+servicio+`</td>
+                                        <td>`+codigo+`</td>
+                                        <td>`+monto+`</td>
+                                        <td>`+fecha+`</td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                    </tr>`;
+                        }
+                    }else{
+                        tbody = `<tr>
+                                    <td colspan="7">
+                                        <center>
+                                            NO SE ENCONTRARON RESULTADOS
+                                        </center>
+                                    </td>
+                                </tr>`;
+                    }
+                    $("#table_paquete tbody").append(tbody);
+                }
+            }
+        });
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:self.current_url+"index.php/sales/listServiciosExcursion",
+            success:function(response){
+                var res = JSON.parse(response);
+                if(res.success){
+                    var tbody = "";
+                    var data = res.data;
+                    //var data_client = JSON.parse(data.data);
+                    $("#table_excursion tbody").empty();
+                    if(data.length > 0){
+                        for(var i = 0;i < data.length;i++){
+                            var id = data[i].id;
+                            var cotizacion_id = data[i].cotizacion_id;
+                            var servicio = data[i].name;                            
+                            var codigo = data[i].code;
+                            var monto = data[i].amount;
+                            var fecha = data[i].created_at;
+
+                          
+
+                            tbody += `<tr>
+                                        <td>
+                                            <center>
+                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
+                                            </center>
+                                        </td>
+                                        <td>`+cotizacion_id+`</td>
+                                        <td>`+servicio+`</td>
+                                        <td>`+codigo+`</td>
+                                        <td>`+monto+`</td>
+                                        <td>`+fecha+`</td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                    </tr>`;
+                        }
+                    }else{
+                        tbody = `<tr>
+                                    <td colspan="7">
+                                        <center>
+                                            NO SE ENCONTRARON RESULTADOS
+                                        </center>
+                                    </td>
+                                </tr>`;
+                    }
+                    $("#table_excursion tbody").append(tbody);
+                }
+            }
+        });
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:self.current_url+"index.php/sales/listServiciosEntrada",
+            success:function(response){
+                var res = JSON.parse(response);
+                if(res.success){
+                    var tbody = "";
+                    var data = res.data;
+                    //var data_client = JSON.parse(data.data);
+                    $("#table_entrada tbody").empty();
+                    if(data.length > 0){
+                        for(var i = 0;i < data.length;i++){
+                            var id = data[i].id;
+                            var cotizacion_id = data[i].cotizacion_id;
+                            var servicio = data[i].name;                            
+                            var codigo = data[i].code;
+                            var monto = data[i].amount;
+                            var fecha = data[i].created_at;
+
+                          
+
+                            tbody += `<tr>
+                                        <td>
+                                            <center>
+                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
+                                            </center>
+                                        </td>
+                                        <td>`+cotizacion_id+`</td>
+                                        <td>`+servicio+`</td>
+                                        <td>`+codigo+`</td>
+                                        <td>`+monto+`</td>
+                                        <td>`+fecha+`</td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                    </tr>`;
+                        }
+                    }else{
+                        tbody = `<tr>
+                                    <td colspan="7">
+                                        <center>
+                                            NO SE ENCONTRARON RESULTADOS
+                                        </center>
+                                    </td>
+                                </tr>`;
+                    }
+                    $("#table_entrada tbody").append(tbody);
+                }
+            }
+        });
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:self.current_url+"index.php/sales/listServiciosTren",
+            success:function(response){
+                var res = JSON.parse(response);
+                if(res.success){
+                    var tbody = "";
+                    var data = res.data;
+                    //var data_client = JSON.parse(data.data);
+                    $("#table_tren tbody").empty();
+                    if(data.length > 0){
+                        for(var i = 0;i < data.length;i++){
+                            var id = data[i].id;
+                            var cotizacion_id = data[i].cotizacion_id;
+                            var servicio = data[i].name;                            
+                            var codigo = data[i].code;
+                            var monto = data[i].amount;
+                            var fecha = data[i].created_at;
+
+                          
+
+                            tbody += `<tr>
+                                        <td>
+                                            <center>
+                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
+                                            </center>
+                                        </td>
+                                        <td>`+cotizacion_id+`</td>
+                                        <td>`+servicio+`</td>
+                                        <td>`+codigo+`</td>
+                                        <td>`+monto+`</td>
+                                        <td>`+fecha+`</td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                    </tr>`;
+                        }
+                    }else{
+                        tbody = `<tr>
+                                    <td colspan="7">
+                                        <center>
+                                            NO SE ENCONTRARON RESULTADOS
+                                        </center>
+                                    </td>
+                                </tr>`;
+                    }
+                    $("#table_tren tbody").append(tbody);
+                }
+            }
+        });
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:self.current_url+"index.php/sales/listServiciosCrucero",
+            success:function(response){
+                var res = JSON.parse(response);
+                if(res.success){
+                    var tbody = "";
+                    var data = res.data;
+                    //var data_client = JSON.parse(data.data);
+                    $("#table_crucero tbody").empty();
+                    if(data.length > 0){
+                        for(var i = 0;i < data.length;i++){
+                            var id = data[i].id;
+                            var cotizacion_id = data[i].cotizacion_id;
+                            var servicio = data[i].name;                            
+                            var codigo = data[i].code;
+                            var monto = data[i].amount;
+                            var fecha = data[i].created_at;
+
+                          
+
+                            tbody += `<tr>
+                                        <td>
+                                            <center>
+                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
+                                            </center>
+                                        </td>
+                                        <td>`+cotizacion_id+`</td>
+                                        <td>`+servicio+`</td>
+                                        <td>`+codigo+`</td>
+                                        <td>`+monto+`</td>
+                                        <td>`+fecha+`</td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                    </tr>`;
+                        }
+                    }else{
+                        tbody = `<tr>
+                                    <td colspan="7">
+                                        <center>
+                                            NO SE ENCONTRARON RESULTADOS
+                                        </center>
+                                    </td>
+                                </tr>`;
+                    }
+                    $("#table_crucero tbody").append(tbody);
+                }
+            }
+        });
+        $.ajax({
+            type:'POST',
+            data:{},
+            url:self.current_url+"index.php/sales/listServiciosOtro",
+            success:function(response){
+                var res = JSON.parse(response);
+                if(res.success){
+                    var tbody = "";
+                    var data = res.data;
+                    //var data_client = JSON.parse(data.data);
+                    $("#table_otro tbody").empty();
+                    if(data.length > 0){
+                        for(var i = 0;i < data.length;i++){
+                            var id = data[i].id;
+                            var cotizacion_id = data[i].cotizacion_id;
+                            var servicio = data[i].name;                            
+                            var codigo = data[i].code;
+                            var monto = data[i].amount;
+                            var fecha = data[i].created_at;
+
+                          
+
+                            tbody += `<tr>
+                                        <td>
+                                            <center>
+                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
+                                            </center>
+                                        </td>
+                                        <td>`+cotizacion_id+`</td>
+                                        <td>`+servicio+`</td>
+                                        <td>`+codigo+`</td>
+                                        <td>`+monto+`</td>
+                                        <td>`+fecha+`</td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
+                                                    <i class="fa fa-edit"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
+                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
+                                                    <i class="fa fa-trash"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                    </tr>`;
+                        }
+                    }else{
+                        tbody = `<tr>
+                                    <td colspan="7">
+                                        <center>
+                                            NO SE ENCONTRARON RESULTADOS
+                                        </center>
+                                    </td>
+                                </tr>`;
+                    }
+                    $("#table_otro tbody").append(tbody);
+                }
+            }
+        });
+
+
+    };
 /*
     self.listClients = function(){
         $.ajax({
@@ -2015,14 +2641,14 @@ var travel = function () {
                                         <td>`+name_client+`</td>
                                         <td>
                                             <center>
-                                                <a href="index.php/sales/venta/?id=`+ cotizacion_id +`&estatus=`+ estat +`&name_client=`+name_client+`" onclick="travel.addCoti(`+cotizacion_id +`);"><i class="fa fa-shopping-cart"></i>
+                                                <a href="index.php/sales/venta/?cotizacion_id=`+ cotizacion_id +`&estatus=`+ estat +`&name_client=`+name_client+`" onclick="travel.addCoti(`+cotizacion_id +`);"><i class="fa fa-eye"></i>
                                                 </a>
                                             </center>
                                         </td>
                                         <td>
                                             <center>
-                                                <a href="index.php/sales/document/`+ cliente_id +'?'+ cotizacion_id +`" onclick="travel.addCoti(`+cliente_id+'?'+ cotizacion_id +`);">
-                                                    <i class="fa fa-file"></i>
+                                                <a href="index.php/sales/document/?cotizacion_id=`+ cotizacion_id +`&estatus=`+ estat +`&name_client=`+name_client+`" onclick="travel.addCoti(`+cotizacion_id +`);">
+                                                    <i class="fa fa-shopping-cart"></i>
                                                 </a>
                                             </center>
                                         </td>
