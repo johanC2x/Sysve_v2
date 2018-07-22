@@ -24,7 +24,8 @@ var travel = function () {
         current_id: 0,
         current_service:-1,
         current_pay:0,
-        current_pay_children:0
+        current_pay_children:0,
+        current_service_children:-1
     };
 
     self.changeRow = function(idObj){
@@ -366,7 +367,7 @@ var travel = function () {
         var code_service = $("#cbo_comision_payment_children").val();
         var code_comision = $("#cbo_code_comision_payment_children").val();
         var amount_comision = $("#cbo_amount_comision_payment_children").val();
-        if($("#cbo_comision_payment_children").val() !== ''){
+        if($("#cbo_comision_payment_children").val() !== '' && code_comision !== '' && amount_comision !== ''){
             var data = {};
             data.service = code_service;
             data.key = $("#cbo_comision_payment_children option:selected").attr("data-key");
@@ -380,17 +381,23 @@ var travel = function () {
                 data.ammount = code_comision;
                 data.monto = amount_comision;
             }
-            self.list_comision_children.push(data);
+            if(self.current_service_children !== -1){
+                var current_service_children = self.list_comision_children[self.current_service_children];
+                self.list_comision_children[self.current_service_children] = data;
+            }else{
+                self.list_comision_children.push(data);
+            }
             self.makeTableComisionChildren();
             self.calcularComisionesChildren();
             if(self.list_comision[self.current_service] !== undefined){
                 var service = self.list_comision[self.current_service];
                 service.childrens = self.list_comision_children;
                 self.list_comision[self.current_service] = service;
-            }
+            }            
             $("#cbo_comision_payment_children").val("");
             $("#cbo_code_comision_payment_children").val("");
             $("#cbo_amount_comision_payment_children").val(0);
+            self.current_service_children = -1;
         }
     };
 
@@ -579,6 +586,7 @@ var travel = function () {
     };
 
     self.openComisionDetailChildren = function(row){
+        self.current_service_children = row;
         var cotizar = self.list_comision_children[row];
         var service = (cotizar.service !== undefined && cotizar.service !== '') ? cotizar.service : '';
         var name = (cotizar.name !== undefined && cotizar.name !== '') ? cotizar.name : '';
