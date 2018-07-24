@@ -2951,11 +2951,11 @@ self.listServiciosVenta = function(){
         }
     };
 
-    self.saveInfoService = function(){
+ self.saveInfoService = function(){
         var name_travel = $("#name_travel").val();
         var total_servicios = $("#total_servicios").val();
         var descripcion = $("#descripcion").val();
-        if(name_travel !== '' && total_servicios !== '' && descripcion !== ''){
+        if(total_servicios !== ''){
             self.current_pay = parseFloat(self.current_pay) + parseFloat(total_servicios);
             var comision = self.list_comision[self.current_service];
             comision.ammount = name_travel;
@@ -2964,8 +2964,8 @@ self.listServiciosVenta = function(){
             self.list_comision[self.current_service] = comision;
             self.makeTableComision();
             $("#total_pago").text(self.current_pay.toFixed(2));
-            $("#modal_detail_comision").modal("hide");
         }
+            $("#modal_detail_comision").modal("hide");
     };
 
     self.saveAddCotizacion = function(){
