@@ -2952,13 +2952,20 @@ self.listServiciosVenta = function(){
     };
 
  self.saveInfoService = function(){
-        var name_travel = $("#name_travel").val();
-        var total_servicios = $("#total_servicios").val();
+    //obtener codigos
+        var childrens = self.list_comision[self.current_service].childrens;
+        var string_childrens = '';
+        var childs = [];
+        for (var i = 0; i < childrens.length; i++) {
+            childs.push(childrens[i].ammount);
+        }
+        string_childrens = childs.join('/');
+        var total_servicios = $("#total_pago_children").text();
         var descripcion = $("#descripcion").val();
         if(total_servicios !== ''){
             self.current_pay = parseFloat(self.current_pay) + parseFloat(total_servicios);
             var comision = self.list_comision[self.current_service];
-            comision.ammount = name_travel;
+            comision.ammount = string_childrens;
             comision.monto = parseFloat(total_servicios).toFixed(2);
             comision.descripcion = descripcion;
             self.list_comision[self.current_service] = comision;
@@ -2992,3 +2999,9 @@ self.listServiciosVenta = function(){
 
     return self;
 }(jQuery);
+
+$(document).ready(function(){
+    $('#add_info_service').click(function(){
+        travel.saveInfoService();
+    })
+})
