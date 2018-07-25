@@ -4,7 +4,7 @@
 
 
 <?php
-$cotizacion_id = $_GET["id"];
+$cotizacion_id = $_GET["cotizacion_id"];
 $estatus = $_GET["estatus"];
 $name_client = $_GET["name_client"];
 ?>
