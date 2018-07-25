@@ -2640,13 +2640,13 @@ self.listServiciosVenta = function(){
                                         <td>`+name_client+`</td>
                                         <td>
                                             <center>
-                                                <a href="index.php/sales/venta/?cotizacion_id=`+ cotizacion_id +`&estatus=`+ estat +`&name_client=`+name_client+`" onclick="travel.addCoti(`+cotizacion_id +`);"><i class="fa fa-eye"></i>
+                                                <a href="index.php/sales/venta/?id=`+ id +`&cotizacion_id=`+ cotizacion_id +`&estatus=`+ estat +`&name_client=`+name_client+`" onclick="travel.addCoti(`+cotizacion_id +`);"><i class="fa fa-eye"></i>
                                                 </a>
                                             </center>
                                         </td>
                                         <td>
                                             <center>
-                                                <a href="index.php/sales/document/?cotizacion_id=`+ cotizacion_id +`&estatus=`+ estat +`&name_client=`+name_client+`" onclick="travel.addCoti(`+cotizacion_id +`);">
+                                                <a href="index.php/sales/document/?id=`+ id +`&cotizacion_id=`+ cotizacion_id +`&estatus=`+ estat +`&name_client=`+name_client+`" onclick="travel.addCoti(`+cotizacion_id +`);">
                                                     <i class="fa fa-shopping-cart"></i>
                                                 </a>
                                             </center>

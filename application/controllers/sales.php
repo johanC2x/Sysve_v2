@@ -50,11 +50,11 @@ class Sales extends Secure_area{
 
 	function Document($id = null, $cotizacion_id = null){
 		$cliente = [];
-		if(!empty($id)){
-			$client = $this->Customer->getClientCoti($id,$cotizacion_id);
+		$id = isset($_GET["id"]) && !empty($_GET["id"]) ? $_GET["id"] : false;
+		if($id){
+			//$client = $this->Customer->getClientCoti($id,$cotizacion_id);
+			$client = $this->Customer->getClient($id);
 			$data = json_decode($client->data);
-
-
 
 			//OBTENIENDO DATOS DE EMAIL
 			$email_pos = array_search('empresa', array_column($data->emails, 'type_email'));
@@ -65,6 +65,11 @@ class Sales extends Secure_area{
 			$phone_pos = array_search('celular_personal', array_column($data->emails, 'type_phone'));
 			$phone_arr = $data->phones[$phone_pos];
 			$phone = (!empty($phone_arr)) ? $phone_arr->nro_phone : "";
+
+			//OBTENIENDO DATOS DE DOCUMENTO
+			$document_pos = array_search('dni', array_column($data->documents, 'type_document'));
+			$document_arr = $data->documents[$document_pos];
+			$document = (!empty($document_arr)) ? $document_arr->nro_doc : "";
 			
 			$cliente['datos']     = array(
 		    	'person_id'       => $client->id,
@@ -73,7 +78,7 @@ class Sales extends Secure_area{
 	            'lastname'        => $client->lastname,
 	            'mother_lastname' => $client->mother_lastname,
 				'last_name_casada'=> $client->last_name_casada,
-				'documents' 	  => $data->documents,
+				'documents' 	  => $document,
 				'description' 	  => $data->description,
 				'cotizacion_id'	  => $client->cotizacion_id,
 				'emails'		  => $email,
