@@ -311,9 +311,9 @@ class Customer extends Person
 	function getClientCoti($client_id, $cotizacion_id){
 		$response = null;
 		$this->db->from('clients');
-		$this->db->join('cotizaciones', 'cotizaciones.cliente_id = clients.id');
+		$this->db->join('cotizaciones', 'cotizaciones.cliente_id = clients.id','left');
 		$this->db->where('clients.id',$client_id);		
-		$this->db->where('deleted',0);
+		$this->db->where('clients.deleted',0);
 		$client = $this->db->get();
 		if($client->num_rows()==1){
 			$response = $client->row();

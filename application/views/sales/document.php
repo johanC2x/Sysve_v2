@@ -39,7 +39,7 @@ $name_client = $_GET["name_client"];
             </fieldset>
 
     </div>
-<!---------------INICIO MODAL GENERAR------------------->
+<!-- ================================ INICIO MODAL GENERAR ======================================= -->
 
 <div id="modal_ticket" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
@@ -59,7 +59,7 @@ $name_client = $_GET["name_client"];
 </div>
 
 
-<!---------------FIN MODAL GENERAR------------------->
+<!-- ================================== FIN MODAL GENERAR ========================================-->
 
             <script language="JavaScript">
                 $(function() {
@@ -487,7 +487,7 @@ border:dimgray 0px solid;
     </div>
 </div>
 
-<!----------INICIO PRINT ---------> 
+<!-- ===================== INICIO PRINT ======================= --> 
 
 <div id="modal_print" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
     <div class="modal-dialog modal-lg">
@@ -516,7 +516,8 @@ border:dimgray 0px solid;
                     </div>
                     <div class="col-md-3" class="form-group">
                             <label for="name_travel">RUC / DNI:</label>
-                            <input type="text" id="minumero3" onchange="SumarAutomatico(this.value);" class="form-control" />
+                            <input type="text" id="minumero3" onchange="SumarAutomatico(this.value);" class="form-control" 
+                                    value="<?= $datos['documents']; ?>"/>
                     </div><br/ >
                 </div>
             </dir>
@@ -719,7 +720,7 @@ border:dimgray 0px solid;
         travel.listServiciosVenta();
 
         /* LISTANDO SERVICIOS SELECCIONADOS FILTRADOS */
-        travel.listServiciosSelect();        
+        travel.listServicios();        
     });
 </script>
 
