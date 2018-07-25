@@ -469,9 +469,11 @@ class Customers extends Person_controller
 			$cliente_id = $this->input->post('person_id');
 			$cotizacion_id = $this->input->post('code_coti');
 			$user_id = $this->session->userdata["person_id"];
+			$descripcion = $this->input->post('descripcion');
 			$cotizaciones_data = array(
 				'cliente_id' => $cliente_id,
 				'cotizacion_id' => $cotizacion_id,
+				'descripcion' => $descripcion,
 				'estatus' => 'C',
 				'asesor' => $user_id,
 				'fecha' => date('Y-m-d H:i:s')
@@ -479,7 +481,7 @@ class Customers extends Person_controller
 			$response = $this->Customer->addCotizacion($cotizaciones_data);
 			$obj_cotizacion = $this->Customer->getCotizacionBycode($cotizacion_id);
 			if(!empty($obj_cotizacion)){
-				$id = $obj_cotizacion->id;
+				$id = $obj_cotizacion->cotizacion_id;
 			}
 			if(!empty($response) && (int)$response === 1){
 				$cotizaciones = json_decode($this->input->post('comisiones'));
@@ -487,6 +489,7 @@ class Customers extends Person_controller
 					$cotizaciones_service_data = array(
 						'name' => $cotizacion->name,
 						'cotizacion_id' => $id,
+						'descripcion' => $cotizacion->descripcion,
 						'created_at' => date('Y-m-d H:i:s'),
 						'created_by' => $user_id,
 						'code' => $cotizacion->ammount,
