@@ -382,6 +382,7 @@ var travel = function () {
             }
             self.list_comision_children.push(data);
             self.makeTableComisionChildren();
+            self.makeTableFactura();
             self.calcularComisionesChildren();
             if(self.list_comision[self.current_service] !== undefined){
                 var service = self.list_comision[self.current_service];
@@ -389,6 +390,38 @@ var travel = function () {
                 self.list_comision[self.current_service] = service;
             }
             $("#cbo_code_comision_payment_children").val("");
+            $("#cbo_amount_comision_payment_children").val(0);
+        }
+    };
+
+    self.addServicio = function(val = null){
+        var code_service = $("#travelid").val();
+        var code_comision = $("#detalle_servicio").val();
+        var amount_comision = $("#cbo_amount_comision_payment_children").val();
+        if($("#cbo_comision_payment_children").val() !== ''){
+            var data = {};
+            data.service = code_service;
+            data.key = code_service;
+            data.name = code_service;
+            data.ammount = code_comision;
+            data.monto = amount_comision;
+            if(val === 'fee'){
+                data.service = code_service;
+                data.key = 'fee';
+                data.name = 'FEE';
+                data.ammount = code_comision;
+                data.monto = amount_comision;
+            }
+            self.list_comision_children.push(data);
+            self.makeTableComisionChildren();
+            self.makeTableFactura();
+            self.calcularComisionesChildren();
+            if(self.list_comision[self.current_service] !== undefined){
+                var service = self.list_comision[self.current_service];
+                service.childrens = self.list_comision_children;
+                self.list_comision[self.current_service] = service;
+            }
+            $("#detalle_servicio").val("");
             $("#cbo_amount_comision_payment_children").val(0);
         }
     };
@@ -455,6 +488,48 @@ var travel = function () {
             }
         }
         $("#table_customer_travel tbody").append(html);
+    };
+
+    self.makeTableFactura = function(){
+        var html = '';
+        $("#table_customer_travel_children tbody").empty();
+        if(self.list_comision_children.length === 0){
+            html = `<tr>
+                        <td colspan="9">
+                            <center>
+                                No se registraron datos.
+                            </center>
+                        </td>
+                    </tr>`;
+        }else{
+            for (var i = 0; i < self.list_comision_children.length; i++) {
+                var ammount = (self.list_comision_children[i].ammount !== '' && self.list_comision_children[i].ammount !== undefined) ? self.list_comision_children[i].ammount : '';
+                var monto = (self.list_comision_children[i].monto !== '' && self.list_comision_children[i].monto !== undefined) ? self.list_comision_children[i].monto : '';
+                html += "<tr>";
+                    html += "<td><center>"+ (i+1) +"</center></td>";
+                    if(self.list_comision_children[i].name !== 'FEE'){
+                        html += "<td style='text-align: right;'><center>"+ ammount +"</center></td>";                         
+                        html += "<td><center>"+ self.list_comision_children[i].name +"</center></td>";   
+                    }else{
+                        html += "<td style='text-align: right;'>"+ '<input type="text" name="amount" size="8">' +"</td>";    
+                    }
+
+                    html += "<td><center>"+ monto +"</center></td>";
+                    html += "<td><center>"+ monto +"</center></td>";
+                    html += "<td><center>"+ monto +"</center></td>";
+                    html += "<td><center>"+ monto +"</center></td>";
+                    html += "<td><center>"+ monto +"</center></td>";
+                    html += `<td>
+                                <center>
+                                    <a href='javascript:void(0);' title='Eliminar' onclick='travel.removeComisionChildren(`+ i +`)' >
+                                        <i class='fa fa-trash-alt'></i>
+                                    </a>
+                                </center>
+                            </td>`;
+                html += "</tr>";
+            }
+        }
+        $("#table_customer_travel_children tbody").append(html);
     };
 
     self.makeTableComisionChildren = function(){
@@ -544,6 +619,8 @@ var travel = function () {
             }
             self.makeTableComisionChildren();
             $("#modal_detail_comision").modal("show");
+            self.makeTableFactura();
+            $("#modal_detail_comision").modal("show");
             /*
             monto_tabla = $('#table_customer_travel').find('tr:eq('+(row+1)+')').find('td:eq(2)').text();
             monto_detalle = data.monto_detalle || monto_tabla;
@@ -621,6 +698,7 @@ var travel = function () {
     self.removeComisionChildren = function(obj){
         self.list_comision_children.splice(obj,1);
         self.makeTableComisionChildren();
+        self.makeTableFactura();
         self.calcularComisionesChildren();
     };
 
