@@ -10,8 +10,245 @@ class Sales extends Secure_area{
 
 	function index()
 	{
-		$this->_reload();
+		$this->load->view("sales/receipt",$data);
 	}
+
+	function Venta($id = null, $cotizacion_id = null){
+		$cliente = [];
+		if(!empty($id)){
+			$client = $this->Customer->getClientCoti($id,$cotizacion_id);
+			$data = json_decode($client->data);
+
+
+
+			//OBTENIENDO DATOS DE EMAIL
+			$email_pos = array_search('empresa', array_column($data->emails, 'type_email'));
+			$email_arr = $data->emails[$email_pos];
+			$email = (!empty($email_arr)) ? $email_arr->email : "";
+
+			//OBTENIENDO DATOS DE TELEFONO
+			$phone_pos = array_search('celular_personal', array_column($data->emails, 'type_phone'));
+			$phone_arr = $data->phones[$phone_pos];
+			$phone = (!empty($phone_arr)) ? $phone_arr->nro_phone : "";
+			
+			$cliente['datos']     = array(
+		    	'person_id'       => $client->id,
+	            'firstname'       => $client->firstname,
+	            'middlename'      => $client->middlename,
+	            'lastname'        => $client->lastname,
+	            'mother_lastname' => $client->mother_lastname,
+				'last_name_casada'=> $client->last_name_casada,
+				'documents' 	  => $data->documents,
+				'description' 	  => $data->description,
+				'cotizacion_id'	  => $client->cotizacion_id,
+				'emails'		  => $email,
+				'phones'	      => $phone,	  
+        	);
+		}
+		$this->load->view('sales/venta',$cliente, $data);
+	}
+
+	function Document($id = null, $cotizacion_id = null){
+		$cliente = [];
+		$id = isset($_GET["id"]) && !empty($_GET["id"]) ? $_GET["id"] : false;
+		if($id){
+			//$client = $this->Customer->getClientCoti($id,$cotizacion_id);
+			$client = $this->Customer->getClient($id);
+			$data = json_decode($client->data);
+
+			//OBTENIENDO DATOS DE EMAIL
+			$email_pos = array_search('empresa', array_column($data->emails, 'type_email'));
+			$email_arr = $data->emails[$email_pos];
+			$email = (!empty($email_arr)) ? $email_arr->email : "";
+
+			//OBTENIENDO DATOS DE TELEFONO
+			$phone_pos = array_search('celular_personal', array_column($data->emails, 'type_phone'));
+			$phone_arr = $data->phones[$phone_pos];
+			$phone = (!empty($phone_arr)) ? $phone_arr->nro_phone : "";
+
+			//OBTENIENDO DATOS DE DOCUMENTO
+			$document_pos = array_search('dni', array_column($data->documents, 'type_document'));
+			$document_arr = $data->documents[$document_pos];
+			$document = (!empty($document_arr)) ? $document_arr->nro_doc : "";
+			
+			$cliente['datos']     = array(
+		    	'person_id'       => $client->id,
+	            'firstname'       => $client->firstname,
+	            'middlename'      => $client->middlename,
+	            'lastname'        => $client->lastname,
+	            'mother_lastname' => $client->mother_lastname,
+				'last_name_casada'=> $client->last_name_casada,
+				'documents' 	  => $document,
+				'description' 	  => $data->description,
+				'cotizacion_id'	  => $client->cotizacion_id,
+				'emails'		  => $email,
+				'phones'	      => $phone,	  
+        	);
+		}
+		$this->load->view('sales/document',$cliente, $data);
+	}
+
+
+	function getCotizacion($cotizacion_id){
+		$response = null;
+		$this->db->from('cotizaciones');
+		$this->db->where('cotizacion_id',$cotizacion_id);
+		$client = $this->db->get();
+		if($client->num_rows()==1){
+			$response = $client->row();
+		}
+		return $response;
+	 }
+
+  	function listServicios(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServicios($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosBoleto(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosBoleto($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosHotel(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosHotel($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosAuto(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosAuto($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosTarjeta(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosTarjeta($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosPaquete(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosPaquete($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosExcursion(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosExcursion($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosEntrada(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosEntrada($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosTren(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosTren($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosCrucero(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosCrucero($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+  	function listServiciosOtro(){
+ 		$cotizacion_id = $this->input->post("id");
+		$response = $this->Sale->listServiciosOtro($cotizacion_id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+	function getServicios(){
+		$response = [];
+		if($this->input->post()){
+			$servicio_id = $this->input->post("id");
+			$result = $this->Sale->getServicios($servicio_id);
+			if(!empty($result)){
+				$response = array('success'=>true,'data'=>$result);
+			}else{
+				$response = array('success'=>false);
+			}
+		}else{
+			$response = array('success'=>false);
+		}
+		echo json_encode($response);
+	}
+
+	function saveService(){
+		if($this->input->post()){
+			$service_data = array(
+				'proveedor'=>$this->input->post('proveedor'),
+				'tarifa_neta'=>$this->input->post('tarifa_neta'),
+				'comi_proveedor'=>$this->input->post('comi_proveedor'),
+				'fee_agencia'=>$this->input->post('fee_agencia'),
+				'fee_proveedor'=>$this->input->post('fee_proveedor'),
+				'descripcion'=>$this->input->post('descripcion'),
+				'tipo_boleto'=>$this->input->post('tipo_boleto')
+			);
+			$response = $this->Sale->insertService($service_data);
+			if(!empty($response) && (int)$response === 1){
+				$this->load->view("sales/receipt",$service_data);
+				echo json_encode(array('success'=>true,'message'=>"Operación correcta"));
+			}else{
+				echo json_encode(array('success'=>false,'message'=>"Ha ocurrido un error interno"));
+			}
+		}else{
+			echo json_encode(array('success'=>false,'message'=>"No se ha enviado ningún registro"));
+		}
+	}
+
 
 	function item_search(){
 		$suggestions = $this->Item->get_item_search_suggestions(
@@ -449,6 +686,53 @@ class Sales extends Secure_area{
 		$this->sale_lib->copy_entire_suspended_sale($sale_id);
 		$this->Sale_suspended->delete($sale_id);
     	$this->_reload();
+	}
+	
+	function factura(){
+		$factura['datos']     = array(
+		    	'cotizacion_id'       =>$this->input->post('ref_id'),
+	            'name'       		  =>$this->input->post('name'),
+	            'num_corre_cpe_ref'   =>$this->input->post('num_corre_cpe_ref'),
+        );
+		if($this->input->post()){
+			$factura = array(
+				'cotizacion_id'	      =>$this->input->post('ref_id'),
+				'name'				  =>$this->input->post('name'),
+				'tip_doc_rct'		  =>$this->input->post('tip_doc_rct'),
+				'num_doc_rct'		  =>$this->input->post('num_doc_rct'),
+				'dir_des_rct'		  =>$this->input->post('dir_des_rct'),
+	            'num_corre_cpe_ref'   =>$this->input->post('num_corre_cpe_ref'),
+	            'fec_doc_ref'		  =>date('Y/m/d'),
+	            'cod_tip_otr_doc_ref' =>$this->input->post('cod_tip_otr_doc_ref'),
+	            'cod_tip_moneda'	  =>$this->input->post('cod_tip_moneda'),
+	            'mnt_tot_imp'		  =>$this->input->post('mnt_tot_imp'),
+	            'mnt_tot_grv'		  =>$this->input->post('mnt_tot_grv'),
+	            'mnt_tot_inf'		  =>$this->input->post('mnt_tot_inf'),
+	            'mnt_tot_exr'		  =>$this->input->post('mnt_tot_exr'),
+	            'mnt_tot_grt'		  =>$this->input->post('mnt_tot_grt'),
+	            'mnt_tot_exp'		  =>$this->input->post('mnt_tot_exp'),
+	            'mnt_tot_isc'		  =>$this->input->post('mnt_tot_isc'),
+	            'mnt_tot_trb_igv'	  =>$this->input->post('mnt_tot_trb_igv'),
+	            'mnt_tot_trb_isc'	  =>$this->input->post('mnt_tot_trb_isc'),
+	            'mnt_tot_trb_otr'	  =>$this->input->post('mnt_tot_trb_otr'),
+	            'mnt_tot_val_vta'	  =>$this->input->post('mnt_tot_val_vta'),
+	            'mnt_tot_prc_vta'	  =>$this->input->post('mnt_tot_prc_vta'),
+	            'mnt_tot_dct'		  =>$this->input->post('mnt_tot_dct'),
+	            'mnt_tot_otr_cgo'	  =>$this->input->post('mnt_tot_otr_cgo'),
+	            'mnt_tot'			  =>$this->input->post('mnt_tot'),
+	            'mnt_tot_antcp'		  =>$this->input->post('mnt_tot_antcp')
+
+
+			);
+			$response = $this->Sale->insertFactura($factura);
+			if(!empty($response) && (int)$response === 1){
+				$this->load->view('customers/render', $cliente);
+			}else{
+				echo json_encode(array('success'=>false,'message'=>"Ha ocurrido un error interno"));
+			}
+		}else{
+			echo json_encode(array('success'=>false,'message'=>"No se ha enviado ningún registro"));
+		}
 	}
 }
 ?>
