@@ -16,6 +16,11 @@ class Sale extends CI_Model
 		return ($this->db->affected_rows() !== 1) ? false : true;
 	}
 
+	function insertFactura($factura){
+		$success = $this->db->insert('factura',$factura);
+		return ($this->db->affected_rows() !== 1) ? false : true;
+	}
+
 	function exists($sale_id)
 	{
 		$this->db->from('sales');
