@@ -382,7 +382,6 @@ var travel = function () {
             }
             self.list_comision_children.push(data);
             self.makeTableComisionChildren();
-            self.makeTableFactura();
             self.calcularComisionesChildren();
             if(self.list_comision[self.current_service] !== undefined){
                 var service = self.list_comision[self.current_service];
@@ -396,7 +395,7 @@ var travel = function () {
 
     self.addServicio = function(val = null){
         var code_service = $("#travelid").val();
-        var code_comision = $("#detalle_servicio").val();
+        var code_comision = $("#cbo_code_comision_payment_children").val();
         var amount_comision = $("#cbo_amount_comision_payment_children").val();
         if($("#cbo_comision_payment_children").val() !== ''){
             var data = {};
@@ -414,14 +413,13 @@ var travel = function () {
             }
             self.list_comision_children.push(data);
             self.makeTableComisionChildren();
-            self.makeTableFactura();
             self.calcularComisionesChildren();
             if(self.list_comision[self.current_service] !== undefined){
                 var service = self.list_comision[self.current_service];
                 service.childrens = self.list_comision_children;
                 self.list_comision[self.current_service] = service;
             }
-            $("#detalle_servicio").val("");
+            $("#cbo_code_comision_payment_children").val("");
             $("#cbo_amount_comision_payment_children").val(0);
         }
     };
@@ -495,7 +493,7 @@ var travel = function () {
         $("#table_customer_travel_children tbody").empty();
         if(self.list_comision_children.length === 0){
             html = `<tr>
-                        <td colspan="9">
+                        <td colspan="5">
                             <center>
                                 No se registraron datos.
                             </center>
@@ -507,22 +505,24 @@ var travel = function () {
                 var monto = (self.list_comision_children[i].monto !== '' && self.list_comision_children[i].monto !== undefined) ? self.list_comision_children[i].monto : '';
                 html += "<tr>";
                     html += "<td><center>"+ (i+1) +"</center></td>";
+                    html += "<td><center>"+ self.list_comision_children[i].name +"</center></td>";
                     if(self.list_comision_children[i].name !== 'FEE'){
-                        html += "<td style='text-align: right;'><center>"+ ammount +"</center></td>";                         
-                        html += "<td><center>"+ self.list_comision_children[i].name +"</center></td>";   
+                        html += "<td style='text-align: right;'><center>"+ ammount +"</center></td>";    
                     }else{
                         html += "<td style='text-align: right;'>"+ '<input type="text" name="amount" size="8">' +"</td>";    
                     }
-
-                    html += "<td><center>"+ monto +"</center></td>";
-                    html += "<td><center>"+ monto +"</center></td>";
-                    html += "<td><center>"+ monto +"</center></td>";
-                    html += "<td><center>"+ monto +"</center></td>";
                     html += "<td><center>"+ monto +"</center></td>";
                     html += `<td>
                                 <center>
                                     <a href='javascript:void(0);' title='Eliminar' onclick='travel.removeComisionChildren(`+ i +`)' >
                                         <i class='fa fa-trash-alt'></i>
+                                    </a>
+                                </center>
+                            </td>`;
+                    html += `<td>
+                                <center>
+                                    <a href='javascript:void(`+ i +`);' title='Agregar Detalle' onclick='travel.openComisionDetailChildren(`+ i +`)' >
+                                        <i class="fa fa-edit"></i>
                                     </a>
                                 </center>
                             </td>`;
