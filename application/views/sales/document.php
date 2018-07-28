@@ -600,8 +600,8 @@ border:dimgray 0px solid;
                 </div></br><br>
 
                     <div class="col-md-3" class="form-group">
-                            <label for="name_travel">Forma de Pago:</label>
-                        <select placeholder="Funcion" class="form-control">
+                            <label for="form_pago">Forma de Pago:</label>
+                        <select name="form_pago" id="form_pago" class="form-control">
                             <option>Seleccione...</option>
                             <option value="+">Contado</option>
                             <option value="-">Cheque</option>
@@ -611,23 +611,23 @@ border:dimgray 0px solid;
                         </select>
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Tipo:</label>
-                            <input type="text" id="name" value="" placeholder="Tipo" class="form-control"/>
+                            <label for="tipo_pago">Tipo:</label>
+                            <input type="text" id="tipo_pago" name="tipo_pago" placeholder="Tipo" class="form-control"/>
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Banco:</label>
-                            <input type="text" name="monto2" class="form-control" placeholder="Banco">
+                            <label for="banco_pago">Banco:</label>
+                            <input type="text" name="banco_pago" id="banco_pago" class="form-control" placeholder="Banco">
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Nro:</label>
-                            <input type="text" name="monto2" class="form-control" placeholder="Nro.">
+                            <label for="nro_pago">Nro:</label>
+                            <input type="text" name="nro_pago" id="nro_pago" class="form-control" placeholder="Nro.">
                     </div>
                     <div class="col-md-3" class="form-group">
-                            <label for="name_travel">Monto:</label>
-                            <input type="number" step="0.1" name="monto4" class="form-control" placeholder="Monto" onChange="calculo();">
+                            <label for="mnt_tot_pago">Monto:</label>
+                            <input type="number" step="0.1" name="mnt_tot_pago" id="mnt_tot_pago" class="form-control" placeholder="Monto" onChange="calculo();">
                     </div><br></br><br></br>
                     <div class="col-md-3" class="form-group">
-                        <select placeholder="Funcion" class="form-control">
+                        <select name="form_pago" id="form_pago" class="form-control">
                             <option>Seleccione...</option>
                             <option value="+">Contado</option>
                             <option value="-">Cheque</option>
@@ -637,21 +637,25 @@ border:dimgray 0px solid;
                         </select>
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <input type="text" id="name" value="" placeholder="Tipo" class="form-control"/>
+                            <label for="tipo_pago">Tipo:</label>
+                            <input type="text" id="tipo_pago" name="tipo_pago" placeholder="Tipo" class="form-control"/>
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <input type="text" name="monto2" class="form-control" placeholder="Banco">
+                            <label for="banco_pago">Banco:</label>
+                            <input type="text" name="banco_pago" id="banco_pago" class="form-control" placeholder="Banco">
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <input type="text" name="monto2" class="form-control" placeholder="Nro.">
+                            <label for="nro_pago">Nro:</label>
+                            <input type="text" name="nro_pago" id="nro_pago" class="form-control" placeholder="Nro.">
                     </div>
                     <div class="col-md-3" class="form-group">
-                            <input type="number" step="0.1" name="monto5" class="form-control" placeholder="Monto" onChange="calculo();">
+                            <label for="mnt_tot_pago">Monto:</label>
+                            <input type="number" step="0.1" name="mnt_tot_pago" id="mnt_tot_pago" class="form-control" placeholder="Monto" onChange="calculo();">
                     </div><br></br>
                     <dir class="col-md-9"></dir>
                     <div class="col-md-3" class="form-group">
                             <label for="name_travel">TOTAL:</label>
-                            <input type="text" name="total3" class="form-control" placeholder="Total" readonly>
+                            <input type="text" name="total3" class="form-control" placeholder="Total">
                     </div><br></br>
 
 <dir class="modal-header"><br>
@@ -788,19 +792,11 @@ border:dimgray 0px solid;
                             <input type="text" placeholder="Direccion" name="dir_des_rct" id="dir_des_rct" class="form-control" />
                         </div>
             </dir>
-
-
-
-
-
-
-
-
     <div class="">
         <div class="modal-header">
             <h5 class="modal-title">Detalle del Servicio</h5>
             <div class="">
-                <?php echo form_open('travel/updateDetailComision',array('id'=>'form_travel_comision_update')); ?>
+                <?php echo form_open('sales/factura',array('id'=>'form_travel_comision_update')); ?>
                     <br/>
                     <div class="col-md-3" class="form-group">
                         <label for="code_travel">Detalle:</label>
@@ -891,7 +887,6 @@ border:dimgray 0px solid;
                             </tbody>
                         </table>
                     </div>
-                <?php echo form_close(); ?>
             </div>
             <div class="modal-footer">
                 <div class="form-group">
@@ -921,35 +916,32 @@ border:dimgray 0px solid;
                     </div>
                     <div class="col-md-2" class="form-group">
                             <label for="name_travel">Anticipo (-)</label>
-                            <input type="text" id="name" disabled="" value="" placeholder="Anticipo" class="form-control"/>
+                            <input type="text" id="name" value="" placeholder="Anticipo" class="form-control"/>
                     </div>
                     <div class="col-md-2" class="form-group">
                             <label for="name_travel">Exonerada</label>
-                            <input type="text" name="monto2" disabled="" class="form-control" placeholder="">
+                            <input type="text" name="monto2" class="form-control" placeholder="">
                     </div>
                     <div class="col-md-2" class="form-group">
                             <label for="name_travel">Inafecta</label>
-                            <input type="text" name="monto2" disabled="" class="form-control" placeholder="">
+                            <input type="text" name="monto2" class="form-control" placeholder="">
                     </div>
                     <div class="col-md-3" class="form-group">
                             <label for="name_travel">Gravada</label>
-                            <input type="number" step="0.1" disabled="" name="monto4" class="form-control" placeholder="" onChange="calculo();">
+                            <input type="number" step="0.1" name="monto4" class="form-control" placeholder="" onChange="calculo();">
                     </div><br></br><br></br>
-                    <div class="col-md-3" class="form-group">
-                            <label for="name_travel">Gravada</label>
-                            <input type="text" name="" disabled="">
-                    </div>
-                    <div class="col-md-2" class="form-group">
+
+                    <div class="col-md-5" class="form-group">
                         
 
                     </div>
                     <div class="col-md-2" class="form-group">
                             <label>Otros Cargos</label>
-                            <input type="text" name="monto2" class="form-control" placeholder="Banco">
+                            <input type="text" name="monto2" class="form-control" placeholder="Monto">
                     </div>
                     <div class="col-md-2" class="form-group">
                             <label>Desc. Total (-)</label>
-                            <input type="text" name="monto2" disabled="" class="form-control" placeholder="Nro.">
+                            <input type="text" name="monto2" class="form-control" placeholder="Nro.">
                     </div>
 <br></br>
  
@@ -957,13 +949,13 @@ border:dimgray 0px solid;
 
                     <div class="col-md-3" class="form-group">
                             <label for="name_travel">TOTAL:</label>
-                            <input type="text" name="total" class="form-control" placeholder="Total" readonly>
+                            <input type="text" name="total" class="form-control" placeholder="Total">
                     </div><br><br>
                 </div></br><br>
-
+<!---------------------FORMA DE PAGO GENERAR FACTURA------------------------>
                     <div class="col-md-3" class="form-group">
-                            <label for="name_travel">Forma de Pago:</label>
-                        <select placeholder="Funcion" class="form-control">
+                            <label for="form_pago">Forma de Pago:</label>
+                        <select class="form-control">
                             <option>Seleccione...</option>
                             <option value="000">NO ASIGNADO</option>
                             <option value="001">EFECTIVO</option>
@@ -975,47 +967,26 @@ border:dimgray 0px solid;
                         </select>
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Tipo:</label>
-                            <input type="text" id="name" value="" placeholder="Tipo" class="form-control"/>
+                            <label for="tipo_pago">Tipo:</label>
+                            <input type="text" id="tipo_pago" name="tipo_pago" value="" placeholder="Tipo" class="form-control"/>
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Banco:</label>
-                            <input type="text" name="monto2" class="form-control" placeholder="Banco">
+                            <label for="banco_pago">Banco:</label>
+                            <input type="text" name="banco_pago" id="banco_pago" class="form-control" placeholder="Banco">
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Nro:</label>
-                            <input type="text" name="monto2" class="form-control" placeholder="Nro.">
+                            <label for="nro_pago">Nro:</label>
+                            <input type="text" name="nro_pago" id="nro_pago" class="form-control" placeholder="Nro.">
                     </div>
                     <div class="col-md-3" class="form-group">
-                            <label for="name_travel">Monto:</label>
-                            <input type="number" step="0.1" name="monto4" class="form-control" placeholder="Monto" onChange="calculo();">
+                            <label for="mnt_tot_pago">Monto:</label>
+                            <input type="number" step="0.1" name="mnt_tot_pago" id="mnt_tot_pago" class="form-control" placeholder="Monto" onChange="calculo();">
                     </div><br></br><br></br>
-                    <div class="col-md-3" class="form-group">
-                        <select placeholder="Funcion" class="form-control">
-                            <option>Seleccione...</option>
-                            <option value="+">Contado</option>
-                            <option value="-">Cheque</option>
-                            <option value="=">Tarjeta de Credito</option>
-                            <option value="">Mixto</option>
-                            <option value="">Puntos</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2" class="form-group">
-                            <input type="text" id="name" value="" placeholder="Tipo" class="form-control"/>
-                    </div>
-                    <div class="col-md-2" class="form-group">
-                            <input type="text" name="monto2" class="form-control" placeholder="Banco">
-                    </div>
-                    <div class="col-md-2" class="form-group">
-                            <input type="text" name="monto2" class="form-control" placeholder="Nro.">
-                    </div>
-                    <div class="col-md-3" class="form-group">
-                            <input type="number" step="0.1" name="monto5" class="form-control" placeholder="Monto" onChange="calculo();">
-                    </div><br></br>
+
                     <dir class="col-md-9"></dir>
                     <div class="col-md-3" class="form-group">
                             <label for="name_travel">TOTAL:</label>
-                            <input type="text" name="total3" class="form-control" placeholder="Total" readonly>
+                            <input type="text" name="total3" class="form-control" placeholder="Total">
                     </div><br></br>
 
 <dir class="modal-header"><br>
@@ -1025,11 +996,6 @@ border:dimgray 0px solid;
                             <!-- value="<?php //echo $travelid ?>" -->
                         </div>
 </dir>
-
-
-
-
-
 
 
                     <div class="modal-footer">
