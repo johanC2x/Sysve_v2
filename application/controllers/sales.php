@@ -725,6 +725,21 @@ class Sales extends Secure_area{
 
 			);
 			$response = $this->Sale->insertFactura($factura);
+			$pago = array(
+				'cotizacion_id'	      =>$this->input->post('ref_id'),
+	            'num_corre_cpe_ref'   =>$this->input->post('num_corre_cpe_ref'),
+	            'fec_doc_ref'		  =>date('Y/m/d'),
+	            'cod_tip_otr_doc_ref' =>$this->input->post('cod_tip_otr_doc_ref'),
+	            'cod_tip_moneda'	  =>$this->input->post('cod_tip_moneda'),
+	            'form_pago'			  =>$this->input->post('form_pago'),
+	            'tipo_pago'			  =>$this->input->post('tipo_pago'),
+	            'banco_pago'		  =>$this->input->post('banco_pago'),
+	            'nro_pago'			  =>$this->input->post('nro_pago'),
+	            'mnt_tot_pago'		  =>$this->input->post('mnt_tot_pago'),
+	            'mnt_tot'			  =>$this->input->post('mnt_tot')
+
+			);
+			$response = $this->Sale->insertPago($pago);
 			if(!empty($response) && (int)$response === 1){
 				$this->load->view('customers/render', $cliente);
 			}else{
