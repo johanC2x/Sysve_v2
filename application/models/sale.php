@@ -21,6 +21,11 @@ class Sale extends CI_Model
 		return ($this->db->affected_rows() !== 1) ? false : true;
 	}
 
+	function insertPago($pago){
+		$success = $this->db->insert('pago',$pago);
+		return ($this->db->affected_rows() !== 1) ? false : true;
+	}
+
 	function exists($sale_id)
 	{
 		$this->db->from('sales');
