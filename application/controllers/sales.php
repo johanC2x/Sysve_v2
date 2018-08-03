@@ -702,7 +702,6 @@ class Sales extends Secure_area{
 		$data["nom_emi"] = "TAX TECHNOLOGY PRUEBA SAC";
 		$data["nom_com_emi"] = "TAXTECH SAC";
 		$data["email"] = "johanc.cca@gmail.com";
-
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, "http://54.152.164.10:4254/taxtech");
 		curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
