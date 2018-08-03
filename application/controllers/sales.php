@@ -1,5 +1,7 @@
 <?php
 require_once ("secure_area.php");
+include_once(str_replace("application","httpful.phar",dirname(__DIR__)));
+
 class Sales extends Secure_area{
 
 	function __construct(){
@@ -688,6 +690,28 @@ class Sales extends Secure_area{
     	$this->_reload();
 	}
 	
+	function test(){
+		$data = [];
+
+		$data["fec_emi"] = "2018-07-27";
+		$data["hor_emi"] = "08:56:14";
+		$data["serie"] = "F004";
+		$data["correlativo"] = "00000060";
+		$data["moneda"] = "PEN";
+		$data["nro_doc"] = "20601890659";
+		$data["nom_emi"] = "TAX TECHNOLOGY PRUEBA SAC";
+		$data["nom_com_emi"] = "TAXTECH SAC";
+		$data["email"] = "johanc.cca@gmail.com";
+
+		$curl = curl_init();
+		curl_setopt($curl, CURLOPT_URL, "http://54.152.164.10:4254/taxtech");
+		curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+		$result = curl_exec($curl);
+		curl_close($curl);
+	}
+
 	function factura(){
 		$factura['datos']     = array(
 		    	'cotizacion_id'       =>$this->input->post('ref_id'),
