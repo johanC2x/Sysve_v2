@@ -24,7 +24,9 @@ var travel = function () {
         current_id: 0,
         current_service:-1,
         current_pay:0,
-        current_pay_children:0
+        current_pay_children:0,
+        list_service_doc:[],
+        current_serice_doc:-1
     };
 
     self.changeRow = function(idObj){
@@ -3073,6 +3075,101 @@ self.listServiciosVenta = function(){
                 }
             }
         });
+    };
+
+    self.addServiceDoc = function(val = null){
+        var service_doc_name = $("#detalle_servicio").val();
+        var service_doc_type = $("#cbo_comision_payment_servicio").val();
+        var service_doc_trib = $("#tributo_travel").val();
+        var service_doc_quantity = $("#travel_cantidad").val();
+        var service_doc_amount = $("#cbo_amount_comision_payment_children").val();
+        if(service_doc_name !== '' && service_doc_type !== '' && service_doc_trib !== ''){
+            var data = {};
+            data.service_doc_name = service_doc_name;
+            data.service_doc_type = service_doc_type;
+            data.service_doc_trib = service_doc_trib;
+            data.service_doc_quantity = service_doc_quantity;
+            data.service_doc_amount = service_doc_amount;
+            if(self.current_serice_doc === -1){
+                self.list_service_doc.push(data);
+            }else{
+                self.list_service_doc[self.current_serice_doc] = data;
+            }
+            self.makeTableServiceDoc();
+            self.resetServiceDocReset();
+            //self.calcularComisionesChildren();
+        }
+    };
+
+    self.makeTableServiceDoc = function(){
+        var html = '';
+        var count = 0;
+        var monto_pagar = 0;
+        if(self.list_service_doc.length === 0){
+            html += `<tr>
+                        <td colspan="9">
+                            <center>
+                                NO SE ENCONTRARON RESULTADOS
+                            </center>
+                        </td>
+                    </tr>`;
+        }else{
+            self.list_service_doc.forEach(function(element){
+                var total = parseInt(element.service_doc_quantity) * parseFloat(element.service_doc_amount);
+                html += `<tr>
+                            <td>`+ (count + 1) +`</td>
+                            <td><center>`+ element.service_doc_name +`</center></td>
+                            <td><center>`+ element.service_doc_type +`</center></td>
+                            <td><center>`+ element.service_doc_trib +`</center></td>
+                            <td>`+ element.service_doc_quantity +`</td>
+                            <td>`+ parseFloat(element.service_doc_amount).toFixed(2) +`</td>
+                            <td>`+ total +`</td>
+                            <td></td>
+                            <td>
+                                <center>
+                                    <a href='javascript:void(0);' title='Eliminar' onclick='travel.removeServiceDoc(`+ count +`)' >
+                                        <i class='fa fa-trash-alt'></i>
+                                    </a>
+                                </center>
+                            </td>
+                            <td>
+                                <center>
+                                    <a href='javascript:void(0);' title='Agregar Detalle' onclick='travel.getServiceDoc(`+ count +`)' >
+                                        <i class="fa fa-edit"></i>
+                                    </a>
+                                </center>
+                            </td>
+                        </tr>`;
+                monto_pagar = monto_pagar + total;
+                count++;
+            });
+        }
+        $("#table_customer_travel_children tbody").empty().append(html);
+        $("#total_pago_children").text(monto_pagar.toFixed(2));
+    };
+
+    self.resetServiceDocReset = function(){
+        $("#detalle_servicio").val("");
+        $("#cbo_comision_payment_servicio").val("");
+        $("#tributo_travel").val("");
+        $("#travel_cantidad").val("");
+        $("#cbo_amount_comision_payment_children").val("");
+        self.current_serice_doc = -1;
+    };
+
+    self.getServiceDoc = function(obj){
+        self.current_serice_doc = obj;
+        var current = self.list_service_doc[obj];
+        $("#detalle_servicio").val(current.service_doc_name);
+        $("#cbo_comision_payment_servicio").val(current.service_doc_type);
+        $("#tributo_travel").val(current.service_doc_trib);
+        $("#travel_cantidad").val(current.service_doc_quantity);
+        $("#cbo_amount_comision_payment_children").val(current.service_doc_amount);
+    };
+
+    self.removeServiceDoc = function(obj){
+        self.list_service_doc.splice(obj,1);
+        self.makeTableServiceDoc();
     };
 
     return self;

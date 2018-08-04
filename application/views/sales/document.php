@@ -867,7 +867,7 @@ border:dimgray 0px solid;
                                     <th><center>Precio Unit.</center></th>
                                     <th><center>Sub Total</center></th>
                                     <th><center>Total</center></th>
-                                    <th><center>Accion</center></th>
+                                    <th colspan="2"><center>Accion</center></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -887,7 +887,7 @@ border:dimgray 0px solid;
                                         <span class="pull-right">SUB TOTAL</span>
                                     </td>
                                     <td>
-                                        <span id="total_pago_children" class="pull-right"></span>
+                                        <span id="total_pago_children" class="pull-right" style="float:right;"></span>
                                     </td>
                                 </tr>
                             </tbody>
@@ -909,7 +909,7 @@ border:dimgray 0px solid;
         travel.current_url = "<?= base_url(); ?>";
 
         $("#btn_save_factura").click(function(){
-            travel.addServicio();
+            travel.addServiceDoc();
         });
 
     });
