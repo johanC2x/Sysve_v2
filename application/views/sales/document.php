@@ -741,24 +741,30 @@ border:dimgray 0px solid;
                 <h4 class="modal-title">Factura</h4>
                         <h4 class="modal-title">Nro Control: <span id="modal-title-coti"><?php echo $ref_id;?></span><span id="modal-coti"><?php echo "-V"?></span></h4>
                         <input type="hidden" name="ref_id" value="<?php echo $ref_id;?>">
-<!--                    <div class="col-md-3" class="form-group">
-                            <input type="number" name="num_corre_cpe_ref" id="num_corre_cpe_ref" class="form-control" placeholder="Nro. Correlativo">
+                    <div class="col-md-3" class="form-group">
+                            <input type="text" name="num_corre_cpe_ref" id="num_corre_cpe_ref" class="form-control" placeholder="Nro. Correlativo">
                     </div>
--->
                   <div class="col-md-4">
                     <select id="cod_tip_otr_doc_ref" name="cod_tip_otr_doc_ref" class="form-control">
                         <option value="">Seleccionar Tipo de Documento</option>
-                        <option value="01">Factura</option>
-                        <option value="02">Boleta de Venta</option>
-                        <option value="07">Nota de Credito</option>
-                        <option value="08">Nota de debito</option>
+                        <option name="01" value="01">Factura</option>
+                        <option name="02" value="02">Boleta de Venta</option>
+                        <option name="07" value="07">Nota de Credito</option>
+                        <option name="08" value="08">Nota de debito</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2">
+                    <select id="serie" name="serie" class="form-control">
+                        <option value="">Seleccionar Serie</option>
+                        <option name="F004" value="F004">F004</option>
+                        <option name="B004" value="B004">B004</option>
                     </select>
                   </div>
                   <div class="col-md-2">
                     <select id="cod_tip_moneda" name="cod_tip_moneda" class="form-control">
                         <option value="">Moneda</option>
-                        <option value="PEN">Soles $</option>
-                        <option value="USD">Dolares U$</option>
+                        <option value="PEN">Soles S/</option>
+                        <option value="USD">Dolares Us$</option>
                     </select>
                   </div>
             </div>
@@ -772,20 +778,20 @@ border:dimgray 0px solid;
                     <div class="col-md-3" class="form-group">                        
                             <label for="code_travel">Tipo de Documento:</label>
                         <select name="tip_doc_rct" id="tip_doc_rct" class="form-control">
-                            <option value="0">DOC.TRIB.NO.DOM.SIN.RUC</option>
-                            <option value="1">DOC. NACIONAL DE IDENTIDAD</option>
-                            <option value="4">CARNET DE EXTRANJERIA</option>    
-                            <option value="6">REG. UNICO DE CONTRIBUYENTES</option>
-                            <option value="7">PASAPORTE</option>
-                            <option value="A">CED. DIPLOMATICA DE IDENTIDAD</option>
-                            <option value="B">DOC.IDENT.PAIS.RESIDENCIA-NO.D</option>
-                            <option value="C">Tax Identification Number - TIN – Doc Trib PP.NN</option>
-                            <option value="D">Identification Number - IN – Doc Trib PP. JJ</option>
+                            <option name="0" value="0">DOC.TRIB.NO.DOM.SIN.RUC</option>
+                            <option name="1" value="1">DOC. NACIONAL DE IDENTIDAD</option>
+                            <option name="4" value="4">CARNET DE EXTRANJERIA</option>    
+                            <option name="6" value="6">REG. UNICO DE CONTRIBUYENTES</option>
+                            <option name="7" value="7">PASAPORTE</option>
+                            <option name="A" value="A">CED. DIPLOMATICA DE IDENTIDAD</option>
+                            <option name="B" value="B">DOC.IDENT.PAIS.RESIDENCIA-NO.D</option>
+                            <option name="C" value="C">Tax Identification Number - TIN – Doc Trib PP.NN</option>
+                            <option name="D" value="D">Identification Number - IN – Doc Trib PP. JJ</option>
                         </select>
                     </div>
                     <div class="col-md-3" class="form-group">
                             <label for="name_travel">Nro de Identidad:</label>
-                            <input type="number" id="num_doc_rct" name="num_doc_rct" class="form-control" />
+                            <input type="number" id="nro_doc_rct" name="nro_doc_rct" class="form-control" />
                     </div><br/ >
                 </div><br></br>
                         <div class="col-md-102" class="form-group"><br>
@@ -796,7 +802,7 @@ border:dimgray 0px solid;
         <div class="modal-header">
             <h5 class="modal-title">Detalle del Servicio</h5>
             <div class="">
-                <?php echo form_open('sales/factura',array('id'=>'form_travel_comision_update')); ?>
+                <?php echo form_open('sales/factura',array('id'=>'employee_form')); ?>
                     <br/>
                     <div class="col-md-3" class="form-group">
                         <label for="code_travel">Detalle:</label>
@@ -804,7 +810,7 @@ border:dimgray 0px solid;
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="code_travel">Servicio:</label>
-                    <select id="cbo_comision_payment" name="cbo_comision_payment" class="form-control">
+                    <select id="cbo_comision_payment_servicio" name="cbo_comision_payment_servicio" class="form-control">
                         <option value="">Seleccionar Tipo de Servicio</option>
                         <option value="vuelo">Boleto Aereo</option>
                         <option value="vuelo">Boleto BT/IT</option>
@@ -822,8 +828,8 @@ border:dimgray 0px solid;
                     </select>
                     </div>
                     <div class="col-md-2">
-                        <label for="name_travel">Tributo:</label>
-                        <select placeholder="Funcion" class="form-control">
+                        <label for="tributo_travel">Tributo:</label>
+                        <select id="tributo_travel" name="tributo_travel" placeholder="Funcion" class="form-control">
                             <option>Seleccione...</option>
                             <option value="1000">IGV IMPUESTO GENERAL A LAS VENTAS</option>
                             <option value="2000">ISC IMPUESTO SELECTIVO AL CONSUMO</option>
@@ -836,7 +842,7 @@ border:dimgray 0px solid;
                     </div>
                     <div class="col-md-1" class="form-group">
                         <label for="code_travel">Cant.:</label>
-                        <input type="text" name="travelid" id="travelid" class="form-control"/>
+                        <input type="text" name="travel_cantidad" id="travel_cantidad" class="form-control"/>
                     </div>
                     <div class="col-md-2">
                         <label for="total_servicios">Precio Unit.:</label>
@@ -910,48 +916,45 @@ border:dimgray 0px solid;
 
 </script>
 <br>
-                   <div class="col-md-3" class="form-group">
-                            <label for="name_travel">Porcentaje Descuento:</label>
-                        <input type="number" name="" placeholder="%">
+
+                    <div class="col-md-2" class="form-group">
+                            <label for="name_travel">Total Exon.</label>
+                            <input type="number" id="mnt_tot_exr" name="mnt_tot_exr" placeholder="0,00" class="form-control"/>
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Anticipo (-)</label>
-                            <input type="text" id="name" value="" placeholder="Anticipo" class="form-control"/>
+                            <label for="name_travel">Total Inaf.</label>
+                            <input type="number" name="mnt_tot_inf" id="mnt_tot_inf" class="form-control" placeholder="0,00">
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Exonerada</label>
-                            <input type="text" name="monto2" class="form-control" placeholder="">
+                            <label for="name_travel">Total Expo.</label>
+                            <input type="number" name="mnt_tot_exp" id="mnt_tot_exp" class="form-control" placeholder="0,00">
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Inafecta</label>
-                            <input type="text" name="monto2" class="form-control" placeholder="">
+                            <label for="name_travel">Total IGV</label>
+                            <input type="number" name="mnt_tot_imp" id="mnt_tot_imp" class="form-control" placeholder="0,00">
                     </div>
-                    <div class="col-md-3" class="form-group">
-                            <label for="name_travel">Gravada</label>
-                            <input type="number" step="0.1" name="monto4" class="form-control" placeholder="" onChange="calculo();">
-                    </div><br></br><br></br>
+                   <div class="col-md-2" class="form-group">
+                            <label for="name_travel">Total Grav.</label>
+                        <input type="number" id="mnt_tot_grv" name="mnt_tot_grv" placeholder="0,00" class="form-control" />
+                    </div>
+                   <div class="col-md-2" class="form-group">
+                            <label for="name_travel">Total Grat.</label>
+                        <input type="number" id="mnt_tot_grt" name="mnt_tot_grt" placeholder="0,00" class="form-control" />
+                   </div>
+                    <br></br><br></br>
 
                     <div class="col-md-5" class="form-group">
                         
 
                     </div>
-                    <div class="col-md-2" class="form-group">
-                            <label>Otros Cargos</label>
-                            <input type="text" name="monto2" class="form-control" placeholder="Monto">
-                    </div>
-                    <div class="col-md-2" class="form-group">
-                            <label>Desc. Total (-)</label>
-                            <input type="text" name="monto2" class="form-control" placeholder="Nro.">
-                    </div>
-<br></br>
  
-                <div class="main">
+                <div class="col-md-4"></div>
 
                     <div class="col-md-3" class="form-group">
                             <label for="name_travel">TOTAL:</label>
-                            <input type="text" name="total" class="form-control" placeholder="Total">
+                            <input type="text" name="mnt_tot" id="mnt_tot" class="form-control" placeholder="Total">
                     </div><br><br>
-                </div></br><br>
+                </br><br>
 <!---------------------FORMA DE PAGO GENERAR FACTURA------------------------>
                     <div class="col-md-3" class="form-group">
                             <label for="form_pago">Forma de Pago:</label>
@@ -996,11 +999,14 @@ border:dimgray 0px solid;
                             <!-- value="<?php //echo $travelid ?>" -->
                         </div>
 </dir>
-
-
+    <div class="form-group">
+        <div class="col-md-9 col-md-offset-3">
+            <div id="messages"></div>
+        </div>
+    </div>
                     <div class="modal-footer">
                         <div class="form-group">
-                            <button id="add_info_service" type="submit" class="btn btn-primary">Aceptar</button> 
+                            <button id="add_info_service" type="submit" class="btn btn-primary">Generar</button> 
                             <button type="button" onclick="travel.cancelRegisterCustomer();" class="btn btn-default" data-dismiss="modal">Cerrar</button>      
                         </div>
                     </div>
@@ -1008,6 +1014,97 @@ border:dimgray 0px solid;
                 </div>
             </div>
         </div>
+
+<script type='text/javascript'>
+
+//validation and submit handling
+$(document).ready(function(){
+
+    $('#employee_form').bootstrapValidator({
+        container: '#messages',
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            name: {
+                validators: {
+                    notEmpty: { message: "<?php echo $this->lang->line('common_first_name_required'); ?>"
+                    }
+                }
+            },
+            last_name: {
+                validators: {
+                    notEmpty: { message: "<?php echo $this->lang->line('common_last_name_required'); ?>"
+                    }
+                }
+            },
+            username: {
+                validators: {
+                    notEmpty: { message: "<?php echo $this->lang->line('employees_username_required'); ?>"
+                    }
+                }
+            },
+            password:{
+                 validators: {
+                    notEmpty: {
+                        message: '<?php 
+                            echo $this->lang->line('employees_password_required'); 
+                        ?>'
+                    }
+                }
+            },
+            repeat_password:{
+                validators: {
+                    notEmpty: {
+                        message: '<?php 
+                            echo $this->lang->line('employees_password_required'); 
+                        ?>'
+                    },
+                    identical: {
+                        field: 'password',
+                        message: '<?php echo $this->lang->line('employees_password_must_match'); ?>'
+                    }
+                }
+            },
+            email:{
+                validators: {
+                    notEmpty: {
+                        message: '<?php echo $this->lang->line('common_email_invalid_format'); ?>'
+                    },
+                     emailAddress: {
+                        message: '<?php echo $this->lang->line('common_email_invalid_format'); ?>'
+                    }
+                }
+            }
+        }
+    }).on('success.form.bv', function(e) {
+        e.preventDefault();
+        $( "#submit" ).prop("disabled", false);
+        var msg = "";
+        $.ajax({
+            type:"POST",
+            url:$("#employee_form").attr('action'),
+            data:$("#employee_form").serialize(),
+            success:function(response){
+                var employees = JSON.parse(response);
+                if(employees.success == true){
+                    msg = getMessageSuccess('Operación realizada con exito...');
+                    $("#messages").html(msg);   
+                    location.reload();              
+                }else{
+                    if(employees.message !== ""){
+                         msg = getMessageError(employees.message);
+                        $("#messages").html(msg);
+                    }                   
+                }
+            }
+        });
+    });
+});
+</script>
+
 
 <!-- FIN GENERAR FACTURA  -->
 
@@ -1023,7 +1120,7 @@ border:dimgray 0px solid;
         /* LISTANDO SERVICIOS SELECCIONADOS FILTRADOS */
         travel.listServicios(); 
         /* LISTANDO SERVICIOS SELECCIONADOS FILTRADOS A IMPRIMIR */    
-        travel.listServiciosSelect();     
+        //travel.listServiciosSelect();     
     });
 </script>
 
