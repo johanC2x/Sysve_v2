@@ -702,6 +702,7 @@ class Sales extends Secure_area{
 		$data["nom_emi"] = "TAX TECHNOLOGY PRUEBA SAC";
 		$data["nom_com_emi"] = "TAXTECH SAC";
 		$data["email"] = "johanc.cca@gmail.com";
+
 		$curl = curl_init();
 		curl_setopt($curl, CURLOPT_URL, "http://54.152.164.10:4254/taxtech");
 		curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
@@ -709,20 +710,90 @@ class Sales extends Secure_area{
 		curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 		$result = curl_exec($curl);
 		curl_close($curl);
+echo "<pre/>";print_r($result);exit();
+
 	}
 
 	function factura(){
 		$factura['datos']     = array(
-		    	'cotizacion_id'       =>$this->input->post('ref_id'),
-	            'name'       		  =>$this->input->post('name'),
+				'cotizacion_id'	      =>$this->input->post('ref_id'),
+				'name'				  =>$this->input->post('name'),
+				'tip_doc_rct'		  =>$this->input->post('tip_doc_rct'),
+				'nro_doc_rct'		  =>$this->input->post('nro_doc_rct'),
+				'dir_des_rct'		  =>$this->input->post('dir_des_rct'),
+				'serie'				  =>$this->input->post('serie'),
 	            'num_corre_cpe_ref'   =>$this->input->post('num_corre_cpe_ref'),
-        );
+	            'fec_doc_ref'		  =>date('Y/m/d'),
+	            'cod_tip_otr_doc_ref' =>$this->input->post('cod_tip_otr_doc_ref'),
+	            'cod_tip_moneda'	  =>$this->input->post('cod_tip_moneda'),
+	            'mnt_tot_imp'		  =>$this->input->post('mnt_tot_imp'),
+	            'mnt_tot_grv'		  =>$this->input->post('mnt_tot_grv'),
+	            'mnt_tot_inf'		  =>$this->input->post('mnt_tot_inf'),
+	            'mnt_tot_exr'		  =>$this->input->post('mnt_tot_exr'),
+	            'mnt_tot_grt'		  =>$this->input->post('mnt_tot_grt'),
+	            'mnt_tot_exp'		  =>$this->input->post('mnt_tot_exp'),
+	            'mnt_tot_isc'		  =>$this->input->post('mnt_tot_isc'),
+	            'mnt_tot_trb_igv'	  =>$this->input->post('mnt_tot_trb_igv'),
+	            'mnt_tot_trb_isc'	  =>$this->input->post('mnt_tot_trb_isc'),
+	            'mnt_tot_trb_otr'	  =>$this->input->post('mnt_tot_trb_otr'),
+	            'mnt_tot_val_vta'	  =>$this->input->post('mnt_tot_val_vta'),
+	            'mnt_tot_prc_vta'	  =>$this->input->post('mnt_tot_prc_vta'),
+	            'mnt_tot_dct'		  =>$this->input->post('mnt_tot_dct'),
+	            'mnt_tot_otr_cgo'	  =>$this->input->post('mnt_tot_otr_cgo'),
+	            'mnt_tot'			  =>$this->input->post('mnt_tot'),
+	            'mnt_tot_antcp'		  =>$this->input->post('mnt_tot_antcp'),
+	            'form_pago'			  =>$this->input->post('form_pago')
+        ); 
+	
+				$data = [];
+				$data["fec_emi"] 		= date('Y-m-d');
+				$data["hor_emi"] 		= date('H:i:s');
+				$data["serie"] 			= $factura['datos']['serie'];
+				$data["correlativo"] 	= $factura['datos']['num_corre_cpe_ref'];
+				$data["moneda"] 		= $factura['datos']['cod_tip_moneda'];
+				$data["cod_tip_otr_doc_ref"] = $factura['datos']['cod_tip_otr_doc_ref'];
+				$data["tip_doc_rct"] 	= $factura['datos']['tip_doc_rct'];
+				$data["nro_doc_rct"] 	= $factura['datos']['nro_doc_rct'];
+				$data["dir_des_rct"] 	= $factura['datos']['dir_des_rct'];
+				$data["nro_doc"] 		= "20101914837";
+				$data["nom_emi"] 		= "TURIFAX, S.A.C.";
+				$data["nom_rct"] 	    = $factura['datos']['name'];
+				$data["mnt_tot_imp"] 	= $factura['datos']['mnt_tot_imp'];
+				$data["mnt_tot_grv"] 	= $factura['datos']['mnt_tot_grv'];
+				$data["mnt_tot_inf"] 	= $factura['datos']['mnt_tot_inf'];
+				$data["mnt_tot_exr"] 	= "0,00";
+				$data["mnt_tot_grt"] 	= $factura['datos']['mnt_tot_grt'];
+				$data["mnt_tot_exp"] 	= $factura['datos']['mnt_tot_exp'];
+				$data["mnt_tot_isc"] 	= $factura['datos']['mnt_tot_isc'];
+				$data["mnt_tot_trb_igv"]= $factura['datos']['mnt_tot_trb_igv'];
+				$data["mnt_tot_trb_isc"]= $factura['datos']['mnt_tot_trb_isc'];
+				$data["mnt_tot_trb_otr"]= $factura['datos']['mnt_tot_trb_otr'];
+				$data["mnt_tot_val_vta"]= $factura['datos']['mnt_tot_val_vta'];
+				$data["mnt_tot_prc_vta"]= $factura['datos']['mnt_tot_prc_vta'];
+				$data["mnt_tot_dct"] 	= $factura['datos']['mnt_tot_dct'];
+				$data["mnt_tot_otr_cgo"]= $factura['datos']['mnt_tot_otr_cgo'];
+				$data["mnt_tot"]		= $factura['datos']['mnt_tot'];
+				$data["mnt_tot_antcp"]	= $factura['datos']['mnt_tot_antcp'];
+				$data["email"] 			= "datasoft28@gmail.com";				
+	            $data["form_pago"]		= $factura['datos']['form_pago'];
+
+
+				$curl = curl_init();
+			//	curl_setopt($curl, CURLOPT_URL, "http://54.152.164.10:4254/taxtech"); //PRODUCCION
+				curl_setopt($curl, CURLOPT_URL, "http://localhost:4254/taxtech");     //DESARROLLO
+				curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
+				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+				$result = curl_exec($curl);
+				curl_close($curl);
+// echo "<pre/>";print_r($result);exit();
+
 		if($this->input->post()){
 			$factura = array(
 				'cotizacion_id'	      =>$this->input->post('ref_id'),
 				'name'				  =>$this->input->post('name'),
 				'tip_doc_rct'		  =>$this->input->post('tip_doc_rct'),
-				'num_doc_rct'		  =>$this->input->post('num_doc_rct'),
+				'num_doc_rct'		  =>$this->input->post('nro_doc_rct'),
 				'dir_des_rct'		  =>$this->input->post('dir_des_rct'),
 	            'num_corre_cpe_ref'   =>$this->input->post('num_corre_cpe_ref'),
 	            'fec_doc_ref'		  =>date('Y/m/d'),
@@ -764,6 +835,8 @@ class Sales extends Secure_area{
 			);
 			$response = $this->Sale->insertPago($pago);
 			if(!empty($response) && (int)$response === 1){
+
+
 				$this->load->view('customers/render', $cliente);
 			}else{
 				echo json_encode(array('success'=>false,'message'=>"Ha ocurrido un error interno"));
