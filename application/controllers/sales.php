@@ -742,7 +742,8 @@ echo "<pre/>";print_r($result);exit();
 	            'mnt_tot_otr_cgo'	  =>$this->input->post('mnt_tot_otr_cgo'),
 	            'mnt_tot'			  =>$this->input->post('mnt_tot'),
 	            'mnt_tot_antcp'		  =>$this->input->post('mnt_tot_antcp'),
-	            'form_pago'			  =>$this->input->post('form_pago')
+	            'form_pago'			  =>$this->input->post('form_pago'),
+	            'list_service_doc'	  =>$this->input->post('list_service_doc'),
         ); 
 	
 				$data = [];
@@ -776,6 +777,7 @@ echo "<pre/>";print_r($result);exit();
 				$data["mnt_tot_antcp"]	= $factura['datos']['mnt_tot_antcp'];
 				$data["email"] 			= "datasoft28@gmail.com";				
 	            $data["form_pago"]		= $factura['datos']['form_pago'];
+	            $data["list_service_doc"] = $factura['datos']['list_service_doc'];
 
 
 				$curl = curl_init();
@@ -786,7 +788,7 @@ echo "<pre/>";print_r($result);exit();
 				curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 				$result = curl_exec($curl);
 				curl_close($curl);
-// echo "<pre/>";print_r($result);exit();
+ echo "<pre/>";print_r($result);exit();
 
 		if($this->input->post()){
 			$factura = array(
