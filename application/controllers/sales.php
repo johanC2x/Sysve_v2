@@ -743,7 +743,7 @@ echo "<pre/>";print_r($result);exit();
 	            'mnt_tot'			  =>$this->input->post('mnt_tot'),
 	            'mnt_tot_antcp'		  =>$this->input->post('mnt_tot_antcp'),
 	            'form_pago'			  =>$this->input->post('form_pago'),
-	            'list_service_doc'	  =>$this->input->post('list_service_doc'),
+	            'list_service_doc'	  =>$this->input->post('detalle_servicio_json'),
         ); 
 	
 				$data = [];
