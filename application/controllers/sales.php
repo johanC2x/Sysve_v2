@@ -689,6 +689,15 @@ class Sales extends Secure_area{
 		$this->Sale_suspended->delete($sale_id);
     	$this->_reload();
 	}
+
+
+
+    public function correlativo()
+    {
+ 			$data = $this->Sale->correlativo();
+
+echo "<pre/>";print_r($data);exit();
+    }
 	
 	function test(){
 		$data = [];
@@ -721,6 +730,7 @@ echo "<pre/>";print_r($result);exit();
 				'tip_doc_rct'		  =>$this->input->post('tip_doc_rct'),
 				'nro_doc_rct'		  =>$this->input->post('nro_doc_rct'),
 				'dir_des_rct'		  =>$this->input->post('dir_des_rct'),
+	            'email'			      =>$this->input->post('email'),
 				'serie'				  =>$this->input->post('serie'),
 	            'num_corre_cpe_ref'   =>$this->input->post('num_corre_cpe_ref'),
 	            'fec_doc_ref'		  =>date('Y/m/d'),
@@ -742,6 +752,7 @@ echo "<pre/>";print_r($result);exit();
 	            'mnt_tot_otr_cgo'	  =>$this->input->post('mnt_tot_otr_cgo'),
 	            'mnt_tot'			  =>$this->input->post('mnt_tot'),
 	            'mnt_tot_antcp'		  =>$this->input->post('mnt_tot_antcp'),
+	            'tipo_pago'			  =>$this->input->post('tipo_pago'),
 	            'form_pago'			  =>$this->input->post('form_pago'),
 	            'list_service_doc'	  =>$this->input->post('detalle_servicio_json'),
         ); 
@@ -775,8 +786,9 @@ echo "<pre/>";print_r($result);exit();
 				$data["mnt_tot_otr_cgo"]= $factura['datos']['mnt_tot_otr_cgo'];
 				$data["mnt_tot"]		= $factura['datos']['mnt_tot'];
 				$data["mnt_tot_antcp"]	= $factura['datos']['mnt_tot_antcp'];
-				$data["email"] 			= "datasoft28@gmail.com";				
-	            $data["form_pago"]		= $factura['datos']['form_pago'];
+				$data["email"] 			= $factura['datos']['email'];
+	            $data["tip_pag"]		= $factura['datos']['tipo_pago'];	   		
+	            $data["frm_pag"]		= $factura['datos']['form_pago'];
 	            $data["list_service_doc"] = $factura['datos']['list_service_doc'];
 
 
