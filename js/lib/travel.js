@@ -80,15 +80,17 @@ var travel = function () {
         }else{
             self.list_service_doc.forEach(function(element){
                 var total = parseInt(element.service_doc_quantity) * parseFloat(element.service_doc_amount);
-                html += `<tr>
-                            <td>`+ (count + 1) +`</td>
+                var tributo = (element.service_doc_trib === '30') ? 0.00 : 0.18;
+                var subtotal = (((((element.service_doc_amount)*tributo)-(element.service_doc_amount))*(-1))*(element.service_doc_quantity));
+                html += `<tr  style="background-color:#FFFFFF">
+                            <td><center>`+ (count + 1) +`</center></td>
                             <td><center>`+ element.service_doc_name +`</center></td>
                             <td><center>`+ element.service_doc_type +`</center></td>
                             <td><center>`+ element.service_doc_trib +`</center></td>
-                            <td>`+ element.service_doc_quantity +`</td>
-                            <td>`+ parseFloat(element.service_doc_amount).toFixed(2) +`</td>
-                            <td>`+ total +`</td>
-                            <td></td>
+                            <td><center>`+ element.service_doc_quantity +`</center></td>
+                            <td align=right>`+ parseFloat(element.service_doc_amount).toFixed(2) +`</td>
+                            <td align=right>`+ parseFloat((((element.service_doc_amount)*tributo)-(element.service_doc_amount))*(-1)).toFixed(2) +`</td>
+                            <td align=right>`+ parseFloat(((((element.service_doc_amount)*tributo)-(element.service_doc_amount))*(-1))*(element.service_doc_quantity)).toFixed(2) +`</td>
                             <td>
                                 <center>
                                     <a href='javascript:void(0);' title='Eliminar' onclick='travel.removeServiceDoc(`+ count +`)' >
@@ -96,20 +98,15 @@ var travel = function () {
                                     </a>
                                 </center>
                             </td>
-                            <td>
-                                <center>
-                                    <a href='javascript:void(0);' title='Agregar Detalle' onclick='travel.getServiceDoc(`+ count +`)' >
-                                        <i class="fa fa-edit"></i>
-                                    </a>
-                                </center>
-                            </td>
                         </tr>`;
-                monto_pagar = monto_pagar + total;
+                monto_pagar = monto_pagar + subtotal;
                 count++;
             });
         }
         $("#table_customer_travel_children tbody").empty().append(html);
         $("#total_pago_children").text(monto_pagar.toFixed(2));
+        $("#mnt_tot_grv").text(monto_pagar.toFixed(2));
+        $("#mnt_tot_grt").text((monto_pagar*(4)).toFixed(2));
     };
     self.resetServiceDocReset = function(){
         $("#detalle_servicio").val("");
@@ -2816,6 +2813,7 @@ self.listServiciosVenta = function(){
                             var estatus = (data[i].estatus === 'C') ? ('COTIZADO').fontcolor("red") : ('VENDIDO').fontcolor("green");
                             var fecha = data[i].fecha;
                             var name_client = data[i].firstname + ' ' + data[i].middlename + ' ' + data[i].lastname + ' ' + data[i].mother_lastname;
+                            var correlativo = data[i].num_corre_cpe_ref; 
 
                             tbody += `<tr>
                                         <td>`+id+`</td>
@@ -2826,13 +2824,13 @@ self.listServiciosVenta = function(){
                                         <td>`+name_client+`</td>
                                         <td>
                                             <center>
-                                                <a href="index.php/sales/venta/?id=`+ id +`&cotizacion_id=`+ cotizacion_id +`&estatus=`+ estat +`&name_client=`+name_client+`" onclick="travel.addCoti(`+cotizacion_id +`);"><i class="fa fa-eye"></i>
+                                                <a href="index.php/sales/venta/?id=`+ id +`&cotizacion_id=`+ cotizacion_id +`&estatus=`+ estat +`&name_client=`+name_client+`&correlativo="`+correlativo+`" onclick="travel.addCoti(`+cotizacion_id +`);"><i class="fa fa-eye"></i>
                                                 </a>
                                             </center>
                                         </td>
                                         <td>
                                             <center>
-                                                <a href="index.php/sales/document/?id=`+ id +`&cotizacion_id=`+ cotizacion_id +`&estatus=`+ estat +`&name_client=`+name_client+`" onclick="travel.addCoti(`+cotizacion_id +`);">
+                                                <a href="index.php/sales/document/?id=`+ id +`&cotizacion_id=`+ cotizacion_id +`&estatus=`+ estat +`&name_client=`+name_client+`&correlativo="`+correlativo+`" onclick="travel.addCoti(`+cotizacion_id +`);">
                                                     <i class="fa fa-shopping-cart"></i>
                                                 </a>
                                             </center>
