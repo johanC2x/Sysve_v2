@@ -8,7 +8,6 @@ $estatus = $_GET["estatus"];
 $name_client = $_GET["name_client"];
 ?>
 
-
 <div class="row">
     <div class="col-md-12">
         <div class="col-md-6">
@@ -21,17 +20,7 @@ $name_client = $_GET["name_client"];
     <div class="col-md-12">
             <fieldset>
                 <legend>Servicios Registrados: <?php echo $name_client; ?></legend>
-                  <div class="col-md-3">
-                    <select id="cbo_comision_payment" name="cbo_comision_payment" class="form-control">
-                        <option value="">Seleccionar Tipo de Documento</option>
-                        <option value="ticket">Documento de Cobranza</option>
-                        <option value="factura">Factura</option>
-                        <option value="boleta">Boleta</option>
-                    </select>
-                  </div>
-
             <button type="button" value="factura" name="registrar" id="factura" class="btn btn-primary">Generar Factura</button>
-
             <button type="button" name="print" id="print" class="btn btn-primary">Imprimir</button>
             </fieldset>
 
@@ -742,24 +731,33 @@ border:dimgray 0px solid;
                         <h4 class="modal-title">Nro Control: <span id="modal-title-coti"><?php echo $ref_id;?></span><span id="modal-coti"><?php echo "-V"?></span></h4>
                         <input type="hidden" name="ref_id" value="<?php echo $ref_id;?>">
                     <div class="col-md-3" class="form-group">
-                            <input type="text" name="num_corre_cpe_ref" id="num_corre_cpe_ref" class="form-control" placeholder="Nro. Correlativo">
+                            <input type="text" name="num_corre_cpe_ref" id="num_corre_cpe_ref" class="form-control" placeholder="Nro. Correlativo" style="color:red;" >
                     </div>
+                    <div class="col-md-1" class="form-group">
+                    </div>
+
+
                   <div class="col-md-4">
-                    <select id="cod_tip_otr_doc_ref" name="cod_tip_otr_doc_ref" class="form-control">
-                        <option value="">Seleccionar Tipo de Documento</option>
-                        <option name="01" value="01">Factura</option>
-                        <option name="02" value="02">Boleta de Venta</option>
-                        <option name="07" value="07">Nota de Credito</option>
-                        <option name="08" value="08">Nota de debito</option>
-                    </select>
-                  </div>
+                        <select id="serie" onchange="h()" name="cod_tip_otr_doc_ref" class="form-control">
+                         <option value="">Tipo de Documento</option>
+                         <option name="cod_tip_otr_doc_ref" value="01" data-hab="h1">Factura</option>
+                         <option name="cod_tip_otr_doc_ref" value="03" data-hab="h2">Boleta de Venta</option>
+                         <option name="cod_tip_otr_doc_ref" value="07" data-hab="h3">Nota de Credito</option>
+                         <option name="cod_tip_otr_doc_ref" value="08" data-hab="h4">Nota de Debito</option>
+                        </select>
+                 </div>
                   <div class="col-md-2">
-                    <select id="serie" name="serie" class="form-control">
-                        <option value="">Seleccionar Serie</option>
-                        <option name="F004" value="F004">F004</option>
-                        <option name="B004" value="B004">B004</option>
-                    </select>
-                  </div>
+                        <select id="serie" name="serie" class="form-control">
+                         <option value="">Serie</option>
+                         <option name="serie" value="F001" class="Factura h1">F001</option>
+                         <option name="serie" value="B001" class="Factura h2">B001</option>
+                         <option name="serie" value="NC" class="Factura h3">NC</option>
+                         <option name="serie" value="ND" class="Factura h4">ND</option>
+                        </select>
+                 </div>
+
+
+
                   <div class="col-md-2">
                     <select id="cod_tip_moneda" name="cod_tip_moneda" class="form-control">
                         <option value="">Moneda</option>
@@ -776,7 +774,7 @@ border:dimgray 0px solid;
                             <input type="text" id="name" name="name" value="<?php echo $name_client; ?>" class="form-control"/>
                     </div>
                     <div class="col-md-3" class="form-group">                        
-                            <label for="code_travel">Tipo de Documento:</label>
+                            <label for="code_travel">Documento de Identidad:</label>
                         <select name="tip_doc_rct" id="tip_doc_rct" class="form-control">
                             <option name="0" value="0">DOC.TRIB.NO.DOM.SIN.RUC</option>
                             <option name="1" value="1">DOC. NACIONAL DE IDENTIDAD</option>
@@ -791,69 +789,105 @@ border:dimgray 0px solid;
                     </div>
                     <div class="col-md-3" class="form-group">
                             <label for="name_travel">Nro de Identidad:</label>
-                            <input type="number" id="nro_doc_rct" name="nro_doc_rct" class="form-control" />
+                            <input type="text" id="nro_doc_rct" name="nro_doc_rct" value="<?php echo $datos['documents']; ?>" class="form-control"/>
                     </div><br/ >
                 </div><br></br>
-                        <div class="col-md-102" class="form-group"><br>
+                        <div class="col-md-8" class="form-group"><br>
                             <input type="text" placeholder="Direccion" name="dir_des_rct" id="dir_des_rct" class="form-control" />
                         </div>
+                        <div class="col-md-4" class="form-group"><br>
+                            <input type="email" placeholder="Correo Electronico" id="email" name="email" value="<?php echo $datos['emails']; ?>" class="form-control"/>
+                        </div>
             </dir>
-    <div class="">
+    <div class=""  style="background-color:#EFF0F1">
         <div class="modal-header">
             <h5 class="modal-title">Detalle del Servicio</h5>
             <div class="">
                 <?php echo form_open('sales/factura',array('id'=>'employee_form')); ?>
                     <br/>
                     <input type="hidden" name="detalle_servicio_json" id="detalle_servicio_json">
-                    <div class="col-md-3" class="form-group">
+                    <div class="col-md-11" class="form-group">
                         <label for="code_travel">Detalle:</label>
                         <input type="text" name="detalle_servicio" id="detalle_servicio" class="form-control" placeholder="Descripcion"/>
                     </div>
-                    <div class="col-md-2" class="form-group">
+                    <div class="col-md-1">
+                        <label for="code_travel">&nbsp;</label><br>
+
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#comentario_item">+</button>
+                    </div>
+                    <br><br><br/><br/>
+                    <div class="col-md-3" class="form-group">
                         <label for="code_travel">Servicio:</label>
                     <select id="cbo_comision_payment_servicio" name="cbo_comision_payment_servicio" class="form-control">
                         <option value="">Seleccionar Tipo de Servicio</option>
-                        <option value="vuelo">Boleto Aereo</option>
-                        <option value="vuelo">Boleto BT/IT</option>
-                        <option value="hotel">Hotel</option>
-                        <option value="auto">Auto</option>
-                        <option value="seguro">Tarjetas de Asistencias</option>
-                        <option value="paquete">Paquete</option>
-                        <option value="paquetes_netos">Paquetes Netos</option>
-                        <option value="tours">Excursiones</option>
-                        <option value="crucero">Crucero</option>
-                        <option value="trenes">Trenes</option>
-                        <option value="entradas">Entradas</option>
-                        <option value="gastos">Gastos Administrativos</option>
-                        <option value="otros">Otros</option>
+                        <option value="Boleto Aereo">Boleto Aereo</option>
+                        <option value="Boleto BT/IT">Boleto BT/IT</option>
+                        <option value="Hotel">Hotel</option>
+                        <option value="Auto">Auto</option>
+                        <option value="Tarjetas de Asistencias">Tarjetas de Asistencias</option>
+                        <option value="Paquete">Paquete</option>
+                        <option value="Paquetes Netos">Paquetes Netos</option>
+                        <option value="Excursiones">Excursiones</option>
+                        <option value="Crucero">Crucero</option>
+                        <option value="Trenes">Trenes</option>
+                        <option value="Entradas">Entradas</option>
+                        <option value="Gastos Administrativos">Gastos Administrativos</option>
+                        <option value="Otros">Otros</option>
                     </select>
                     </div>
-                    <div class="col-md-2">
-                        <label for="tributo_travel">Tributo:</label>
+                    <div class="col-md-3">
+                        <label for="tributo_travel">Afectacion:</label>
                         <select id="tributo_travel" name="tributo_travel" placeholder="Funcion" class="form-control">
                             <option>Seleccione...</option>
-                            <option value="1000">IGV IMPUESTO GENERAL A LAS VENTAS</option>
-                            <option value="2000">ISC IMPUESTO SELECTIVO AL CONSUMO</option>
-                            <option value="9995">EXPORTACIÓN</option>
-                            <option value="9996">GRATUITO</option>
-                            <option value="9997">EXONERADO</option>
-                            <option value="9998">INAFECTO</option>
-                            <option value="9999">OTROS CONCEPTOS DE PAGO</option>
+                            <option value="10">Gravado - Operación onerosa</option>
+                            <option value="11">Gravado - Retiro por premio</option>
+                            <option value="12">Gravado - Retiro por donación</option>
+                            <option value="14">Gravado - Retiro</option>
+                            <option value="15">Gravado - Bonificaciones</option>
+                            <option value="16">Gravado - Retiro por entrega a trabajadores</option>
+                            <option value="17">Gravado - IVAP</option>
+                            <option value="20">Exonerado - Operación onerosa</option>
+                            <option value="21">Exonerado - Operación onerosa</option>
+                            <option value="30">Inafecto - Operación onerosa</option>
+                            <option value="40">Exportación</option>
                         </select>
                     </div>
-                    <div class="col-md-1" class="form-group">
+                    <div class="col-md-2" class="form-group">
                         <label for="code_travel">Cant.:</label>
-                        <input type="text" name="travel_cantidad" id="travel_cantidad" class="form-control"/>
+                        <input type="number" name="travel_cantidad" id="travel_cantidad" class="form-control"/>
                     </div>
                     <div class="col-md-2">
-                        <label for="total_servicios">Precio Unit.:</label>
+                        <label for="total_servicios">Valor Vta.:</label>
                         <input type="number" name="cbo_amount_comision_payment_children" id="cbo_amount_comision_payment_children" class="form-control"
-                            step="0.1" placeholder="Ingresar monto"/>
+                            step="0.01" placeholder="0,00"/>
                     </div>
                     <div class="col-md-2">
                         <label for="code_travel">&nbsp;</label><br>
                         <input type="button" id="btn_save_factura" class="btn btn-primary" value="Agregar"/>
                     </div>
+
+
+
+
+  <!-- Modal -->
+  <div class="modal fade" id="comentario_item" style="overflow-y: scroll;" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal adicionar coemntario a items-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <textarea style="padding:40px 190px;" ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
                     <br><br>
                     <br/><br/><br/>
                     <div class="col-md-12">
@@ -863,11 +897,11 @@ border:dimgray 0px solid;
                                     <th><center>#</center></th>
                                     <th><center>Detalle</center></th>
                                     <th><center>Servicios</center></th>
-                                    <th><center>Tributo</center></th>
+                                    <th><center>Afectacion</center></th>
                                     <th><center>Cant.</center></th>
-                                    <th><center>Precio Unit.</center></th>
-                                    <th><center>Sub Total</center></th>
-                                    <th><center>Total</center></th>
+                                    <th><center>Prc. Unit.</center></th>
+                                    <th><center>Val. Unit.</center></th>
+                                    <th><center>Val. Total.</center></th>
                                     <th><center>Accion</center></th>
                                 </tr>
                             </thead>
@@ -881,24 +915,20 @@ border:dimgray 0px solid;
                                 </tr>
                             </tbody>
                         </table>
-                        <table class="table table-hover table-bordered" >
+<!--                        <table class="table table-hover table-bordered"   style="background-color:#FFFFFF" >
                             <tbody>
                                 <tr>
                                     <td colspan=2>
                                         <span class="pull-right">SUB TOTAL</span>
                                     </td>
                                     <td>
-                                        <span id="total_pago_children" class="pull-right"></span>
+                                        <span id="total_pago_children" class="pull-right"></span><br>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
+-->
                     </div>
-            </div>
-            <div class="modal-footer">
-                <div class="form-group">
-                    <button id="add_info_service" type="button" class="btn btn-primary">Aceptar</button> 
-                </div>
             </div>
         </div>
     </div>
@@ -920,60 +950,87 @@ border:dimgray 0px solid;
 <br>
 
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Total Exon.</label>
-                            <input type="number" id="mnt_tot_exr" name="mnt_tot_exr" placeholder="0,00" class="form-control"/>
+                            <label for="name_travel">Exonerada</label>
+                            <input type="number" id="mnt_tot_exr" step="0.01" name="mnt_tot_exr" placeholder="0,00" class="form-control"/>
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Total Inaf.</label>
-                            <input type="number" name="mnt_tot_inf" id="mnt_tot_inf" class="form-control" placeholder="0,00">
+                            <label for="name_travel">Inafecto</label>
+                            <input type="number" name="mnt_tot_inf" step="0.01" id="mnt_tot_inf" class="form-control" placeholder="0,00">
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Total Expo.</label>
-                            <input type="number" name="mnt_tot_exp" id="mnt_tot_exp" class="form-control" placeholder="0,00">
+                            <label for="name_travel">Exonerada</label>
+                            <input type="number" name="mnt_tot_exp" step="0.01" id="mnt_tot_exp" class="form-control" placeholder="0,00">
                     </div>
+                   <div class="col-md-2" class="form-group">
+                            <label for="name_travel">Gravada</label>
+                         <p><span id="mnt_tot_grv"></span></p>  
+                        <input type="number" id="mnt_tot_grv" step="0.01" name="mnt_tot_grv" placeholder="0,00" class="form-control" />
+                   </div>
+                   <div class="col-md-2" class="form-group">
+                            <label for="name_travel">Gratuita</label>
+                         <p><span id="mnt_tot_grt"></span></p>  
+                        <input type="number" id="mnt_tot_grt" step="0.01" name="mnt_tot_grt" placeholder="0,00" class="form-control" />
+                   </div>
                     <div class="col-md-2" class="form-group">
                             <label for="name_travel">Total IGV</label>
-                            <input type="number" name="mnt_tot_imp" id="mnt_tot_imp" class="form-control" placeholder="0,00">
+                            <input type="number" name="mnt_tot_imp" step="0.01" id="mnt_tot_imp" class="form-control" placeholder="0,00">
                     </div>
-                   <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Total Grav.</label>
-                        <input type="number" id="mnt_tot_grv" name="mnt_tot_grv" placeholder="0,00" class="form-control" />
-                    </div>
-                   <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Total Grat.</label>
-                        <input type="number" id="mnt_tot_grt" name="mnt_tot_grt" placeholder="0,00" class="form-control" />
-                   </div>
                     <br></br><br></br>
 
-                    <div class="col-md-5" class="form-group">
-                        
-
+                    <div class="col-md-3" class="form-group">
+                            <label for="name_travel">Detraccion:</label>
+                                <input name="pago1" type="radio" value="Ventanilla"/>
+                                    <span class="auto-style4">No</span>
+                                <input checked="checked" name="pago1" type="radio" value="Deposito"/>
+                                    <span class="auto-style4">Si</span>
+                                <div id="div1" style="display:;">
+                                        <select name="segundo" id="segundo" class="form-control" >
+                                            <option value=''>Seleccione...</option>
+                                            <option value='10.00'>10.00 %</option>
+                                            <option value='4.00'>4.00 %</option>
+                                            <option value='12.00'>12.00 %</option>
+                                        </select>
+                                </div>
                     </div>
- 
-                <div class="col-md-4"></div>
+
+
+                <div class="col-md-6"></div>
 
                     <div class="col-md-3" class="form-group">
                             <label for="name_travel">TOTAL:</label>
-                            <input type="text" name="mnt_tot" id="mnt_tot" class="form-control" placeholder="Total">
+                            <input type="text" name="mnt_tot" step="0.01" id="mnt_tot" class="form-control" placeholder="Total">
                     </div><br><br>
                 </br><br>
 <!---------------------FORMA DE PAGO GENERAR FACTURA------------------------>
                     <div class="col-md-3" class="form-group">
-                            <label for="form_pago">Forma de Pago:</label>
-                        <select class="form-control">
+                            <label for="form_pago">Tipo de Pago:</label>
+                        <select name="tipo_pago" class="form-control">
+                            <option>Seleccione...</option>
+                            <option value="000">NO ASIGNADO</option>
+                            <option value="001">CONTADO</option>
+                            <option value="002">CRÉDITO A 7 DÍAS</option>
+                            <option value="003">CRÉDITO A 15 DÍAS</option>
+                            <option value="004">CRÉDITO A 30 DÍAS</option>
+                            <option value="005">CRÉDITO A 60 DÍAS</option>
+                            <option value="006">CRÉDITO A 90 DÍAS</option>
+                            <option value="007">CRÉDITO A 120 DÍAS</option>
+                            <option value="008">CRÉDITO A 20 DÍAS</option>
+                            <option value="009">CRÉDITO A 45 DÍAS</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2" class="form-group">
+                            <label for="form_pago">Forma:</label>
+                        <select name="form_pago" class="form-control">
                             <option>Seleccione...</option>
                             <option value="000">NO ASIGNADO</option>
                             <option value="001">EFECTIVO</option>
                             <option value="002">CHEQUE</option>
-                            <option value="004">TARJETA DE CREDITO</option>                            
-                            <option value="005">TARJETA DE DEBITO</option>
-                            <option value="006">DEPOSITO BANCARIO</option>                            
+                            <option value="003">LETRA</option>
+                            <option value="004">TARJETA DE CRÉDITO</option>
+                            <option value="005">TARJETA DE DÉBITO</option>
+                            <option value="006">DEPOSITO BANCARIO</option>
                             <option value="007">TRANSFERENCIA INTERBANCARIA</option>
                         </select>
-                    </div>
-                    <div class="col-md-2" class="form-group">
-                            <label for="tipo_pago">Tipo:</label>
-                            <input type="text" id="tipo_pago" name="tipo_pago" value="" placeholder="Tipo" class="form-control"/>
                     </div>
                     <div class="col-md-2" class="form-group">
                             <label for="banco_pago">Banco:</label>
@@ -1126,8 +1183,42 @@ $(document).ready(function(){
     });
 </script>
 
+<script type="text/javascript">
+    function h(){
+opt = document.getElementsByClassName("Factura");
+ for (i=0; i<opt.length; i++) {
+ opt[i].style.display = "none";
+ }
 
-
+e = document.getElementById("serie")
+e = e[e.selectedIndex].dataset.hab.split(" ");
+for (x=0;x<e.length;x++){
+ opt = document.getElementsByClassName(e[x]);
+  if (opt.length) {
+   for (i=0; i<opt.length; i++) {
+    opt[i].style.display = "";
+   }
+  }
+ }
+}
+h("");
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $("input[type=radio]").click(function(event){
+        var valor = $(event.target).val();
+        if(valor =="Deposito"){
+            $("#div1").show();
+            $("#div2").hide();
+        } else if (valor == "Ventanilla") {
+            $("#div1").hide();
+            $("#div2").show();
+        } else { 
+            // Otra cosa
+        }
+    });
+});
+</script>
 
 
 
