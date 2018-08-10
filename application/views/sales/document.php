@@ -86,64 +86,54 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
 }
 </script>
 
-<style>
-/*----clase pra las pestañas---*/
-#tab{
-padding:5px;
-text-decoration:none;
-color:#ffffff;
-font: 14px/100% Arial, Helvetica, sans-serif;
- background: #337ab7;
- border: 6px solid #337ab7;
--webkit-border-top-left-radius: 10px;
--webkit-border-top-right-radius: 10px;
--moz-border-radius-topleft: 10px;
--moz-border-radius-topright: 10px;
-border-top-left-radius: 3px;
-border-top-right-radius: 3px;
-}
 
-/*----clase para las pestañas activadas----*/
-#tab:active{ 
-color:#000;
-background:#ccc;
+<style>
+*{ margin:0; padding:0; }
+#content{
+    width: auto;
+    margin: 0 auto;
+    border: 0px solid #000;
 }
-/*----clase para el contenido------*/
-.tab_contenido{
-text-align:left;
-padding: 8px;
-display:none;
-width:auto;
-height: 500px;
-color:#000;
-background:#fff;
-border:dimgray 0px solid;
+#menu{
+    list-style-type: none;
+    margin: none;
+    width: 100%;
+}
+#menu li{
+    display: inline-block;
+    background-color: #337ab7;
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+        border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+#menu li a{ color: #fff; }
+ 
+#menu .selected{
+    background-color: #ccc;
+    border-bottom: none;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+#menu .selected a{ color: #000; }
+#menu .rest{
+    width: 105px;
+    border-right: none;
 }
 </style>
-
 
  
  <br><br>
  <br><br><br>
-    <dir class="col-md-1"></dir>
-    <!-----pestañas de la tab--->
-    <a id="tab" href="javascript:tab('tab_contenido1');" >Boletos</a>
-    <a id="tab" href="javascript:tab('tab_contenido2');" >Hotel</a>
-    <a id="tab" href="javascript:tab('tab_contenido3');" >Auto</a>
-    <a id="tab" href="javascript:tab('tab_contenido4');" >Tarjeta de Asistencia</a>
-    <a id="tab" href="javascript:tab('tab_contenido5');" >Paquetes</a>
-    <a id="tab" href="javascript:tab('tab_contenido6');" >Excursiones</a>
-    <a id="tab" href="javascript:tab('tab_contenido7');" >Entradas</a>
-    <a id="tab" href="javascript:tab('tab_contenido8');" >Trenes</a>
-    <a id="tab" href="javascript:tab('tab_contenido9');" >Cruceros</a>
-    <a id="tab" href="javascript:tab('tab_contenido10');" >Gastos Administrativos / Otros</a>
-    <!----contenidos de la tab--->
 
-    <div class="col-md-12"><br/>
-            <form>
-
+<div id="content">
+<?php if(empty($_GET['tab'])){ ?>
+    <ul id="menu">
+        <li class="rest">&nbsp;</li><li class="selected"><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Boletos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=2">Hotel</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=3">Autos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=4">Tarjeta de Asistencia</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=5">Paquetes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=6">Excursiones</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=7">Entradas</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=8">Trenes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=9">Cruceros</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=10">Gastos Administrativos / Otros</a></li><li class="rest">&nbsp;</li>
+    </ul>
+    <div id="message">
     <div name="tab_contenido" id="tab_contenido1" class="tab_contenido"style="display: block;">
-<h5 class="modal-title">Boletos Aereos - Boletos BT/IT</h5>
             <div id="table_holder">
                 <table class="table table-bordered" id="table_boleto">
                     <thead>
@@ -169,10 +159,13 @@ border:dimgray 0px solid;
                 </table>
             </div>
     </div>
-
-
+    </div>
+<?php }elseif($_GET['tab'] == 2){ ?>
+    <ul id="menu">
+        <li class="rest">&nbsp;</li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Boletos</a></li><li class="selected"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=2">Hotel</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=3">Autos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=4">Tarjeta de Asistencia</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=5">Paquetes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=6">Excursiones</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=7">Entradas</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=8">Trenes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=9">Cruceros</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=10">Gastos Administrativos / Otros</a></li><li class="rest">&nbsp;</li>
+    </ul>
+    <div id="message">
         <div name="tab_contenido" id="tab_contenido2" class="tab_contenido">
-<h5 class="modal-title">Hoteles</h5>
     <div class="col-md-12">
             <div id="table_holder">
                 <table class="table table-bordered" id="table_hotel">
@@ -201,10 +194,13 @@ border:dimgray 0px solid;
     </div>
     </div>
 
-
-
+    </div>
+<?php }elseif($_GET['tab'] == 3){ ?>
+    <ul id="menu">
+        <li class="rest">&nbsp;</li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Boletos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=2">Hotel</a></li><li  class="selected"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=3">Autos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=4">Tarjeta de Asistencia</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=5">Paquetes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=6">Excursiones</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=7">Entradas</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=8">Trenes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=9">Cruceros</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=10">Gastos Administrativos / Otros</a></li><li class="rest">&nbsp;</li>
+    </ul>
+    <div id="message">
         <div name="tab_contenido" id="tab_contenido3" class="tab_contenido">
-<h5 class="modal-title">Autos</h5>
     <div class="col-md-12">
             <div id="table_holder">
                 <table class="table table-bordered" id="table_auto">
@@ -232,10 +228,13 @@ border:dimgray 0px solid;
             </div>
    </div>
     </div>
-
-
-        <div name="tab_contenido" id="tab_contenido4" class="tab_contenido">
-<h5 class="modal-title">Tarjetas de Asistencias</h5>
+    </div>
+<?php }elseif($_GET['tab'] == 4){ ?>
+    <ul id="menu">
+        <li class="rest">&nbsp;</li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Boletos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=2">Hotel</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=3">Autos</a></li><li class="selected"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=4">Tarjeta de Asistencia</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=5">Paquetes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=6">Excursiones</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=7">Entradas</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=8">Trenes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=9">Cruceros</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=10">Gastos Administrativos / Otros</a></li><li class="rest">&nbsp;</li>
+    </ul>
+    <div id="message">
+        <div name="tab_contenido" id="tab_contenido3" class="tab_contenido">
     <div class="col-md-12">
             <div id="table_holder">
                 <table class="table table-bordered" id="table_tarjeta">
@@ -261,11 +260,15 @@ border:dimgray 0px solid;
                     </tbody>
                 </table>
             </div>
+   </div>
     </div>
     </div>
-
-            <div name="tab_contenido" id="tab_contenido5" class="tab_contenido">
-<h5 class="modal-title">Paquetes - Paquetes Netos</h5>
+<?php }elseif($_GET['tab'] == 5){ ?>
+    <ul id="menu">
+        <li class="rest">&nbsp;</li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Boletos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=2">Hotel</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=3">Autos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=4">Tarjeta de Asistencia</a></li><li class="selected"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=5">Paquetes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=6">Excursiones</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=7">Entradas</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=8">Trenes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=9">Cruceros</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=10">Gastos Administrativos / Otros</a></li><li class="rest">&nbsp;</li>
+    </ul>
+    <div id="message">
+        <div name="tab_contenido" id="tab_contenido3" class="tab_contenido">
     <div class="col-md-12">
             <div id="table_holder">
                 <table class="table table-bordered" id="table_paquete">
@@ -291,11 +294,15 @@ border:dimgray 0px solid;
                     </tbody>
                 </table>
             </div>
+   </div>
     </div>
     </div>
-
-            <div name="tab_contenido" id="tab_contenido6" class="tab_contenido">
-<h5 class="modal-title">Excursiones</h5>
+<?php }elseif($_GET['tab'] == 6){ ?>
+    <ul id="menu">
+        <li class="rest">&nbsp;</li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Boletos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=2">Hotel</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=3">Autos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=4">Tarjeta de Asistencia</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=5">Paquetes</a></li><li class="selected"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=6">Excursiones</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=7">Entradas</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=8">Trenes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=9">Cruceros</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=10">Gastos Administrativos / Otros</a></li><li class="rest">&nbsp;</li>
+    </ul>
+    <div id="message">
+        <div name="tab_contenido" id="tab_contenido3" class="tab_contenido">
     <div class="col-md-12">
             <div id="table_holder">
                 <table class="table table-bordered" id="table_excursion">
@@ -321,11 +328,15 @@ border:dimgray 0px solid;
                     </tbody>
                 </table>
             </div>
+   </div>
     </div>
     </div>
-
-            <div name="tab_contenido" id="tab_contenido7" class="tab_contenido">
-<h5 class="modal-title">Entradas</h5>
+<?php }elseif($_GET['tab'] == 7){ ?>
+    <ul id="menu">
+        <li class="rest">&nbsp;</li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Boletos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=2">Hotel</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=3">Autos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=4">Tarjeta de Asistencia</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=5">Paquetes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=6">Excursiones</a></li><li class="selected"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=7">Entradas</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=8">Trenes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=9">Cruceros</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=10">Gastos Administrativos / Otros</a></li><li class="rest">&nbsp;</li>
+    </ul>
+    <div id="message">
+        <div name="tab_contenido" id="tab_contenido3" class="tab_contenido">
     <div class="col-md-12">
             <div id="table_holder">
                 <table class="table table-bordered" id="table_entrada">
@@ -351,11 +362,15 @@ border:dimgray 0px solid;
                     </tbody>
                 </table>
             </div>
+   </div>
     </div>
     </div>
-
-            <div name="tab_contenido" id="tab_contenido8" class="tab_contenido">
-<h5 class="modal-title">Trenes</h5>
+<?php }elseif($_GET['tab'] == 8){ ?>
+    <ul id="menu">
+        <li class="rest">&nbsp;</li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Boletos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=2">Hotel</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=3">Autos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=4">Tarjeta de Asistencia</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=5">Paquetes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=6">Excursiones</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=7">Entradas</a></li><li class="selected"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=8">Trenes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=9">Cruceros</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=10">Gastos Administrativos / Otros</a></li><li class="rest">&nbsp;</li>
+    </ul>
+    <div id="message">
+        <div name="tab_contenido" id="tab_contenido3" class="tab_contenido">
     <div class="col-md-12">
             <div id="table_holder">
                 <table class="table table-bordered" id="table_tren">
@@ -381,11 +396,15 @@ border:dimgray 0px solid;
                     </tbody>
                 </table>
             </div>
+   </div>
     </div>
     </div>
-
-            <div name="tab_contenido" id="tab_contenido9" class="tab_contenido">
-<h5 class="modal-title">Cruceros</h5>
+<?php }elseif($_GET['tab'] == 9){ ?>
+    <ul id="menu">
+        <li class="rest">&nbsp;</li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Boletos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=2">Hotel</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=3">Autos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=4">Tarjeta de Asistencia</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=5">Paquetes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=6">Excursiones</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=7">Entradas</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=8">Trenes</a></li><li class="selected"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=9">Cruceros</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=10">Gastos Administrativos / Otros</a></li><li class="rest">&nbsp;</li>
+    </ul>
+    <div id="message">
+        <div name="tab_contenido" id="tab_contenido3" class="tab_contenido">
     <div class="col-md-12">
             <div id="table_holder">
                 <table class="table table-bordered" id="table_crucero">
@@ -411,11 +430,15 @@ border:dimgray 0px solid;
                     </tbody>
                 </table>
             </div>
+   </div>
     </div>
     </div>
-
-            <div name="tab_contenido" id="tab_contenido10" class="tab_contenido">
-<h5 class="modal-title">Gastos Administrativos - Otros</h5>
+<?php }elseif($_GET['tab'] == 10){ ?>
+    <ul id="menu">
+        <li class="rest">&nbsp;</li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>">Boletos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=2">Hotel</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=3">Autos</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=4">Tarjeta de Asistencia</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=5">Paquetes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=6">Excursiones</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=7">Entradas</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=8">Trenes</a></li><li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=9">Cruceros</a></li><li class="selected"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=10">Gastos Administrativos / Otros</a></li><li class="rest">&nbsp;</li>
+    </ul>
+    <div id="message">
+        <div name="tab_contenido" id="tab_contenido3" class="tab_contenido">
     <div class="col-md-12">
             <div id="table_holder">
                 <table class="table table-bordered" id="table_otro">
@@ -441,25 +464,17 @@ border:dimgray 0px solid;
                     </tbody>
                 </table>
             </div>
+   </div>
     </div>
     </div>
-
-
+<?php } ?>
+</div>
+ 
 
 
         </div>
 
 
-
-
-
-
-
-
-
-
-
-</div>
 <!-- MODAL DE CONFIRMACIÓN -->
 
 <div id="modal_success" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
@@ -701,6 +716,23 @@ border:dimgray 0px solid;
         </div>
 
 <!-- FIN PRINT  -->
+
+<!-- MODAL DE CONFIRMACIÓN -->
+
+<div id="modal_success" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <center>
+                    <h3 class="modal-title messages_modal">Operación Correcta</h3>
+                    <br/>
+                    <button type="button" class="btn btn-primary btn_success" data-dismiss="modal">Aceptar</button>
+                </center>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <!-- INICIO GENERAR FACTURA -->
 
