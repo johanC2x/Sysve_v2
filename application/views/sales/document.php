@@ -838,7 +838,7 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                     <div class="col-md-1">
                         <label for="code_travel">&nbsp;</label><br>
 
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#comentario_item">+</button>
+                        <button type="button" class="btn btn-primary" onclick='$("#comentario_item").modal("show");'>+</button>
                     </div>
                     <br><br><br/><br/>
                     <div class="col-md-3" class="form-group">
@@ -890,29 +890,6 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                         <label for="code_travel">&nbsp;</label><br>
                         <input type="button" id="btn_save_factura" class="btn btn-primary" value="Agregar"/>
                     </div>
-
-
-
-
-  <!-- Modal -->
-  <div class="modal fade" id="comentario_item" style="overflow-y: scroll;" role="dialog">
-    <div class="modal-dialog">    
-      <!-- Modal adicionar coemntario a items-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <textarea style="padding:40px 190px;" ></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
                     <br><br>
                     <br/><br/><br/>
                     <div class="col-md-12">
@@ -1098,6 +1075,24 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                 </div>
             </div>
         </div>
+
+<!-- Modal -->
+<div class="modal fade" id="comentario_item" style="overflow-y: scroll;" role="dialog">
+    <div class="modal-dialog">    
+      <!-- Modal adicionar coemntario a items-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <textarea style="padding:40px 190px;" ></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+        </div>
+      </div>
+    </div>
+</div>
 
 <script type='text/javascript'>
 
