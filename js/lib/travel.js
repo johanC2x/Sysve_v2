@@ -26,7 +26,8 @@ var travel = function () {
         current_pay:0,
         current_pay_children:0,
         list_service_doc:[],
-        current_serice_doc:-1
+        current_serice_doc:-1,
+        detalle_servicio:""
     };
 
     self.changeRow = function(idObj){
@@ -53,6 +54,7 @@ var travel = function () {
             data.service_doc_trib = service_doc_trib;
             data.service_doc_quantity = service_doc_quantity;
             data.service_doc_amount = service_doc_amount;
+            data.service_doc_name_detail = self.detalle_servicio;
             if(self.current_serice_doc === -1){
                 self.list_service_doc.push(data);
             }else{
@@ -62,12 +64,19 @@ var travel = function () {
             self.setOcultoDetalleServicio();
             self.makeTableServiceDoc();
             self.resetServiceDocReset();
+            self.detalle_servicio = "";
             //self.calcularComisionesChildren();
         }
     };
     self.makeTableServiceDoc = function(){
         var html = '';
         var count = 0;
+        var mnt_tot_inf = 0;
+        var mnt_tot_exr = 0;
+        var mnt_tot_exp = 0;
+        var mnt_tot_grv = 0;
+        var mnt_tot_grt = 0;
+        var mnt_tot_imp = 0;
         var monto_pagar = 0;
         if(self.list_service_doc.length === 0){
             html += `<tr>
@@ -80,17 +89,33 @@ var travel = function () {
         }else{
             self.list_service_doc.forEach(function(element){
                 var total = parseInt(element.service_doc_quantity) * parseFloat(element.service_doc_amount);
-                var tributo = (element.service_doc_trib === '30') ? 0.00 : 0.18;
-                var subtotal = (((((element.service_doc_amount)*tributo)-(element.service_doc_amount))*(-1))*(element.service_doc_quantity));
+                var tributo = (element.service_doc_trib === '10') ? 0.18 : 0.00;
+                var impuesto = ((parseInt(element.service_doc_quantity) * parseFloat(element.service_doc_amount))*tributo);
+
+                var gravada10   = ((element.service_doc_trib === '10') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
+                var gravada11   = ((element.service_doc_trib === '11') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
+                var gravada12   = ((element.service_doc_trib === '12') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
+                var gravada13   = ((element.service_doc_trib === '13') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
+                var gravada14   = ((element.service_doc_trib === '14') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
+                var gravada15   = ((element.service_doc_trib === '15') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
+                var gravada16   = ((element.service_doc_trib === '16') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
+                var gravada17   = ((element.service_doc_trib === '17') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
+                var exonerado20 = ((element.service_doc_trib === '20') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
+                var exonerado21 = ((element.service_doc_trib === '21') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
+                var exportacion = ((element.service_doc_trib === '40') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
+                var inafecto30  = ((element.service_doc_trib === '30') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
+
+
+                var subtotal = parseFloat(element.service_doc_amount);
                 html += `<tr  style="background-color:#FFFFFF">
                             <td><center>`+ (count + 1) +`</center></td>
                             <td><center>`+ element.service_doc_name +`</center></td>
                             <td><center>`+ element.service_doc_type +`</center></td>
                             <td><center>`+ element.service_doc_trib +`</center></td>
                             <td><center>`+ element.service_doc_quantity +`</center></td>
+                            <td align=right>`+ ((parseFloat(element.service_doc_amount)*tributo)+ parseFloat(element.service_doc_amount)).toFixed(2) +`</td>
                             <td align=right>`+ parseFloat(element.service_doc_amount).toFixed(2) +`</td>
-                            <td align=right>`+ parseFloat((((element.service_doc_amount)*tributo)-(element.service_doc_amount))*(-1)).toFixed(2) +`</td>
-                            <td align=right>`+ parseFloat(((((element.service_doc_amount)*tributo)-(element.service_doc_amount))*(-1))*(element.service_doc_quantity)).toFixed(2) +`</td>
+                            <td align=right>`+ parseInt(element.service_doc_quantity)*parseFloat(element.service_doc_amount).toFixed(2) +`</td>
                             <td>
                                 <center>
                                     <a href='javascript:void(0);' title='Eliminar' onclick='travel.removeServiceDoc(`+ count +`)' >
@@ -99,14 +124,33 @@ var travel = function () {
                                 </center>
                             </td>
                         </tr>`;
-                monto_pagar = monto_pagar + subtotal;
+                mnt_tot_imp = mnt_tot_imp + impuesto; 
+                mnt_tot_exp = mnt_tot_exp + exportacion;
+                mnt_tot_grv = mnt_tot_grv + gravada10 ;
+                mnt_tot_grt = mnt_tot_grt + gravada11 + gravada12 + gravada13 + gravada14 + gravada15 + gravada16 + gravada17;
+                mnt_tot_inf = mnt_tot_inf + inafecto30;
+                mnt_tot_exr = mnt_tot_exr + exonerado20 + exonerado21;
+                monto_pagar = monto_pagar + total + impuesto;
                 count++;
             });
         }
         $("#table_customer_travel_children tbody").empty().append(html);
+        $("#mnt_tot").text(monto_pagar.toFixed(2));
+        $('input[id="mnt_tot"]').val(monto_pagar.toFixed(2));
         $("#total_pago_children").text(monto_pagar.toFixed(2));
-        $("#mnt_tot_grv").text(monto_pagar.toFixed(2));
-        $("#mnt_tot_grt").text((monto_pagar*(4)).toFixed(2));
+        $('input[id="total_pago_children"]').val(monto_pagar.toFixed(2));
+        $("#mnt_tot_grv").text((mnt_tot_grv).toFixed(2));
+        $('input[id="mnt_tot_grv"]').val(mnt_tot_grv.toFixed(2));
+        $("#mnt_tot_grt").text((mnt_tot_grt).toFixed(2));
+        $('input[id="mnt_tot_grt"]').val(mnt_tot_grt.toFixed(2));
+        $("#mnt_tot_exr").text((mnt_tot_exr).toFixed(2));
+        $('input[id="mnt_tot_exr"]').val(mnt_tot_exr.toFixed(2));
+        $("#mnt_tot_inf").text((mnt_tot_inf).toFixed(2));
+        $('input[id="mnt_tot_inf"]').val(mnt_tot_inf.toFixed(2));
+        $("#mnt_tot_exp").text((mnt_tot_exp).toFixed(2));
+        $('input[id="mnt_tot_exp"]').val(mnt_tot_exp.toFixed(2));        
+        $("#mnt_tot_imp").text((mnt_tot_imp).toFixed(2));
+        $('input[id="mnt_tot_imp"]').val(mnt_tot_imp.toFixed(2));        
     };
     self.resetServiceDocReset = function(){
         $("#detalle_servicio").val("");
@@ -3179,6 +3223,17 @@ self.listServiciosVenta = function(){
                 }
             }
         });
+    };
+
+    self.guardarDetalles = function(){
+        var detalle_servicio = $("#detalle_servicio_modal").val();
+        self.detalle_servicio = detalle_servicio;
+        $(".content_service_detail").css("display","none");
+        $("#detalle_servicio_modal").val("");
+    };
+
+    self.openModalDetail = function(){
+        $(".content_service_detail").css("display","inline");
     };
 
     return self;
