@@ -727,6 +727,7 @@ echo "<pre/>";print_r($result);exit();
 		$factura['datos']     = array(
 				'cotizacion_id'	      =>$this->input->post('ref_id'),
 				'name'				  =>$this->input->post('name'),
+				'cod_tip_ope'		  =>$this->input->post('cod_tip_ope'),
 				'tip_doc_rct'		  =>$this->input->post('tip_doc_rct'),
 				'nro_doc_rct'		  =>$this->input->post('nro_doc_rct'),
 				'dir_des_rct'		  =>$this->input->post('dir_des_rct'),
@@ -755,11 +756,12 @@ echo "<pre/>";print_r($result);exit();
 	            'tipo_pago'			  =>$this->input->post('tipo_pago'),
 	            'form_pago'			  =>$this->input->post('form_pago'),
 	            'list_service_doc'	  =>$this->input->post('detalle_servicio_json'),
-        ); 
-	
+		); 
+		
 				$data = [];
 				$data["fec_emi"] 		= date('Y-m-d');
 				$data["hor_emi"] 		= date('H:i:s');
+				$data["cod_tip_ope"]	= $factura['datos']['cod_tip_ope'];
 				$data["serie"] 			= $factura['datos']['serie'];
 				$data["correlativo"] 	= $factura['datos']['num_corre_cpe_ref'];
 				$data["moneda"] 		= $factura['datos']['cod_tip_moneda'];
@@ -770,37 +772,40 @@ echo "<pre/>";print_r($result);exit();
 				$data["nro_doc"] 		= "20101914837";
 				$data["nom_emi"] 		= "TURIFAX, S.A.C.";
 				$data["nom_rct"] 	    = $factura['datos']['name'];
-				$data["mnt_tot_imp"] 	= $factura['datos']['mnt_tot_imp'];
-				$data["mnt_tot_grv"] 	= $factura['datos']['mnt_tot_grv'];
-				$data["mnt_tot_inf"] 	= $factura['datos']['mnt_tot_inf'];
+				$data["mnt_tot_imp"] 	= isset($factura['datos']['mnt_tot_imp']) && !empty($factura['datos']['mnt_tot_imp']) ? $factura['datos']['mnt_tot_imp'] : number_format(0,2);
+				$data["mnt_tot_grv"] 	= isset($factura['datos']['mnt_tot_grv']) && !empty($factura['datos']['mnt_tot_grv']) ? $factura['datos']['mnt_tot_grv'] : number_format(0,2);
+				$data["mnt_tot_inf"] 	= isset($factura['datos']['mnt_tot_inf']) && !empty($factura['datos']['mnt_tot_inf']) ? $factura['datos']['mnt_tot_inf'] : number_format(0,2);
 				$data["mnt_tot_exr"] 	= "0,00";
-				$data["mnt_tot_grt"] 	= $factura['datos']['mnt_tot_grt'];
-				$data["mnt_tot_exp"] 	= $factura['datos']['mnt_tot_exp'];
-				$data["mnt_tot_isc"] 	= $factura['datos']['mnt_tot_isc'];
-				$data["mnt_tot_trb_igv"]= $factura['datos']['mnt_tot_trb_igv'];
-				$data["mnt_tot_trb_isc"]= $factura['datos']['mnt_tot_trb_isc'];
-				$data["mnt_tot_trb_otr"]= $factura['datos']['mnt_tot_trb_otr'];
-				$data["mnt_tot_val_vta"]= $factura['datos']['mnt_tot_val_vta'];
-				$data["mnt_tot_prc_vta"]= $factura['datos']['mnt_tot_prc_vta'];
-				$data["mnt_tot_dct"] 	= $factura['datos']['mnt_tot_dct'];
-				$data["mnt_tot_otr_cgo"]= $factura['datos']['mnt_tot_otr_cgo'];
-				$data["mnt_tot"]		= $factura['datos']['mnt_tot'];
-				$data["mnt_tot_antcp"]	= $factura['datos']['mnt_tot_antcp'];
+				$data["mnt_tot_grt"] 	= isset($factura['datos']['mnt_tot_grt']) && !empty($factura['datos']['mnt_tot_grt']) ? $factura['datos']['mnt_tot_grt'] : number_format(0,2);
+				$data["mnt_tot_exp"] 	= isset($factura['datos']['mnt_tot_exp']) && !empty($factura['datos']['mnt_tot_exp']) ? $factura['datos']['mnt_tot_exp'] : number_format(0,2);
+				$data["mnt_tot_isc"] 	= isset($factura['datos']['mnt_tot_isc']) && !empty($factura['datos']['mnt_tot_isc']) ? $factura['datos']['mnt_tot_isc'] : number_format(0,2);
+				$data["mnt_tot_trb_igv"]= isset($factura['datos']['mnt_tot_trb_igv']) && !empty($factura['datos']['mnt_tot_trb_igv']) ? $factura['datos']['mnt_tot_trb_igv'] : number_format(0,2);
+				$data["mnt_tot_trb_isc"]= isset($factura['datos']['mnt_tot_trb_isc']) && !empty($factura['datos']['mnt_tot_trb_isc']) ? $factura['datos']['mnt_tot_trb_isc'] : number_format(0,2);
+				$data["mnt_tot_trb_otr"]= isset($factura['datos']['mnt_tot_trb_otr']) && !empty($factura['datos']['mnt_tot_trb_otr']) ? $factura['datos']['mnt_tot_trb_otr'] : number_format(0,2);
+				$data["mnt_tot_val_vta"]= isset($factura['datos']['mnt_tot_val_vta']) && !empty($factura['datos']['mnt_tot_val_vta']) ? $factura['datos']['mnt_tot_val_vta'] : number_format(0,2);
+				$data["mnt_tot_prc_vta"]= isset($factura['datos']['mnt_tot_prc_vta']) && !empty($factura['datos']['mnt_tot_prc_vta']) ? $factura['datos']['mnt_tot_prc_vta'] : number_format(0,2);
+				$data["mnt_tot_dct"] 	= isset($factura['datos']['mnt_tot_dct']) && !empty($factura['datos']['mnt_tot_dct']) ? $factura['datos']['mnt_tot_dct'] : number_format(0,2);
+				$data["mnt_tot_otr_cgo"]= isset($factura['datos']['mnt_tot_otr_cgo']) && !empty($factura['datos']['mnt_tot_otr_cgo']) ? $factura['datos']['mnt_tot_otr_cgo'] : number_format(0,2);
+				$data["mnt_tot"]		= isset($factura['datos']['mnt_tot']) && !empty($factura['datos']['mnt_tot']) ? $factura['datos']['mnt_tot'] : number_format(0,2);
+				$data["mnt_tot_antcp"]	= isset($factura['datos']['mnt_tot_antcp']) && !empty($factura['datos']['mnt_tot_antcp']) ? $factura['datos']['mnt_tot_antcp'] : number_format(0,2);
 				$data["email"] 			= $factura['datos']['email'];
 	            $data["tip_pag"]		= $factura['datos']['tipo_pago'];	   		
 	            $data["frm_pag"]		= $factura['datos']['form_pago'];
 	            $data["list_service_doc"] = $factura['datos']['list_service_doc'];
-
+	
+// echo "<pre/>";print_r(json_encode($data));exit();
 
 				$curl = curl_init();
-			//	curl_setopt($curl, CURLOPT_URL, "http://54.152.164.10:4254/taxtech"); //PRODUCCION
-				curl_setopt($curl, CURLOPT_URL, "http://localhost:4254/taxtech");     //DESARROLLO
+				curl_setopt($curl, CURLOPT_URL, "http://54.152.164.10:4254/taxtech"); //PRODUCCION
+			//	curl_setopt($curl, CURLOPT_URL, "http://localhost:4254/taxtech");     //DESARROLLO
+			//	curl_setopt($curl, CURLOPT_URL, "http://192.168.1.35:4254/taxtech");     //DESARROLLO
 				curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 				curl_setopt($curl, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
 				$result = curl_exec($curl);
 				curl_close($curl);
- echo "<pre/>";print_r($result);exit();
+
+// echo "<pre/>";print_r($result);exit();
 
 		if($this->input->post()){
 			$factura = array(
@@ -829,9 +834,12 @@ echo "<pre/>";print_r($result);exit();
 	            'mnt_tot_otr_cgo'	  =>$this->input->post('mnt_tot_otr_cgo'),
 	            'mnt_tot'			  =>$this->input->post('mnt_tot'),
 	            'mnt_tot_antcp'		  =>$this->input->post('mnt_tot_antcp')
-
-
 			);
+
+//			echo "<pre/>";
+//			print_r($factura);
+//			exit();
+
 			$response = $this->Sale->insertFactura($factura);
 			$pago = array(
 				'cotizacion_id'	      =>$this->input->post('ref_id'),
