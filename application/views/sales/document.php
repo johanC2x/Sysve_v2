@@ -12,7 +12,8 @@ $name_client = $_GET["name_client"];
     <div class="col-md-12">
         <div class="col-md-6">
         <h4 class="modal-title">Cotizacion Nro: <?php echo $cotizacion_id."-".$estatus; ?></h4>
-        </div> <button type="button" value="factura" name="registrar" id="factura" class="btn btn-primary pull-right">Emitir Documento</button>       
+        </div> 
+        <button type="button" value="factura" name="registrar" id="factura" class="btn btn-primary pull-right">Emitir Documento</button>
     </div>
 </div>
 <hr/>
@@ -756,14 +757,22 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                         <h4 class="modal-title">Nro Control: <span id="modal-title-coti"><?php echo $ref_id;?></span><span id="modal-coti"><?php echo "-V"?></span></h4>
                         <input type="hidden" name="ref_id" value="<?php echo $ref_id;?>">
                     <div class="col-md-3" class="form-group">
-                            <input type="text" name="num_corre_cpe_ref" id="num_corre_cpe_ref" class="form-control" placeholder="Nro. Correlativo" style="color:red;" >
+                        <select required id="cod_tip_ope" name="cod_tip_ope" class="form-control">
+                                <option value="">Tipo de Operacion</option>
+                                <option name="cod_tip_ope" value="0101" >Venta Interna</option>
+                                <option name="cod_tip_ope" value="0102" >Venta Interna - Anticipos</option>
+                                <option name="cod_tip_ope" value="0103" >Venta Interna - Deduccion Anticipos</option>
+                                <option name="cod_tip_ope" value="0104" >Venta Itinerante</option>
+                                <option name="cod_tip_ope" value="0200" >Exportacion de B/E</option>
+                        </select>
+                       <!--     <input type="text" name="num_corre_cpe_ref" id="num_corre_cpe_ref" class="form-control" placeholder="Nro. Correlativo" style="color:red;" > -->
                     </div>
                     <div class="col-md-1" class="form-group">
                     </div>
 
 
                   <div class="col-md-4">
-                        <select id="serie" onchange="h()" name="cod_tip_otr_doc_ref" class="form-control">
+                        <select required id="serie" onchange="h()" name="cod_tip_otr_doc_ref" class="form-control">
                          <option value="">Tipo de Documento</option>
                          <option name="cod_tip_otr_doc_ref" value="01" data-hab="h1">Factura</option>
                          <option name="cod_tip_otr_doc_ref" value="03" data-hab="h2">Boleta de Venta</option>
@@ -772,7 +781,7 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                         </select>
                  </div>
                   <div class="col-md-2">
-                        <select id="serie" name="serie" class="form-control">
+                        <select required id="serie" name="serie" class="form-control">
                          <option value="">Serie</option>
                          <option name="serie" value="F001" class="Factura h1">F001</option>
                          <option name="serie" value="B001" class="Factura h2">B001</option>
@@ -784,7 +793,7 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
 
 
                   <div class="col-md-2">
-                    <select id="cod_tip_moneda" name="cod_tip_moneda" class="form-control">
+                    <select required id="cod_tip_moneda" name="cod_tip_moneda" class="form-control">
                         <option value="">Moneda</option>
                         <option value="PEN">Soles S/</option>
                         <option value="USD">Dolares Us$</option>
@@ -796,15 +805,15 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                 <div class="main">
                     <div class="col-md-6" class="form-group">
                             <label for="code_travel">Cliente:</label>
-                            <input type="text" id="name" name="name" value="<?php echo $name_client; ?>" class="form-control"/>
+                            <input required type="text" id="name" name="name" value="<?php echo $name_client; ?>" class="form-control"/>
                     </div>
                     <div class="col-md-3" class="form-group">                        
                             <label for="code_travel">Documento de Identidad:</label>
-                        <select name="tip_doc_rct" id="tip_doc_rct" class="form-control">
+                        <select name="tip_doc_rct" id="tip_doc_rct" class="form-control" required>
                             <option name="0" value="0">DOC.TRIB.NO.DOM.SIN.RUC</option>
-                            <option name="1" value="1">DOC. NACIONAL DE IDENTIDAD</option>
+                            <option name="1" value="1">D.N.I.</option>
                             <option name="4" value="4">CARNET DE EXTRANJERIA</option>    
-                            <option name="6" value="6">REG. UNICO DE CONTRIBUYENTES</option>
+                            <option name="6" value="6">R.U.C.</option>
                             <option name="7" value="7">PASAPORTE</option>
                             <option name="A" value="A">CED. DIPLOMATICA DE IDENTIDAD</option>
                             <option name="B" value="B">DOC.IDENT.PAIS.RESIDENCIA-NO.D</option>
@@ -814,14 +823,14 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                     </div>
                     <div class="col-md-3" class="form-group">
                             <label for="name_travel">Nro de Identidad:</label>
-                            <input type="text" id="nro_doc_rct" name="nro_doc_rct" value="<?php echo $datos['documents']; ?>" class="form-control"/>
+                            <input required type="text" id="nro_doc_rct" name="nro_doc_rct" value="<?php echo $datos['documents']; ?>" class="form-control"/>
                     </div><br/ >
                 </div><br></br>
                         <div class="col-md-8" class="form-group"><br>
-                            <input type="text" placeholder="Direccion" name="dir_des_rct" id="dir_des_rct" class="form-control" />
+                            <input required type="text" placeholder="Direccion" name="dir_des_rct" id="dir_des_rct" class="form-control" />
                         </div>
                         <div class="col-md-4" class="form-group"><br>
-                            <input type="email" placeholder="Correo Electronico" id="email" name="email" value="<?php echo $datos['emails']; ?>" class="form-control"/>
+                            <input required type="email" placeholder="Correo Electronico" id="email" name="email" value="<?php echo $datos['emails']; ?>" class="form-control"/>
                         </div>
             </dir>
     <div class=""  style="background-color:#EFF0F1">
@@ -837,9 +846,23 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                     </div>
                     <div class="col-md-1">
                         <label for="code_travel">&nbsp;</label><br>
-
-                        <button type="button" class="btn btn-primary" onclick='$("#comentario_item").modal("show");'>+</button>
+                        <button type="button" class="btn btn-primary" onclick="travel.openModalDetail();">+</button>
                     </div>
+
+                    <div class="col-md-10 content_service_detail" class="form-group" style="display:none;">
+                        <br/>
+                            <textarea name="detalle_servicio_modal" id="detalle_servicio_modal" class="form-control" placeholder="Descripcion">
+                            </textarea>
+                        <br/>
+                    </div>
+                    <div class="col-md-2 content_service_detail" style="display:none;">
+                        <br/>
+                            <button type="button" class="btn btn-primary" onclick="travel.guardarDetalles();">  
+                                Guardar
+                            </button>   
+                        <br/>
+                    </div>
+
                     <br><br><br/><br/>
                     <div class="col-md-3" class="form-group">
                         <label for="code_travel">Servicio:</label>
@@ -872,7 +895,7 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                             <option value="16">Gravado - Retiro por entrega a trabajadores</option>
                             <option value="17">Gravado - IVAP</option>
                             <option value="20">Exonerado - Operación onerosa</option>
-                            <option value="21">Exonerado - Operación onerosa</option>
+                            <option value="21">Exonerado - Transferencia Gratuita</option>
                             <option value="30">Inafecto - Operación onerosa</option>
                             <option value="40">Exportación</option>
                         </select>
@@ -890,6 +913,7 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                         <label for="code_travel">&nbsp;</label><br>
                         <input type="button" id="btn_save_factura" class="btn btn-primary" value="Agregar"/>
                     </div>
+
                     <br><br>
                     <br/><br/><br/>
                     <div class="col-md-12">
@@ -946,36 +970,44 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
             travel.addServiceDoc();
         });
 
+        $("#btn_save_description_detail").click(function(){
+            travel.guardarDetalles();
+        });
+
     });
 
 </script>
 <br>
 
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Exonerada</label>
-                            <input type="number" id="mnt_tot_exr" step="0.01" name="mnt_tot_exr" placeholder="0,00" class="form-control"/>
+                        <label for="name_travel">Exonerada</label>                            
+                    <!--     <p><span id="mnt_tot_exr"></span></p>  -->
+                            <input type="number" value="0.00" id="mnt_tot_exr" step="0.01" name="mnt_tot_exr" placeholder="0,00" class="form-control" readonly="true"/>
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Inafecto</label>
-                            <input type="number" name="mnt_tot_inf" step="0.01" id="mnt_tot_inf" class="form-control" placeholder="0,00">
+                        <label for="name_travel">Inafecto</label>
+                    <!--     <p><span id="mnt_tot_inf"></span></p>  -->
+                        <input type="number" value="0.00" name="mnt_tot_inf" step="0.01" id="mnt_tot_inf" class="form-control" placeholder="0,00" readonly="true"/>
                     </div>
                     <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Exonerada</label>
-                            <input type="number" name="mnt_tot_exp" step="0.01" id="mnt_tot_exp" class="form-control" placeholder="0,00">
+                            <label for="name_travel">Exportacion</label>
+                    <!--     <p><span id="mnt_tot_exp"></span></p>  -->
+                        <input type="number" value="0.00" name="mnt_tot_exp" step="0.01" id="mnt_tot_exp" class="form-control" placeholder="0,00" readonly="true"/>
                     </div>
                    <div class="col-md-2" class="form-group">
-                            <label for="name_travel">Gravada</label>
-                         <p><span id="mnt_tot_grv"></span></p>  
-                        <input type="hidden" id="mnt_tot_grv" step="0.01" name="mnt_tot_grv" placeholder="0,00" class="form-control" />
+                        <label for="name_travel">Gravada</label>
+                    <!--     <p><span id="mnt_tot_grv"></span></p>  -->
+                        <input type="number" value="0.00" id="mnt_tot_grv" step="0.01" name="mnt_tot_grv" placeholder="0,00" class="form-control" readonly="true"/>
                    </div>
                    <div class="col-md-2" class="form-group">
                             <label for="name_travel">Gratuita</label>
-                         <p><span id="mnt_tot_grt"></span></p>  
-                        <input type="hidden" id="mnt_tot_grt" step="0.01" name="mnt_tot_grt" placeholder="0,00" class="form-control" />
+                    <!--     <p><span id="mnt_tot_grt"></span></p>  -->
+                        <input type="number" value="0.00" id="mnt_tot_grt" step="0.01" name="mnt_tot_grt" placeholder="0,00" class="form-control" readonly="true"/>
                    </div>
                     <div class="col-md-2" class="form-group">
                             <label for="name_travel">Total IGV</label>
-                            <input type="number" name="mnt_tot_imp" step="0.01" id="mnt_tot_imp" class="form-control" placeholder="0,00">
+                    <!--     <p><span id="mnt_tot_imp"></span></p>  -->
+                        <input type="number" value="0.00" name="mnt_tot_imp" step="0.01" id="mnt_tot_imp" class="form-control" placeholder="0,00" readonly="true"/>
                     </div>
                     <br></br><br></br>
 
@@ -995,18 +1027,9 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                                 </div>
                     </div>
 
-
-                <div class="col-md-6"></div>
-
-                    <div class="col-md-3" class="form-group">
-                            <label for="name_travel">TOTAL:</label>
-                            <input type="text" name="mnt_tot" step="0.01" id="mnt_tot" class="form-control" placeholder="Total">
-                    </div><br><br>
-                </br><br>
-<!---------------------FORMA DE PAGO GENERAR FACTURA------------------------>
                     <div class="col-md-3" class="form-group">
                             <label for="form_pago">Tipo de Pago:</label>
-                        <select name="tipo_pago" class="form-control">
+                        <select required name="tipo_pago" class="form-control">
                             <option>Seleccione...</option>
                             <option value="000">NO ASIGNADO</option>
                             <option value="001">CONTADO</option>
@@ -1020,9 +1043,9 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                             <option value="009">CRÉDITO A 45 DÍAS</option>
                         </select>
                     </div>
-                    <div class="col-md-2" class="form-group">
+                    <div class="col-md-3" class="form-group">
                             <label for="form_pago">Forma:</label>
-                        <select name="form_pago" class="form-control">
+                        <select required name="form_pago" class="form-control">
                             <option>Seleccione...</option>
                             <option value="000">NO ASIGNADO</option>
                             <option value="001">EFECTIVO</option>
@@ -1034,24 +1057,32 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                             <option value="007">TRANSFERENCIA INTERBANCARIA</option>
                         </select>
                     </div>
-                    <div class="col-md-2" class="form-group">
-                            <label for="banco_pago">Banco:</label>
-                            <input type="text" name="banco_pago" id="banco_pago" class="form-control" placeholder="Banco">
-                    </div>
-                    <div class="col-md-2" class="form-group">
-                            <label for="nro_pago">Nro:</label>
-                            <input type="text" name="nro_pago" id="nro_pago" class="form-control" placeholder="Nro.">
-                    </div>
                     <div class="col-md-3" class="form-group">
-                            <label for="mnt_tot_pago">Monto:</label>
-                            <input type="number" step="0.1" name="mnt_tot_pago" id="mnt_tot_pago" class="form-control" placeholder="Monto" onChange="calculo();">
-                    </div><br></br><br></br>
+                            <label for="name_travel">TOTAL:</label>
+                    <!--     <p><span id="mnt_tot"></span></p> -->
+                            <input type="number" value="0.00" name="mnt_tot" step="0.01" id="mnt_tot" class="form-control" placeholder="Total" readonly="true"/>
+                    </div><br><br>
+                </br><br>
+<!---------------------FORMA DE PAGO GENERAR FACTURA------------------------>
+
+                    <div class="col-md-2" class="form-group">
+                         <!--   <label for="banco_pago">Banco:</label> -->
+                            <input type="hidden" name="banco_pago" value="0.00" id="banco_pago" class="form-control" placeholder="Banco">
+                    </div>
+                    <div class="col-md-2" class="form-group">
+                        <!--    <label for="nro_pago">Nro:</label> -->
+                            <input type="hidden" name="nro_pago" id="nro_pago" class="form-control" placeholder="Nro.">
+                    </div>
+                    <div class="col-md-1" class="form-group">
+                       <!--     <label for="mnt_tot_pago">Monto:</label> -->
+                            <input type="hidden" step="0.1" name="mnt_tot_pago" value="0.00" id="mnt_tot_pago" class="form-control" placeholder="Monto" onChange="calculo();">
+                    </div>
 
                     <dir class="col-md-9"></dir>
                     <div class="col-md-3" class="form-group">
-                            <label for="name_travel">TOTAL:</label>
-                            <input type="text" name="total3" class="form-control" placeholder="Total">
-                    </div><br></br>
+                        <!--    <label for="name_travel">TOTAL:</label>  -->
+                            <input type="hidden" name="total3" class="form-control" value="0.00" placeholder="Total">
+                    </div>
 
 <dir class="modal-header"><br>
 <h5 class="modal-title">Observaciones</h5>
@@ -1075,24 +1106,6 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                 </div>
             </div>
         </div>
-
-<!-- Modal -->
-<div class="modal fade" id="comentario_item" style="overflow-y: scroll;" role="dialog">
-    <div class="modal-dialog">    
-      <!-- Modal adicionar coemntario a items-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <textarea style="padding:40px 190px;" ></textarea>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-dismiss="modal">Guardar</button>
-        </div>
-      </div>
-    </div>
-</div>
 
 <script type='text/javascript'>
 
@@ -1238,11 +1251,8 @@ $(document).ready(function() {
         }
     });
 });
+
 </script>
-
-
-
-
 <?php $this->load->view("partial/footer"); ?>
 
 
