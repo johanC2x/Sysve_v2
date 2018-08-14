@@ -411,6 +411,46 @@ class Sale extends CI_Model
 		$this->db->query('UPDATE '.$this->db->dbprefix('sales_items_temp'). ' SET total=subtotal WHERE total IS NULL');
 	}
 	
+	public function correlativo($postData)
+	{
+		$response = [];
+		$this->db->from('factura');
+		$this->db->order_by('num_corre_cpe_ref', 'desc');
+		$this->db->select_max('num_corre_cpe_ref');
+		$this->db->select('cod_tip_otr_doc_ref');
+		$this->db->group_by(array("cod_tip_otr_doc_ref"));
+		$correlativo = $this->db->get();
+		foreach($correlativo->result() as $row){
+			$response[] = $row;
+		}
+		return $response;
+	}
+
+
+
+	function getUserDetails($postData){
+		 
+		  $response = array();
+		 
+		// if($postData['username'] )
+		  {
+		 
+		   // Select record
+		   $this->db->select('*');
+		   $this->db->where('cod_tip_otr_doc_ref',  $postData['cod_tip_otr_doc_ref']);
+		   $this->db->order_by('num_corre_cpe_ref', 'desc');		   
+		   $q = $this->db->get('factura');
+		   $response = $q->result_array();
+		 
+		  }
+		 
+		  return $response;
+		 }
+
+
+
+
+
 	public function get_giftcard_value( $giftcardNumber )
 	{
 		if ( !$this->Giftcard->exists( $this->Giftcard->get_giftcard_id($giftcardNumber)))
