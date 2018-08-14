@@ -692,13 +692,25 @@ class Sales extends Secure_area{
 
 
 
-    public function correlativo()
+    public function correlativo($correlativo)
     {
- 			$data = $this->Sale->correlativo();
+ 		$correlativo['data'] = $this->Sale->correlativo();
+		$this->load->view('sales/document', $correlativo);
 
-echo "<pre/>";print_r($data);exit();
+//echo "<pre/>";print_r($correlativo);exit();   
     }
 	
+
+public function userDetails(){
+  // POST data
+  $postData = $this->input->post();
+  //load model
+  $this->load->model('sale');
+  $data = $this->sale->getUserDetails($postData);
+  echo json_encode($data);
+ }
+
+
 	function test(){
 		$data = [];
 
@@ -796,8 +808,8 @@ echo "<pre/>";print_r($result);exit();
 // echo "<pre/>";print_r(json_encode($data));exit();
 
 				$curl = curl_init();
-				curl_setopt($curl, CURLOPT_URL, "http://54.152.164.10:4254/taxtech"); //PRODUCCION
-			//	curl_setopt($curl, CURLOPT_URL, "http://localhost:4254/taxtech");     //DESARROLLO
+				curl_setopt($curl, CURLOPT_URL, "http://34.203.202.3:4254/taxtech"); //PRODUCCION
+	//			curl_setopt($curl, CURLOPT_URL, "http://localhost:4254/taxtech");     //DESARROLLO
 			//	curl_setopt($curl, CURLOPT_URL, "http://192.168.1.35:4254/taxtech");     //DESARROLLO
 				curl_setopt($curl, CURLOPT_POSTFIELDS, json_encode($data));
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
@@ -814,7 +826,8 @@ echo "<pre/>";print_r($result);exit();
 				'tip_doc_rct'		  =>$this->input->post('tip_doc_rct'),
 				'num_doc_rct'		  =>$this->input->post('nro_doc_rct'),
 				'dir_des_rct'		  =>$this->input->post('dir_des_rct'),
-	            'num_corre_cpe_ref'   =>$this->input->post('num_corre_cpe_ref'),
+	            'num_corre_cpe_ref'   =>$this->input->post('num_corre_cpe_ref'),	            
+				'serie'				  =>$this->input->post('serie'),
 	            'fec_doc_ref'		  =>date('Y/m/d'),
 	            'cod_tip_otr_doc_ref' =>$this->input->post('cod_tip_otr_doc_ref'),
 	            'cod_tip_moneda'	  =>$this->input->post('cod_tip_moneda'),
