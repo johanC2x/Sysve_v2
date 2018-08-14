@@ -85,6 +85,48 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
 }
 </script>
 
+ <!-- Script -->
+  <script type='text/javascript'>
+  $(document).ready(function(){
+ 
+   $('#sel_user').change(function(){
+    var cod_tip_otr_doc_ref = $(this).val();
+    $.ajax({
+     url:'<?=base_url()?>index.php/sales/userDetails',
+     method: 'post',
+     data: {cod_tip_otr_doc_ref: cod_tip_otr_doc_ref},
+     dataType: 'json',
+     success: function(response){
+      var len = response.length;
+
+      if(len > 0){
+       // Read values
+       var serie = response[0].serie;
+       var cod_tip_otr_doc_ref = response[0].cod_tip_otr_doc_ref;
+       var num_corre_cpe_ref = (parseInt(response[0].num_corre_cpe_ref)+1);
+
+
+       $('#sserie').text(serie);
+       $('select[id="sserie"]').val(serie);
+       $('#scod_tip_otr_doc_ref').text(cod_tip_otr_doc_ref);
+       $('input[id="scod_tip_otr_doc_ref"]').val(cod_tip_otr_doc_ref);
+       $('#snum_corre_cpe_ref').text(num_corre_cpe_ref);
+       $('input[id="snum_corre_cpe_ref"]').val(num_corre_cpe_ref);
+ 
+      }else{
+       $('#serie').text('');
+       $('select[id="sserie"]').text('');
+       $('#scod_tip_otr_doc_ref').text('');
+       $('input[id="scod_tip_otr_doc_ref"]').val('');
+       $('#snum_corre_cpe_ref').text('');
+       $('input[id="snum_corre_cpe_ref"]').val('');
+      }
+ 
+     }
+   });
+  });
+ });
+ </script>
 
 <style>
 *{ margin:0; padding:0; }
@@ -668,37 +710,6 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
 </form>
 
 
-<script type="text/javascript">
-    function calculo(){
-    //tasa de impuesto
-  var tasa = 18;
-  
-  //monto a calcular el impuesto
-  var monto2 = $("input[name=monto2]").val();
-  var monto3 = $("input[name=monto3]").val();  
-  var monto4 = $("input[name=monto4]").val();
-  var monto5 = $("input[name=monto5]").val(); 
-  //calculo del impuesto
-  var iva = ((monto2 + monto3) * tasa)/100;
-
-  var total1 = monto2 + monto3;
-  var total2 = (monto2 + monto3 - monto4 - monto5); 
-  //Subtotal
-  $("input[name=subtotal]").val(parseInt(total1));
-
-  //se carga el iva en el campo correspondien te
-  $("input[name=iva]").val(iva);
-  
-  //se carga el total en el campo correspondiente
-  $("input[name=total]").val(parseInt(total1)+parseInt(iva));
-  $("input[name=total3]").val(parseInt(total2)+parseInt(iva));   
-}
-</script>
-
-
-
-
-
                     <div class="modal-footer">
                         <div class="form-group">
                             <button id="add_info_service" type="button" class="btn btn-primary">Aceptar</button> 
@@ -753,8 +764,7 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
         <?php echo form_open('sales/factura'); ?>
-                <h4 class="modal-title">Documento</h4>
-                        <h4 class="modal-title">Nro Control: <span id="modal-title-coti"><?php echo $ref_id;?></span><span id="modal-coti"><?php echo "-V"?></span></h4>
+                        <h4 class="modal-title">Nro Control: <span id="modal-title-coti"><?php echo $ref_id;?></span><span id="modal-coti"><?php echo "-V"?></span></h4></br>
                         <input type="hidden" name="ref_id" value="<?php echo $ref_id;?>">
                     <div class="col-md-3" class="form-group">
                         <select required id="cod_tip_ope" name="cod_tip_ope" class="form-control">
@@ -762,35 +772,35 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                                 <option name="cod_tip_ope" value="0101" >Venta Interna</option>
                                 <option name="cod_tip_ope" value="0102" >Venta Interna - Anticipos</option>
                                 <option name="cod_tip_ope" value="0103" >Venta Interna - Deduccion Anticipos</option>
-                                <option name="cod_tip_ope" value="0104" >Venta Itinerante</option>
+                            <!--<option name="cod_tip_ope" value="0104" >Venta Itinerante</option>-->
                                 <option name="cod_tip_ope" value="0200" >Exportacion de B/E</option>
                         </select>
                        <!--     <input type="text" name="num_corre_cpe_ref" id="num_corre_cpe_ref" class="form-control" placeholder="Nro. Correlativo" style="color:red;" > -->
                     </div>
-                    <div class="col-md-1" class="form-group">
-                    </div>
 
 
-                  <div class="col-md-4">
-                        <select required id="serie" onchange="h()" name="cod_tip_otr_doc_ref" class="form-control">
-                         <option value="">Tipo de Documento</option>
-                         <option name="cod_tip_otr_doc_ref" value="01" data-hab="h1">Factura</option>
-                         <option name="cod_tip_otr_doc_ref" value="03" data-hab="h2">Boleta de Venta</option>
-                         <option name="cod_tip_otr_doc_ref" value="07" data-hab="h3">Nota de Credito</option>
-                         <option name="cod_tip_otr_doc_ref" value="08" data-hab="h4">Nota de Debito</option>
-                        </select>
+
+                  <div class="col-md-3">
+                          <select name="cod_tip_otr_doc_ref" placeholder="Tipo de Documento" class="form-control" id='sel_user' required >
+                               <option value='01'>Factura</option>
+                               <option value='03'>Boleta de Venta</option>
+                               <option value='07'>Nota de Credito</option>
+                               <option value='08'>Nota de Debito</option>
+                          </select>
                  </div>
                   <div class="col-md-2">
-                        <select required id="serie" name="serie" class="form-control">
-                         <option value="">Serie</option>
-                         <option name="serie" value="F001" class="Factura h1">F001</option>
-                         <option name="serie" value="B001" class="Factura h2">B001</option>
-                         <option name="serie" value="NC" class="Factura h3">NC</option>
-                         <option name="serie" value="ND" class="Factura h4">ND</option>
-                        </select>
+                    <input type="hidden" name="serie" id="sserie" class="form-control" readonly="true"/>
+                          <select required id="sserie" name="serie" class="form-control">
+                               <option value="">Serie</option>
+                               <option id="sserie" name="serie" value="F001" class="Factura h1">F001</option>
+                               <option id="sserie" name="serie" value="B001" class="Factura h2">B001</option>
+                               <option id="sserie" name="serie" value="NC" class="Factura h3">NC</option>
+                               <option id="sserie" name="serie" value="ND" class="Factura h4">ND</option>
+                          </select>
                  </div>
-
-
+                 <div class="col-md-2">
+                        <input type="text" name="num_corre_cpe_ref" id="snum_corre_cpe_ref" class="form-control" readonly="true" style="color:red; text-align:center "/>
+                 </div>
 
                   <div class="col-md-2">
                     <select required id="cod_tip_moneda" name="cod_tip_moneda" class="form-control">
@@ -803,10 +813,6 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
             <dir class="modal-header" >
                 <h5 class="modal-title">Datos del Cliente</h5>
                 <div class="main">
-                    <div class="col-md-6" class="form-group">
-                            <label for="code_travel">Cliente:</label>
-                            <input required type="text" id="name" name="name" value="<?php echo $name_client; ?>" class="form-control"/>
-                    </div>
                     <div class="col-md-3" class="form-group">                        
                             <label for="code_travel">Documento de Identidad:</label>
                         <select name="tip_doc_rct" id="tip_doc_rct" class="form-control" required>
@@ -824,7 +830,12 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                     <div class="col-md-3" class="form-group">
                             <label for="name_travel">Nro de Identidad:</label>
                             <input required type="text" id="nro_doc_rct" name="nro_doc_rct" value="<?php echo $datos['documents']; ?>" class="form-control"/>
-                    </div><br/ >
+                    </div>
+                    <div class="col-md-6" class="form-group">
+                            <label for="code_travel">Cliente:</label>
+                            <input required type="text" id="name" name="name" value="<?php echo $name_client; ?>" class="form-control"/>
+                    </div>
+
                 </div><br></br>
                         <div class="col-md-8" class="form-group"><br>
                             <input required type="text" placeholder="Direccion" name="dir_des_rct" id="dir_des_rct" class="form-control" />
@@ -1106,7 +1117,7 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                 </div>
             </div>
         </div>
-
+</div>
 <script type='text/javascript'>
 
 //validation and submit handling
@@ -1253,6 +1264,7 @@ $(document).ready(function() {
 });
 
 </script>
+
 <?php $this->load->view("partial/footer"); ?>
 
 
