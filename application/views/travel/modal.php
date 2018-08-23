@@ -12,6 +12,7 @@
               <fieldset>
                 <legend>Documentos</legend>
                 <!-- =========== FORM ADDRESS ============ -->
+                <div class="col-md-4">
                   <div class="form-group" >
                     <select id="type_customer_doc" class="form-control">
                       <option value="">Seleccionar Tipo de Documento</option>
@@ -20,10 +21,13 @@
                       <option value="pasaporte">Pasaporte</option>
                     </select>
                   </div>
+                </div>
+                <div class="col-md-5">
                   <div class="form-group" >
                     <input type="text" id="nro_customer_doc" name="nro_customer_doc" class="form-control" placeholder="Nro. Documento">
                   </div>
-                  <div class="col-md-4">
+                </div>
+                  <div class="col-md-2">
                     <div class="form-group">
                       <button id="btn_add_customer_doc" type="button" class="btn btn-primary">Agregar</button>
                     </div>
@@ -98,7 +102,19 @@
                 <input type="text" id="last_name_casada" name="last_name_casada" class="form-control"/>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="nacionalidad">Nacionalidad:</label>
+                <input type="text" id="nacionalidad" name="nacionalidad" class="form-control"/>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="fecha_vcto">Vcto. Doc. Identidad:</label>
+                <input type="date" id="fecha_vcto" name="fecha_vcto" class="form-control"/>
+              </div>
+            </div>
+            <div class="col-md-3">
               <div class="form-group">
                 <label for="gender">Género:</label>
                 <select class="form-control" id="gender" name="gender">
@@ -108,13 +124,13 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div class="form-group">
                 <label for="user_date">Fecha de Nacimiento:</label>
                 <input type="date" id="user_date" name="user_date" class="form-control"/>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <div class="form-group">
                 <label for="age">Edad:</label>
           <table width="100%">
@@ -137,8 +153,168 @@
                 <div id="messages" class="form-group"></div>
               </center>
             </div>
+
+            <!-- =========== FORM TELEFONOS Y CORREOS ============ -->
+
+            
+            <div class="col-md-6" style="background-color:#EFF0F1"></br>
+              <fieldset>
+                <legend>Teléfonos</legend>
+                <div class="col-md-5">
+                <div class="form-group">
+                  <label for="type_customer_phone">Tipo de Contacto:</label>
+                  <select name="type_customer_phone" id="type_customer_phone" class="form-control">
+                    <option value="">Seleccionar</option>
+                    <option value="celular_personal">Celular Personal</option>
+                    <option value="celular_empresa">Celular Empresa</option>
+                    <option value="telefono_fijo">Telefono Fijo</option>
+                    <option value="otros">Otros</option>
+                  </select>
+                </div>
+                </div>
+                <div class="col-md-4">
+                <div class="form-group">
+                  <label for="customer_phone">Telefono:</label>
+                  <input type="text" id="customer_phone" name="customer_phone" class="form-control">
+                </div>
+                </div>
+                  <div class="form-group" >
+                    <label for="">&nbsp;</label>
+                  <div class="form-group">
+                <button id="btn_add_customer_phones" type="button" class="btn btn-primary">Agregar</button>
+                  </div>
+                </div>
+                <table id="table_customer_phones" class="table table-hover table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-2"><center>T. Contacto</center></th>
+                      <th class="col-md-4"><center>Teléfono</center></th>
+                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="3">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+            <div class="col-md-6" style="background-color:#EFF0F1"></br>
+            <fieldset>
+                <legend>Correos</legend>
+                <div class="col-md-4">
+                <div class="form-group">
+                  <label for="type_customer_email">Tipo de Email:</label>
+                  <select name="type_customer_email" id="type_customer_email" class="form-control">
+                    <option value="">Seleccionar</option>
+                    <option value="empresa">Empresa</option>
+                    <option value="personal">Personal</option>
+                  </select>
+                </div>
+                </div>
+                <div class="col-md-5">
+                <div class="form-group">
+                  <label for="customer_email">Email:</label>
+                  <input type="text" id="customer_email" name="customer_email" class="form-control">
+                </div>
+                </div>
+                  <div class="form-group" >
+                    <label for="">&nbsp;</label>
+                  <div class="form-group">
+                <button id="btn_add_customer_emails" type="button" class="btn btn-primary">Agregar</button>
+                  </div>
+                </div>
+                <table id="table_customer_emails" class="table table-hover table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-2"><center>T. Email</center></th>
+                      <th class="col-md-4"><center>Email</center></th>
+                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="3">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+            <!-- ===================================== -->
+
+            <!-- =========== FORM BREVETE ============ -->
+            <div class="col-md-12"></br>
+              <fieldset>
+                <legend>Licencia de Conducir</legend>
+                <div class="col-md-3">
+                  <div class="form-group" >
+                    <label for="brevete_customer_nro">Nro. Identificador:</label>
+                    <input type="text" id="brevete_customer_nro" name="brevete_customer_nro" class="form-control">
+                  </div>  
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group" >
+                    <label for="brevete_customer_date">Fecha de vcto.:</label>
+                    <input type="date" id="brevete_customer_date" name="brevete_customer_date" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="brevete_customer_type">Tipo de Doc:</label>
+                        <select class="form-control" id="brevete_customer_type" name="brevete_customer_type">
+                          <option value="">Seleccionar</option>
+                          <option value="Nacional">NACIONAL</option>
+                          <option value="Internacional">INTERNACIONAL</option>
+                        </select>
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="brevete_customer_country">País de Emisión:</label>
+                    <input type="text" id="brevete_customer_country" name="brevete_customer_country" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-2">
+                  <br/>
+                  <div class="form-group">
+                    <button id="btn_add_customer_brevete" type="button" class="btn btn-primary">Agregar</button>
+                  </div>
+                </div>
+                <table id="table_customer_brevete" class="table table-hover table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-4"><center>Nro. Doc.</center></th>
+                      <th class="col-md-3"><center>Fec. Vencimiento</center></th>
+                      <th class="col-md-2"><center>Tipo</center></th>
+                      <th class="col-md-2"><center>Pais Emisor</center></th> 
+                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="6">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+            <!-- ===================================== -->
+
             <!-- =========== FORM ADDRESS ============ -->
-            <div class="col-md-12">
+            <div class="col-md-12"style="background-color:#EFF0F1"></br>
               <fieldset>
                 <legend>Pasaportes</legend>
                 <div class="col-md-4">
@@ -203,7 +379,7 @@
             <!-- ===================================== -->
 
             <!-- =========== FORM VISADO ============ -->
-            <div class="col-md-12">
+            <div class="col-md-12"></br>
               <fieldset>
                 <legend>Visado</legend>
                 <div class="col-md-6">
@@ -222,25 +398,25 @@
                     <input type="text" id="visado_customer_nro" name="visado_customer_nro" class="form-control">
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                   <div class="form-group" >
                     <label for="visado_customer_init_date">Fecha de Emisión:</label>
                     <input type="date" id="visado_customer_init_date" name="visado_customer_init_date" class="form-control">
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-3">
                   <div class="form-group" >
                     <label for="visado_customer_end_date">Fecha de Vencimiento:</label>
                     <input type="date" id="visado_customer_end_date" name="visado_customer_end_date" class="form-control">
                   </div>
                 </div>
-                <div class="col-md-6">
+                <div class="col-md-4">
                   <div class="form-group" >
                     <label for="visado_customer_country">Pais Emisor:</label>
                     <input type="text" name="visado_customer_country" id="visado_customer_country" class="form-control">
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                   <div class="form-group" >
                     <label for="">&nbsp;</label>
                         <div class="form-group">
@@ -251,7 +427,8 @@
                 <table id="table_customer_visado" class="table table-hover table-bordered" >
                   <thead>
                     <tr>
-                      <th class="col-md-3"><center>Pais Emisor</center></th>
+                      <th class="col-md-2"><center>Pais Emisor</center></th>
+                      <th class="col-md-2"><center>Tipo</center></th>
                       <th class="col-md-2"><center>Número</center></th>
                       <th class="col-md-2"><center>Fec. Emisión</center></th> 
                       <th class="col-md-2"><center>Fec. Vencimiento</center></th>
@@ -273,89 +450,8 @@
               </div>
             <!-- ===================================== -->
 
-            <!-- =========== FORM TELEFONOS Y CORREOS ============ -->
-
-            <div class="col-md-6">
-              <fieldset>
-                <legend>Teléfonos</legend>
-                <div class="form-group">
-                  <label for="type_customer_phone">Tipo de Contacto:</label>
-                  <select name="type_customer_phone" id="type_customer_phone" class="form-control">
-                    <option value="">Seleccionar</option>
-                    <option value="celular_personal">Celular Personal</option>
-                    <option value="celular_empresa">Celular Empresa</option>
-                    <option value="telefono_fijo">Telefono Fijo</option>
-                    <option value="otros">Otros</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="customer_phone">Telefono:</label>
-                  <input type="text" id="customer_phone" name="customer_phone" class="form-control">
-                </div>
-                  <div class="form-group">
-                <button id="btn_add_customer_phones" type="button" class="btn btn-primary">Agregar</button>
-                  </div>
-                <table id="table_customer_phones" class="table table-hover table-bordered" >
-                  <thead>
-                    <tr>
-                      <th class="col-md-2"><center>T. Contacto</center></th>
-                      <th class="col-md-4"><center>Teléfono</center></th>
-                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td colspan="3">
-                        <center>
-                          No se registraron datos.
-                        </center>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </fieldset>
-            </div>
-            <div class="col-md-6">
-            <fieldset>
-                <legend>Correos</legend>
-                <div class="form-group">
-                  <label for="type_customer_email">Tipo de Email:</label>
-                  <select name="type_customer_email" id="type_customer_email" class="form-control">
-                    <option value="">Seleccionar</option>
-                    <option value="empresa">Empresa</option>
-                    <option value="personal">Personal</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="customer_email">Email:</label>
-                  <input type="text" id="customer_email" name="customer_email" class="form-control">
-                </div>
-                  <div class="form-group">
-                <button id="btn_add_customer_emails" type="button" class="btn btn-primary">Agregar</button>
-                  </div>
-                <table id="table_customer_emails" class="table table-hover table-bordered" >
-                  <thead>
-                    <tr>
-                      <th class="col-md-2"><center>T. Email</center></th>
-                      <th class="col-md-4"><center>Email</center></th>
-                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td colspan="3">
-                        <center>
-                          No se registraron datos.
-                        </center>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </fieldset>
-            </div>
-            <!-- ===================================== -->
             <!-- ===== FORM CLIENTES FRECUENTES ====== -->
-            <div class="col-md-12">
+            <div class="col-md-12" style="background-color:#EFF0F1"></br>
               <fieldset>
                 <legend>Pasajeros Frecuentes</legend>
                 <div class="col-md-6">
@@ -376,20 +472,23 @@
                     <input type="text" id="user_customer_frec" name="user_customer_frec" class="form-control">
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="pass_customer_frec">Clave:</label>
                     <input type="text" id="pass_customer_frec" name="pass_customer_frec" class="form-control">
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group">
                     <label for="end_customer_frec">Pin:</label>
                     <input type="text" id="end_customer_frec" name="end_customer_frec" class="form-control">
                   </div>
                 </div>
                   <div class="form-group">
+                    <label>&nbsp;</label>
+                  <div class="form-group">
                 <button id="btn_add_customer_frec" type="button" class="btn btn-primary">Agregar</button>
+                  </div>
                   </div>
                 <table id="table_customer_frec" class="table table-hover table-bordered" >
                   <thead>
@@ -416,7 +515,7 @@
             </div>
             <!-- ===================================== -->
             <!-- =========== FORM ADDRESS ============ -->
-            <div class="col-md-12">
+            <div class="col-md-12"></br>
               <fieldset>
                 <legend>Direcciones Propias y de Entrega</legend>
                 <div class="col-md-4">
@@ -446,23 +545,26 @@
                     <input type="text" id="country_customer_travel" name="country_customer_travel" class="form-control">
                   </div>  
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group" >
                     <label for="phone_customer_travel">Teléfono:</label>
                     <input type="text" id="phone_customer_travel" name="phone_customer_travel" class="form-control">
                   </div>  
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group" >
                     <label for="reference_customer_travel">Referencia:</label>
                     <input type="text" id="reference_customer_travel" name="reference_customer_travel" class="form-control">
                   </div>  
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label>&nbsp;</label>
                   <div class="form-group">
                     <button id="btn_add_customer_travel" type="button" class="btn btn-primary">Agregar</button>
                   </div>
                 </div>
+              </div>
                 <table id="table_customer_address" class="table table-hover table-bordered" >
                   <thead>
                     <tr>
@@ -489,7 +591,7 @@
             </div>
             <!-- ===================================== -->
             <!-- =========== FORM COMPANY ============ -->
-            <div class="col-md-12">
+            <div class="col-md-12" style="background-color:#EFF0F1"></br>
               <fieldset>
                 <legend>Datos de Empresas</legend>
                 <div class="col-md-6">
@@ -516,13 +618,13 @@
                       <input type="text" id="company_customer_district" name="company_customer_district" class="form-control">
                     </div>  
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="form-group" >
                       <label for="company_customer_mail">Correo:</label>
                       <input type="text" id="company_customer_mail" name="company_customer_mail" class="form-control">
                     </div>  
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-3">
                     <div class="form-group" >
                       <label for="company_customer_phone">Teléfono:</label>
                       <input type="text" id="company_customer_phone" name="company_customer_phone" class="form-control">
@@ -534,11 +636,14 @@
                       <input type="text" id="company_customer_reference" name="company_customer_reference" class="form-control">
                     </div>  
                   </div>
-                  <div class="col-md-4">
+                  <div class="col-md-2">
+                    <div class="form-group">
+                      <label>&nbsp;</label>
                     <div class="form-group">
                       <button id="btn_add_customer_company" type="button" class="btn btn-primary">Agregar</button>
                     </div>
                   </div>
+                </div>
                 <table id="table_customer_company" class="table table-hover table-bordered" >
                   <thead>
                     <tr>
@@ -567,32 +672,35 @@
             <!-- ===================================== -->
 
              <!-- =========== FORM CONTACTS ============ -->
-            <div class="col-md-12">
+            <div class="col-md-12"></br>
               <fieldset>
-                <legend>Personas a Contactar de la Empresa</legend>
+                <legend>Contacto en Caso de Emergencia</legend>
                 <div class="col-md-4">
                   <div class="form-group" >
                     <label for="contact_customer_ruc">Nombre:</label>
                     <input type="text" id="contact_customer_ruc" name="contact_customer_ruc" class="form-control">
                   </div>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group" >
                     <label for="contact_customer_name">Teléfono:</label>
                     <input type="text" id="contact_customer_name" name="contact_customer_name" class="form-control">
                   </div>  
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group" >
                     <label for="contact_customer_address">Correo:</label>
                     <input type="text" id="contact_customer_address" name="contact_customer_address" class="form-control">
                   </div>  
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="debito_credito">&nbsp;</label>
                   <div class="form-group">
                     <button id="btn_add_customer_contacts" type="button" class="btn btn-primary">Agregar</button>
                   </div>
                 </div>
+              </div>
                 <table id="table_customer_contacts" class="table table-hover table-bordered" >
                   <thead>
                     <tr>
@@ -616,10 +724,10 @@
             </div>
             <!-- ===================================== -->
             <!-- =========== FORM DATOS TARJETAS ============ -->
-            <div class="col-md-12">
+            <div class="col-md-12" style="background-color:#EFF0F1"></br>
               <fieldset>
                 <legend>Datos de Tarjetas</legend>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group" >
                     <label for="tipo_tarjeta">Tipo de Tarjeta:</label>
                     <input type="text" id="tipo_tarjeta" name="tipo_tarjeta" class="form-control">
@@ -631,17 +739,20 @@
                     <input type="text" id="nro_tarjeta" name="nro_tarjeta" class="form-control">
                   </div>  
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                   <div class="form-group" >
                     <label for="debito_credito">Débito o Crédito:</label>
                     <input type="text" id="debito_credito" name="debito_credito" class="form-control">
                   </div>  
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
+                  <div class="form-group">
+                    <label for="debito_credito">&nbsp;</label>
                   <div class="form-group">
                     <button id="btn_add_tarjetas" type="button" class="btn btn-primary">Agregar</button>
                   </div>
                 </div>
+              </div>
                 <table id="table_tarjetas" class="table table-hover table-bordered" >
                   <thead>
                     <tr>
@@ -665,7 +776,7 @@
             </div>
             <!-- ===================================== -->
             <!-- =========== FORM DATOS FAMILIARES ============ -->
-            <div class="col-md-12">
+            <div class="col-md-12"></br>
               <fieldset>
                 <legend>Datos de Familiares</legend>
                 <div class="col-md-2">
@@ -690,6 +801,8 @@
                   <div class="form-group" >
                     <label for="contact_familiar_prefasiento">Pref Asiento:</label>
                     <select id="contact_familiar_prefasiento" name="contact_familiar_prefasiento" class="form-control">
+                      <option value="NO INDICA">NO INDICA</option>
+                      <option value="MEDIO">MEDIO</option>
                       <option value="VENTANA">VENTANA</option>
                       <option value="PASILLO">PASILLO</option>
                       <option value="SALIDA DE EMERGENCIA">SALIDA DE EMERGENCIA</option>
@@ -726,7 +839,7 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td colspan="12">
+                      <td colspan="6">
                         <center>
                           No se registraron datos.
                         </center>
@@ -736,25 +849,27 @@
                 </table>
               </fieldset>
             </div>
-            <div class="col-md-12">
+            <div class="col-md-12" style="background-color:#EFF0F1"></br>
               <fieldset>
                 <legend>Observaciones</legend>
                 <div class="form-group">
-                  <textarea id="descripcion" class="form-control" style="height: 150px;"></textarea>
+                  <textarea placeholder="Comentarios..." id="descripcion" name="descripcion" class="form-control" style="height: 150px;"></textarea>
                 </div>
               </fieldset>
             </div>
             <!-- ===================================== -->
-            <div id="messages" class="col-md-12"></div>
+            <div id="messages" class="col-md-12"></div></br>
           </div>
-          <button type="submit" class="btn btn-primary">Guardar</button>
-        <?php echo form_close();?>
-      </div>
+
       <div class="modal-footer">
+                  <button type="submit" class="btn btn-primary">Guardar</button>
+        <?php echo form_close();?>
+      
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
   </div>
+</div>
 </div>
 
 <!-- MODAL DE REGISTRO DE VIAJES -->
@@ -1253,8 +1368,6 @@
     </div>
           <?php echo form_close(); ?>
 </div>
-
-
 
 
 
