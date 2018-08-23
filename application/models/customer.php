@@ -290,6 +290,7 @@ class Customer extends Person
 		$client = $this->db->get();
 		if($client->num_rows()==1){
 			$response = $client->row();
+			echo $response;
 		}
 		return $response;
 	 }
@@ -311,16 +312,15 @@ class Customer extends Person
 	function getClientCoti($client_id, $cotizacion_id){
 		$response = null;
 		$this->db->from('clients');
-		$this->db->join('cotizaciones', 'cotizaciones.cliente_id = clients.id','left');
+		$this->db->join('cotizaciones', 'cotizaciones.cliente_id = clients.id');
 		$this->db->where('clients.id',$client_id);		
-		$this->db->where('clients.deleted',0);
+		$this->db->where('deleted',0);
 		$client = $this->db->get();
 		if($client->num_rows()==1){
 			$response = $client->row();
 		}
 		return $response;
 	 }
-
 
 	function listCotizacion(){
 		$response = [];

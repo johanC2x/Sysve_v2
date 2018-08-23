@@ -47,17 +47,18 @@ class Sale extends CI_Model
 		return $response;
 	 }
 
-	function listServicios($cotizacion_id){
+
+	function listServicios($data){	
 		$response = null;
 		$this->db->from('cotizaciones_servicios');
-		$this->db->where('cotizacion_id', $cotizacion_id);
+		$this->db->where('cotizacion_id', $data);
 		$this->db->order_by('id', 'desc');
-		$clients = $this->db->get();
-		foreach($clients->result() as $row){
-			$response[] = $row;
-		}
-		return $response;
-	}
+		$query = $this->db->get();
+			if ($query->num_rows() > 0){
+		   		return $query->result();
+			}
+			return null; 
+			}
 
 	function listServiciosBoleto($cotizacion_id){
 		$response = null;
@@ -445,9 +446,21 @@ class Sale extends CI_Model
 		  }
 		 
 		  return $response;
-		 }
+	}
 
-
+	function getCotizacionDetails($postData){
+		 
+		  $response = array();
+		  {
+		   $this->db->select('*');
+		   $this->db->where('cotizacion_id', 'TURIFAX-G1K6-1408');// $postData['cotizacion_id']);	   
+		   $q = $this->db->get('cotizaciones_servicios');
+		   $response = $q->result_array();
+		 
+		  }
+		 
+		  return $response;
+	}
 
 
 
