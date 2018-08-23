@@ -100,15 +100,6 @@
                   <div class="col-md-2" class="form-group">
                     <input type="button" id="btn_save_com" class="btn btn-primary" value="Agregar Servicio" />
                   </div>
-                    
-            <script language="javascript" type="text/javascript">
-                // function popitup(url) {
-                //     newwindow=window.open(url,'name','height=200,width=400');
-                //     if (window.focus) {newwindow.focus()}
-                //     return false;
-                // }
-            </script>
-
 
             <div class="col-md-6" align="center"> 
                 <a class="btn btn-primary" href="javascript:void(0)" onClick="email=window.open('http://34.203.202.3/pruebamail?id=<?php echo $cotizacion_id;?>','buscador','scrollbars=yes,width=680,h eight=500'); return false;">Enviar Correo</a>
@@ -126,11 +117,8 @@
                             <h3 class="modal-title">Se ha generado Nueva cotizacion</h3><?php echo $cotizacion_id; ?>
                             <br>
                             <dir class="form-group"><br>
-                                <button id="btn_add_coti" type="button" class="btn btn-primary">Confirma</button>                    
- <!--                               <a class="btn btn-primary" href="javascript:void(0)" onClick="email=window.open('http://34.203.202.3/pruebamail?id=<?php echo $cotizacion_id;?>','buscador','scrollbars=yes,width=680,h eight=500'); return false;">Enviar Correo</a>
-                                <a class="a.active.botonete" href="javascript:void(0)" onClick="email.close()"></a>
-                                <a type="button" href="http://34.203.202.3/pdf2/?id=<?php echo $cotizacion_id;?>" class="btn btn-primary">Imprimir</a> 
--->                            </dir>
+                                <button id="btn_add_coti" type="button" class="btn btn-primary">Confirma</button>
+                            </dir>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -443,6 +431,7 @@
     });
 
 </script>
+</div>
 <?php $this->load->view("partial/footer"); ?>
 
 

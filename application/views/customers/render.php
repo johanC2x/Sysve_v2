@@ -20,7 +20,7 @@
             <tr class="well">
                 <th><center>Nombres</center></th>
                 <th><center>Apellidos</center></th>
-                <th><center>Nro. DNI</center></th>
+                <th><center>Nro. Identidad</center></th>
                 <th><center>Genero</center></th>
                 <th><center>Email</center></th>
                 <th><center>Teléfono</center></th>
@@ -60,7 +60,7 @@
 		</div>
 	</div>
 </div>
-
+</div>
 <script type="text/javascript">
     $(document).ready(function(){
         travel.current_url = "<?= base_url();?>";
@@ -73,6 +73,14 @@
             const btn_add_customer_travel = document.getElementById("btn_add_customer_travel");
             btn_add_customer_travel.addEventListener("click" ,() => {
                 travel.saveCustomerAddress();
+            });
+        }
+
+        /* BOTON DE AGREGADO DE BREVETE */
+        if(document.getElementById("btn_add_customer_brevete") !== null){
+            const btn_add_customer_brevete = document.getElementById("btn_add_customer_brevete");
+            btn_add_customer_brevete.addEventListener("click" ,() => {
+                travel.saveCustomerBrevete();
             });
         }
 
@@ -233,7 +241,22 @@
                         notEmpty: { message: "El campo edad es requerido"}
                     }
                 },
-                date_expire:{
+                nacionalidad:{
+                    validators: {
+                        notEmpty: { message: "El campo nacionalidad es requerido"}
+                    }
+                },
+                person_id:{
+                    validators: {
+                        notEmpty: { message: "El campo documento de identidad es requerido"}
+                    }
+                },
+/*                fecha_vcto:{
+                    validators: {
+                        notEmpty: { message: "El campo fecha de vencimiento es requerido"}
+                    }
+                },
+*/                date_expire:{
                     validators: {
                         notEmpty: { message: "El campo fecha de nacimiento es requerido"}
                     }
@@ -245,6 +268,7 @@
             var data = {};
             travel.saveDescripcion();
             data.address = travel.customer_address_list;
+            data.brevete = travel.customer_brevete_list;
             data.passport = travel.customer_passport_list;
             data.card = travel.customer_card_list;
             data.company = travel.customer_company_list;
