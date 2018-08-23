@@ -782,6 +782,7 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
 
                   <div class="col-md-3">
                           <select name="cod_tip_otr_doc_ref" placeholder="Tipo de Documento" class="form-control" id='sel_user' required >
+                               <option value=''>Seleccione...</option>
                                <option value='01'>Factura</option>
                                <option value='03'>Boleta de Venta</option>
                                <option value='07'>Nota de Credito</option>
@@ -799,7 +800,7 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                           </select>
                  </div>
                  <div class="col-md-2">
-                        <input type="text" name="num_corre_cpe_ref" id="snum_corre_cpe_ref" class="form-control" readonly="true" style="color:red; text-align:center "/>
+                        <input type="text" name="num_corre_cpe_ref" id="snum_corre_cpe_ref" class="form-control" readonly="true" style="color:red; text-align:center"/>
                  </div>
 
                   <div class="col-md-2">
@@ -1097,21 +1098,15 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
 
 <dir class="modal-header"><br>
 <h5 class="modal-title">Observaciones</h5>
-                        <div class="col-md-102" class="form-group">
+                        <div class="col-md-12" class="form-group">
                             <input type="text" name="travelid" id="travelid" class="form-control" />
                             <!-- value="<?php //echo $travelid ?>" -->
                         </div>
 </dir>
-    <div class="form-group">
-        <div class="col-md-9 col-md-offset-3">
-            <div id="messages"></div>
-        </div>
-    </div>
+
                     <div class="modal-footer">
-                        <div class="form-group">
                             <button id="add_info_service" type="submit" class="btn btn-primary">Generar</button> 
                             <button type="button" onclick="travel.cancelRegisterCustomer();" class="btn btn-default" data-dismiss="modal">Cerrar</button>      
-                        </div>
                     </div>
         <?php echo form_close(); ?>
                 </div>
