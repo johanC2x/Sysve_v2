@@ -1,4 +1,4 @@
-var travel = function () {
+var sales = function () {
 
     var self = {
         current_url : "",
@@ -8,8 +8,7 @@ var travel = function () {
         last_travel : '',
         last_list_comision: [],
         customer_address_list : [],
-        customer_brevete_list : [],
-        customer_passport_list : [],
+        customer_pay_list : [],
         customer_card_list : [],
         customer_company_list : [],
         customer_visado_list : [],
@@ -31,6 +30,7 @@ var travel = function () {
         detalle_servicio:""
     };
 
+
     self.changeRow = function(idObj){
         var open = $("#row_travel_"+idObj).is(':visible');
         if(!open){
@@ -43,19 +43,47 @@ var travel = function () {
     };
 
     self.addServiceDoc = function(val = null){
-        var service_doc_name = $("#detalle_servicio").val();
-        var service_doc_type = $("#cbo_comision_payment_servicio").val();
-        var service_doc_trib = $("#tributo_travel").val();
-        var service_doc_quantity = $("#travel_cantidad").val();
-        var service_doc_amount = $("#cbo_amount_comision_payment_children").val();
-        if(service_doc_name !== '' && service_doc_type !== '' && service_doc_trib !== ''){
+        var tipo_servicio = $("#tipo_servicio").val();
+        var codigo = $("#codigo").val();
+        var cantidad = $("#cantidad").val();
+        var valor_unitario = $("#valor_unitario").val();
+        var detalle = $("#detalle").val();
+        var proveedor = $("#proveedor").val();
+        var tarifa_neta = $("#tarifa_neta").val();
+        var comi_proveedor_porcentaje = $("#comi_proveedor_porcentaje").val();
+        var comi_proveedor_fija = $("#comi_proveedor_fija").val();
+        var fee_proveedor = $("#fee_proveedor").val();
+        var fee_proveedor_conf = $("#fee_proveedor_conf").val();
+        var fee_agencia = $("#fee_agencia").val();
+        var impuesto = $("#impuesto").val();
+        var incentivo_add = $("#incentivo_add").val();
+        var otros = $("#otros").val();
+        var costo = $("#costo").val();
+        var incentivo = $("#incentivo").val();
+
+
+        if(tipo_servicio !== '' && codigo !== '' && cantidad !== '' && valor_unitario !== ''){
             var data = {};
-            data.service_doc_name = service_doc_name;
-            data.service_doc_type = service_doc_type;
-            data.service_doc_trib = service_doc_trib;
-            data.service_doc_quantity = service_doc_quantity;
-            data.service_doc_amount = service_doc_amount;
-            data.service_doc_name_detail = self.detalle_servicio;
+            data.tipo_servicio = tipo_servicio;
+            data.codigo = codigo;
+            data.cantidad = cantidad;
+            data.valor_unitario = valor_unitario;
+            data.detalle = detalle;
+            data.proveedor = proveedor;
+            data.tarifa_neta = tarifa_neta
+            data.comi_proveedor_porcentaje = comi_proveedor_porcentaje;
+            data.comi_proveedor_fija = comi_proveedor_fija;
+            data.fee_proveedor = fee_proveedor;
+            data.fee_proveedor_conf = fee_proveedor_conf;
+            data.fee_agencia = fee_agencia;
+            data.impuesto = impuesto;
+            data.incentivo_add = incentivo_add;
+            data.otros = otros;
+            data.costo = costo;
+            data.incentivo = incentivo;
+
+
+
             if(self.current_serice_doc === -1){
                 self.list_service_doc.push(data);
             }else{
@@ -72,13 +100,7 @@ var travel = function () {
     self.makeTableServiceDoc = function(){
         var html = '';
         var count = 0;
-        var mnt_tot_inf = 0;
-        var mnt_tot_exr = 0;
-        var mnt_tot_exp = 0;
-        var mnt_tot_grv = 0;
-        var mnt_tot_grt = 0;
-        var mnt_tot_imp = 0;
-        var monto_pagar = 0;
+        var utilidad = 0;
         if(self.list_service_doc.length === 0){
             html += `<tr>
                         <td colspan="9">
@@ -89,76 +111,36 @@ var travel = function () {
                     </tr>`;
         }else{
             self.list_service_doc.forEach(function(element){
-                var total = parseInt(element.service_doc_quantity) * parseFloat(element.service_doc_amount);
-                var tributo = (element.service_doc_trib === '10') ? 0.18 : 0.00;
-                var impuesto = ((parseInt(element.service_doc_quantity) * parseFloat(element.service_doc_amount))*tributo);
-
-                var gravada10   = ((element.service_doc_trib === '10') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
-                var gravada11   = ((element.service_doc_trib === '11') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
-                var gravada12   = ((element.service_doc_trib === '12') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
-                var gravada13   = ((element.service_doc_trib === '13') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
-                var gravada14   = ((element.service_doc_trib === '14') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
-                var gravada15   = ((element.service_doc_trib === '15') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
-                var gravada16   = ((element.service_doc_trib === '16') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
-                var gravada17   = ((element.service_doc_trib === '17') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
-                var exonerado20 = ((element.service_doc_trib === '20') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
-                var exonerado21 = ((element.service_doc_trib === '21') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
-                var exportacion = ((element.service_doc_trib === '40') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
-                var inafecto30  = ((element.service_doc_trib === '30') ? parseFloat(element.service_doc_amount):0.00)*parseInt(element.service_doc_quantity) ;
+                var utilidad = ((parseInt(element.tarifa_neta) * parseFloat(element.comi_proveedor_porcentaje))/100)+parseInt(element.comi_proveedor_fija)+parseInt(element.fee_agencia);
 
 
-                var subtotal = parseFloat(element.service_doc_amount);
+
                 html += `<tr  style="background-color:#FFFFFF">
                             <td><center>`+ (count + 1) +`</center></td>
-                            <td><center>`+ element.service_doc_name +`</center></td>
-                            <td><center>`+ element.service_doc_type +`</center></td>
-                            <td><center>`+ element.service_doc_trib +`</center></td>
-                            <td><center>`+ element.service_doc_quantity +`</center></td>
-                            <td align=right>`+ ((parseFloat(element.service_doc_amount)*tributo)+ parseFloat(element.service_doc_amount)).toFixed(2) +`</td>
-                            <td align=right>`+ parseFloat(element.service_doc_amount).toFixed(2) +`</td>
-                            <td align=right>`+ parseInt(element.service_doc_quantity)*parseFloat(element.service_doc_amount).toFixed(2) +`</td>
+                            <td><center>`+ element.tipo_servicio +`</center></td>
+                            <td><center>`+ element.detalle +`</center></td>
+                            <td><center>`+ element.codigo +`</center></td>
+                            <td><center>`+ element.cantidad +`</center></td>
+                            <td><center>`+ (element.cantidad)*parseFloat(element.valor_unitario).toFixed(2) +`</center></td>
+                            <td><center>`+ element.proveedor +`</td>
+                            <td><center>`+ utilidad.toFixed(2) +`</td>
                             <td>
                                 <center>
-                                    <a href='javascript:void(0);' >
-                                        <i class='fa fa-edit'></i>
-                                    </a>
+                                    <a href="javascript:void(`+ count +`);" onclick="sales.getServicios(8);"><i class="fa fa-edit"></i></a>
                                 </center>
                             </td>
                             <td>
                                 <center>
-                                    <a href='javascript:void(0);' title='Eliminar' onclick='travel.removeServiceDoc(`+ count +`)' >
+                                    <a href='javascript:void(0);' title='Eliminar' onclick='sales.removeServiceDoc(`+ count +`)' >
                                         <i class='fa fa-trash-alt'></i>
                                     </a>
                                 </center>
                             </td>
                         </tr>`;
-                mnt_tot_imp = mnt_tot_imp + impuesto; 
-                mnt_tot_exp = mnt_tot_exp + exportacion;
-                mnt_tot_grv = mnt_tot_grv + gravada10 ;
-                mnt_tot_grt = mnt_tot_grt + gravada11 + gravada12 + gravada13 + gravada14 + gravada15 + gravada16 + gravada17;
-                mnt_tot_inf = mnt_tot_inf + inafecto30;
-                mnt_tot_exr = mnt_tot_exr + exonerado20 + exonerado21;
-                monto_pagar = monto_pagar + total + impuesto;
                 count++;
             });
         }
-        $("#table_customer_travel_children tbody").empty().append(html);
-        $("#mnt_tot").text(monto_pagar.toFixed(2));
-        $('input[id="mnt_tot"]').val(monto_pagar.toFixed(2));
-        $("#total_pago_children").text(monto_pagar.toFixed(2));
-        $('input[id="total_pago_children"]').val(monto_pagar.toFixed(2));
-        $("#mnt_tot_grv").text((mnt_tot_grv).toFixed(2));
-        $('input[id="mnt_tot_grv"]').val(mnt_tot_grv.toFixed(2));
-        $("#mnt_tot_grt").text((mnt_tot_grt).toFixed(2));
-        $('input[id="mnt_tot_grt"]').val(mnt_tot_grt.toFixed(2));
-        $("#mnt_tot_exr").text((mnt_tot_exr).toFixed(2));
-        $('input[id="mnt_tot_exr"]').val(mnt_tot_exr.toFixed(2));
-        $("#mnt_tot_inf").text((mnt_tot_inf).toFixed(2));
-        $('input[id="mnt_tot_inf"]').val(mnt_tot_inf.toFixed(2));
-        $("#mnt_tot_exp").text((mnt_tot_exp).toFixed(2));
-        $('input[id="mnt_tot_exp"]').val(mnt_tot_exp.toFixed(2));        
-        $("#mnt_tot_imp").text((mnt_tot_imp).toFixed(2));
-        $('input[id="mnt_tot_imp"]').val(mnt_tot_imp.toFixed(2));        
+        $("#table_customer_travel_children tbody").empty().append(html);     
     };
     self.resetServiceDocReset = function(){
         $("#detalle_servicio").val("");
@@ -173,12 +155,18 @@ var travel = function () {
         var current = self.list_service_doc[obj];
         $("#detalle_servicio").val(current.service_doc_name);
         $("#cbo_comision_payment_servicio").val(current.service_doc_type);
+        $("#proveedor").val(current.proveedor);
+        $("#fee_proveedor").val(current.fee_proveedor);
         $("#tributo_travel").val(current.service_doc_trib);
         $("#travel_cantidad").val(current.service_doc_quantity);
         $("#cbo_amount_comision_payment_children").val(current.service_doc_amount);
     };
+
+
+
     self.removeServiceDoc = function(obj){
         self.list_service_doc.splice(obj,1);
+     //   self.addServiceDoc();
         self.makeTableServiceDoc();
     };
 
@@ -736,6 +724,51 @@ var travel = function () {
 
     self.makeTableComisionChildren = function(){
         var html = '';
+        $("#table_customer_travel_pay tbody").empty();
+        if(self.list_comision_children.length === 0){
+            html = `<tr>
+                        <td colspan="9">
+                            <center>
+                                No se registraron datos.
+                            </center>
+                        </td>
+                    </tr>`;
+        }else{
+            for (var i = 0; i < self.list_comision_children.length; i++) {
+                var ammount = (self.list_comision_children[i].ammount !== '' && self.list_comision_children[i].ammount !== undefined) ? self.list_comision_children[i].ammount : '';
+                var tributo_travel = (self.list_comision_children[i].tributo_travel !== '' && self.list_comision_children[i].tributo_travel !== undefined) ? self.list_comision_children[i].tributo_travel : '';
+                var travel_cantidad = (self.list_comision_children[i].travel_cantidad !== '' && self.list_comision_children[i].travel_cantidad !== undefined) ? self.list_comision_children[i].travel_cantidad : '';
+                var monto = (self.list_comision_children[i].monto !== '' && self.list_comision_children[i].monto !== undefined) ? self.list_comision_children[i].monto : '';
+                var montototal = (self.list_comision_children[i].monto !== '' && self.list_comision_children[i].monto !== undefined) ? self.list_comision_children[i].monto * self.list_comision_children[i].travel_cantidad: '';
+                html += "<tr>";
+                    html += "<td><center>"+ (i+1) +"</center></td>";
+                    html += "<td><center>"+ self.list_comision_children[i].name +"</center></td>";
+                    if(self.list_comision_children[i].name !== 'FEE'){
+                        html += "<td style='text-align: right;'><center>"+ ammount +"</center></td>";    
+                    }else{
+                        html += "<td style='text-align: right;'>"+ '<input type="text" name="amount" size="8">' +"</td>";    
+                    }
+                    html += "<td><center>"+ tributo_travel +"</center></td>";
+                    html += "<td><center>"+ travel_cantidad +"</center></td>";
+                    html += "<td><center>"+ monto +"</center></td>";
+                    html += "<td><center>"+ montototal +"</center></td>";
+                    html += "<td><center>"+ montototal +"</center></td>";
+                    html += `<td>
+                                <center>
+                                    <a href='javascript:void(0);' title='Eliminar' onclick='travel.removeComisionChildren(`+ i +`)' >
+                                        <i class='fa fa-trash-alt'></i>
+                                    </a>
+                                </center>
+                            </td>`;
+                html += "</tr>";
+            }
+        }
+        $("#table_customer_travel_pay tbody").append(html);
+    };
+
+
+    self.makeTableComisionChildren = function(){
+        var html = '';
         $("#table_customer_travel_children tbody").empty();
         if(self.list_comision_children.length === 0){
             html = `<tr>
@@ -1122,8 +1155,7 @@ var travel = function () {
             e.preventDefault();
             var data = {};
             data.address = self.customer_address_list;
-            data.brevete = self.customer_brevete_list;
-            data.passports = self.customer_passport_list;
+            data.passports = self.customer_pay_list;
             data.cards = self.customer_card_list;
             data.companies = self.customer_company_list;
             $("#data_customer").val(JSON.stringify(data));
@@ -1398,7 +1430,7 @@ var travel = function () {
         var contact_name = $("#contact_customer_name").val();
         var contact_address = $("#contact_customer_address").val();
 
-        if(contact_ruc !== '' && contact_name !== ''){
+        if(contact_ruc !== '' && contact_name !== '' && contact_address !== ''){
             self.customer_contact_list.push({
                 ruc : contact_ruc,
                 name : contact_name,
@@ -1741,69 +1773,6 @@ var travel = function () {
 
 
 
-    /* ================ SET TABLE FOR REGISTER CUSTOMER BREVETE ============= */
-     self.saveCustomerBrevete = function(){
-        var brevete_country = $("#brevete_customer_country").val();
-        var brevete_nro = $("#brevete_customer_nro").val();
-        var brevete_date = $("#brevete_customer_date").val();
-        var brevete_type = $("#brevete_customer_type").val();
-
-        if(brevete_country !== '' && brevete_nro !== '' && brevete_date !== '' && brevete_type !== ''){
-            self.customer_brevete_list.push({
-                country : brevete_country,
-                nro : brevete_nro,
-                date : moment(brevete_date).format("DD / MM / YYYY"),
-                type : brevete_type
-            });
-
-            $("#brevete_customer_country").val("");
-            $("#brevete_customer_nro").val("");
-            $("#brevete_customer_date").val("");
-            $("#brevete_customer_type").val("");
-
-            self.makeTableBrevete();
-        }else{
-            console.log("errores");
-        }
-    };
-
-    self.removeCustomerBrevete = function(index){
-        self.customer_brevete_list.splice(index,1);
-        self.makeTableBrevete();
-    };
-
-    self.makeTableBrevete = function(){
-        var html = '';
-        $("#table_customer_brevete tbody").empty();
-        if(self.customer_brevete_list.length > 0){
-            for(var i = 0;i < self.customer_brevete_list.length; i++){
-                html += `<tr>
-                            <td><center>`+ self.customer_brevete_list[i].nro +`</center></td>
-                            <td><center>`+ self.customer_brevete_list[i].date +`</center></td>
-                            <td><center>`+ self.customer_brevete_list[i].type +`</center></td>
-                            <td><center>`+ self.customer_brevete_list[i].country +`</center></td>
-                            <td>
-                                <a href="javascript:void(0);" onclick="travel.removeCustomerBrevete(`+i+`);">
-                                    <center>
-                                        <i class="fa fa-trash"></i>
-                                    </center>
-                                </a>
-                            </td>
-                        </tr>`;
-            }
-        }else{
-            html += `<tr>
-                        <td colspan="5">
-                            <center>
-                                No se registraron datos.
-                            </center>
-                        </td>
-                    </tr>`;
-        }
-        $("#table_customer_brevete").append(html);
-    };
-    
-
 
     /* ================ SET TABLE FOR REGISTER CUSTOMER PASSPORT ============= */
      self.saveCustomerPassport = function(){
@@ -2079,8 +2048,6 @@ var travel = function () {
         document.getElementById("form_customer_register").reset();
         self.customer_address_list = [];
         self.makeTableAddress();
-        self.customer_brevete_list = [];
-        self.makeTableBrevete();
         self.customer_passport_list = [];
         self.makeTablePassport();
         self.customer_card_list = [];
@@ -2155,7 +2122,7 @@ var travel = function () {
                             var id = data[i].id;
                             var nombres = data[i].firstname.toUpperCase() + ' ' + data[i].middlename.toUpperCase();
                             var apellidos = data[i].lastname.toUpperCase() + ' ' + data[i].mother_lastname.toUpperCase();
-                            var genero = (data[i].gender === 'M') ? '<i class="fa fa-male"></i>'.fontcolor("blue") : '<i class="fa fa-female"></i>'.fontcolor("magenta");
+                            var genero = (data[i].gender === 'M') ? 'MASCULINO' : 'FEMENINO';
 
                             //BUSCANDO VALORES EN DATA DE CLIENTES
                             var data_client = JSON.parse(data[i].data);
@@ -2165,16 +2132,16 @@ var travel = function () {
                             var phones = data_client.phones.find(x => x.type_phone === "celular_empresa" != "celular_personal");
                             //VALIDANDO VALORES VACIOS
                             var val_doc = (document !== undefined && document.nro_doc !== "") ? document.nro_doc : ("SIN DOCUMENTO").fontcolor("red");
-                            var val_email = (email !== undefined && email.email !== "") ? email.email.toLowerCase() : '<i class="fa fa-envelope-open"></i> '.fontcolor("red");
-                            var val_phone = (phones !== undefined && phones.nro_phone !== "") ? phones.nro_phone : '<i class="fa fa-phone"></i>'.fontcolor("red");
+                            var val_email = (email !== undefined && email.email !== "") ? email.email : ("FALTA INFORMACION").fontcolor("red");
+                            var val_phone = (phones !== undefined && phones.nro_phone !== "") ? phones.nro_phone : ("FALTA INFORMACION").fontcolor("red");
 
                             tbody += `<tr>
                                         <td>`+nombres+`</td>
                                         <td>`+apellidos+`</td>
                                         <td>`+val_doc+`</td>
-                                        <td><center>`+genero+`</center></td>
-                                        <td><center>`+val_email+`</center></td>
-                                        <td><center>`+val_phone+`</center></td>
+                                        <td>`+genero+`</td>
+                                        <td>`+val_email+`</td>
+                                        <td>`+val_phone+`</td>
                                         <td>
                                             <center>
                                                 <a href="javascript:void(0);" onclick="travel.getClient(`+id+`);">
@@ -2256,700 +2223,6 @@ self.listServicios = function(){
     };
 
 
-self.listServiciosVenta = function(){
-        $.ajax({
-            type:'POST',
-            data:{},
-            url:self.current_url+"index.php/sales/listServiciosBoleto",
-            success:function(response){
-                var res = JSON.parse(response);
-                if(res.success){
-                    var tbody = "";
-                    var data = res.data;
-                    //var data_client = JSON.parse(data.data);
-                    $("#table_boleto tbody").empty();
-                    if(data.length > 0){
-                        for(var i = 0;i < data.length;i++){
-                            var id = data[i].id;
-                            var cotizacion_id = data[i].cotizacion_id;
-                            var servicio = data[i].name;                            
-                            var codigo = data[i].code;
-                            var monto = data[i].amount;
-                            var fecha = data[i].created_at;
-
-                          
-
-                            tbody += `<tr>
-                                        <td>
-                                            <center>
-                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
-                                            </center>
-                                        </td>
-                                        <td>`+cotizacion_id+`</td>
-                                        <td>`+servicio+`</td>
-                                        <td>`+codigo+`</td>
-                                        <td>`+monto+`</td>
-                                        <td>`+fecha+`</td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                    </tr>`;
-                        }
-                    }else{
-                        tbody = `<tr>
-                                    <td colspan="7">
-                                        <center>
-                                            NO SE ENCONTRARON RESULTADOS
-                                        </center>
-                                    </td>
-                                </tr>`;
-                    }
-                    $("#table_boleto tbody").append(tbody);
-                }
-            }
-        });
-        $.ajax({
-            type:'POST',
-            data:{},
-            url:self.current_url+"index.php/sales/listServiciosHotel",
-            success:function(response){
-                var res = JSON.parse(response);
-                if(res.success){
-                    var tbody = "";
-                    var data = res.data;
-                    //var data_client = JSON.parse(data.data);
-                    $("#table_hotel tbody").empty();
-                    if(data.length > 0){
-                        for(var i = 0;i < data.length;i++){
-                            var id = data[i].id;
-                            var cotizacion_id = data[i].cotizacion_id;
-                            var servicio = data[i].name;                            
-                            var codigo = data[i].code;
-                            var monto = data[i].amount;
-                            var fecha = data[i].created_at;
-
-                          
-
-                            tbody += `<tr>
-                                        <td>
-                                            <center>
-                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
-                                            </center>
-                                        </td>
-                                        <td>`+cotizacion_id+`</td>
-                                        <td>`+servicio+`</td>
-                                        <td>`+codigo+`</td>
-                                        <td>`+monto+`</td>
-                                        <td>`+fecha+`</td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                    </tr>`;
-                        }
-                    }else{
-                        tbody = `<tr>
-                                    <td colspan="7">
-                                        <center>
-                                            NO SE ENCONTRARON RESULTADOS
-                                        </center>
-                                    </td>
-                                </tr>`;
-                    }
-                    $("#table_hotel tbody").append(tbody);
-                }
-            }
-        });
-        $.ajax({
-            type:'POST',
-            data:{},
-            url:self.current_url+"index.php/sales/listServiciosAuto",
-            success:function(response){
-                var res = JSON.parse(response);
-                if(res.success){
-                    var tbody = "";
-                    var data = res.data;
-                    //var data_client = JSON.parse(data.data);
-                    $("#table_auto tbody").empty();
-                    if(data.length > 0){
-                        for(var i = 0;i < data.length;i++){
-                            var id = data[i].id;
-                            var cotizacion_id = data[i].cotizacion_id;
-                            var servicio = data[i].name;                            
-                            var codigo = data[i].code;
-                            var monto = data[i].amount;
-                            var fecha = data[i].created_at;
-
-                          
-
-                            tbody += `<tr>
-                                        <td>
-                                            <center>
-                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
-                                            </center>
-                                        </td>
-                                        <td>`+cotizacion_id+`</td>
-                                        <td>`+servicio+`</td>
-                                        <td>`+codigo+`</td>
-                                        <td>`+monto+`</td>
-                                        <td>`+fecha+`</td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                    </tr>`;
-                        }
-                    }else{
-                        tbody = `<tr>
-                                    <td colspan="7">
-                                        <center>
-                                            NO SE ENCONTRARON RESULTADOS
-                                        </center>
-                                    </td>
-                                </tr>`;
-                    }
-                    $("#table_auto tbody").append(tbody);
-                }
-            }
-        });
-        $.ajax({
-            type:'POST',
-            data:{},
-            url:self.current_url+"index.php/sales/listServiciosTarjeta",
-            success:function(response){
-                var res = JSON.parse(response);
-                if(res.success){
-                    var tbody = "";
-                    var data = res.data;
-                    //var data_client = JSON.parse(data.data);
-                    $("#table_tarjeta tbody").empty();
-                    if(data.length > 0){
-                        for(var i = 0;i < data.length;i++){
-                            var id = data[i].id;
-                            var cotizacion_id = data[i].cotizacion_id;
-                            var servicio = data[i].name;                            
-                            var codigo = data[i].code;
-                            var monto = data[i].amount;
-                            var fecha = data[i].created_at;
-
-                          
-
-                            tbody += `<tr>
-                                        <td>
-                                            <center>
-                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
-                                            </center>
-                                        </td>
-                                        <td>`+cotizacion_id+`</td>
-                                        <td>`+servicio+`</td>
-                                        <td>`+codigo+`</td>
-                                        <td>`+monto+`</td>
-                                        <td>`+fecha+`</td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                    </tr>`;
-                        }
-                    }else{
-                        tbody = `<tr>
-                                    <td colspan="7">
-                                        <center>
-                                            NO SE ENCONTRARON RESULTADOS
-                                        </center>
-                                    </td>
-                                </tr>`;
-                    }
-                    $("#table_tarjeta tbody").append(tbody);
-                }
-            }
-        });
-        $.ajax({
-            type:'POST',
-            data:{},
-            url:self.current_url+"index.php/sales/listServiciosPaquete",
-            success:function(response){
-                var res = JSON.parse(response);
-                if(res.success){
-                    var tbody = "";
-                    var data = res.data;
-                    //var data_client = JSON.parse(data.data);
-                    $("#table_paquete tbody").empty();
-                    if(data.length > 0){
-                        for(var i = 0;i < data.length;i++){
-                            var id = data[i].id;
-                            var cotizacion_id = data[i].cotizacion_id;
-                            var servicio = data[i].name;                            
-                            var codigo = data[i].code;
-                            var monto = data[i].amount;
-                            var fecha = data[i].created_at;
-
-                          
-
-                            tbody += `<tr>
-                                        <td>
-                                            <center>
-                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
-                                            </center>
-                                        </td>
-                                        <td>`+cotizacion_id+`</td>
-                                        <td>`+servicio+`</td>
-                                        <td>`+codigo+`</td>
-                                        <td>`+monto+`</td>
-                                        <td>`+fecha+`</td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                    </tr>`;
-                        }
-                    }else{
-                        tbody = `<tr>
-                                    <td colspan="7">
-                                        <center>
-                                            NO SE ENCONTRARON RESULTADOS
-                                        </center>
-                                    </td>
-                                </tr>`;
-                    }
-                    $("#table_paquete tbody").append(tbody);
-                }
-            }
-        });
-        $.ajax({
-            type:'POST',
-            data:{},
-            url:self.current_url+"index.php/sales/listServiciosExcursion",
-            success:function(response){
-                var res = JSON.parse(response);
-                if(res.success){
-                    var tbody = "";
-                    var data = res.data;
-                    //var data_client = JSON.parse(data.data);
-                    $("#table_excursion tbody").empty();
-                    if(data.length > 0){
-                        for(var i = 0;i < data.length;i++){
-                            var id = data[i].id;
-                            var cotizacion_id = data[i].cotizacion_id;
-                            var servicio = data[i].name;                            
-                            var codigo = data[i].code;
-                            var monto = data[i].amount;
-                            var fecha = data[i].created_at;
-
-                          
-
-                            tbody += `<tr>
-                                        <td>
-                                            <center>
-                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
-                                            </center>
-                                        </td>
-                                        <td>`+cotizacion_id+`</td>
-                                        <td>`+servicio+`</td>
-                                        <td>`+codigo+`</td>
-                                        <td>`+monto+`</td>
-                                        <td>`+fecha+`</td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                    </tr>`;
-                        }
-                    }else{
-                        tbody = `<tr>
-                                    <td colspan="7">
-                                        <center>
-                                            NO SE ENCONTRARON RESULTADOS
-                                        </center>
-                                    </td>
-                                </tr>`;
-                    }
-                    $("#table_excursion tbody").append(tbody);
-                }
-            }
-        });
-        $.ajax({
-            type:'POST',
-            data:{},
-            url:self.current_url+"index.php/sales/listServiciosEntrada",
-            success:function(response){
-                var res = JSON.parse(response);
-                if(res.success){
-                    var tbody = "";
-                    var data = res.data;
-                    //var data_client = JSON.parse(data.data);
-                    $("#table_entrada tbody").empty();
-                    if(data.length > 0){
-                        for(var i = 0;i < data.length;i++){
-                            var id = data[i].id;
-                            var cotizacion_id = data[i].cotizacion_id;
-                            var servicio = data[i].name;                            
-                            var codigo = data[i].code;
-                            var monto = data[i].amount;
-                            var fecha = data[i].created_at;
-
-                          
-
-                            tbody += `<tr>
-                                        <td>
-                                            <center>
-                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
-                                            </center>
-                                        </td>
-                                        <td>`+cotizacion_id+`</td>
-                                        <td>`+servicio+`</td>
-                                        <td>`+codigo+`</td>
-                                        <td>`+monto+`</td>
-                                        <td>`+fecha+`</td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                    </tr>`;
-                        }
-                    }else{
-                        tbody = `<tr>
-                                    <td colspan="7">
-                                        <center>
-                                            NO SE ENCONTRARON RESULTADOS
-                                        </center>
-                                    </td>
-                                </tr>`;
-                    }
-                    $("#table_entrada tbody").append(tbody);
-                }
-            }
-        });
-        $.ajax({
-            type:'POST',
-            data:{},
-            url:self.current_url+"index.php/sales/listServiciosTren",
-            success:function(response){
-                var res = JSON.parse(response);
-                if(res.success){
-                    var tbody = "";
-                    var data = res.data;
-                    //var data_client = JSON.parse(data.data);
-                    $("#table_tren tbody").empty();
-                    if(data.length > 0){
-                        for(var i = 0;i < data.length;i++){
-                            var id = data[i].id;
-                            var cotizacion_id = data[i].cotizacion_id;
-                            var servicio = data[i].name;                            
-                            var codigo = data[i].code;
-                            var monto = data[i].amount;
-                            var fecha = data[i].created_at;
-
-                          
-
-                            tbody += `<tr>
-                                        <td>
-                                            <center>
-                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
-                                            </center>
-                                        </td>
-                                        <td>`+cotizacion_id+`</td>
-                                        <td>`+servicio+`</td>
-                                        <td>`+codigo+`</td>
-                                        <td>`+monto+`</td>
-                                        <td>`+fecha+`</td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                    </tr>`;
-                        }
-                    }else{
-                        tbody = `<tr>
-                                    <td colspan="7">
-                                        <center>
-                                            NO SE ENCONTRARON RESULTADOS
-                                        </center>
-                                    </td>
-                                </tr>`;
-                    }
-                    $("#table_tren tbody").append(tbody);
-                }
-            }
-        });
-        $.ajax({
-            type:'POST',
-            data:{},
-            url:self.current_url+"index.php/sales/listServiciosCrucero",
-            success:function(response){
-                var res = JSON.parse(response);
-                if(res.success){
-                    var tbody = "";
-                    var data = res.data;
-                    //var data_client = JSON.parse(data.data);
-                    $("#table_crucero tbody").empty();
-                    if(data.length > 0){
-                        for(var i = 0;i < data.length;i++){
-                            var id = data[i].id;
-                            var cotizacion_id = data[i].cotizacion_id;
-                            var servicio = data[i].name;                            
-                            var codigo = data[i].code;
-                            var monto = data[i].amount;
-                            var fecha = data[i].created_at;
-
-                          
-
-                            tbody += `<tr>
-                                        <td>
-                                            <center>
-                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
-                                            </center>
-                                        </td>
-                                        <td>`+cotizacion_id+`</td>
-                                        <td>`+servicio+`</td>
-                                        <td>`+codigo+`</td>
-                                        <td>`+monto+`</td>
-                                        <td>`+fecha+`</td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                    </tr>`;
-                        }
-                    }else{
-                        tbody = `<tr>
-                                    <td colspan="7">
-                                        <center>
-                                            NO SE ENCONTRARON RESULTADOS
-                                        </center>
-                                    </td>
-                                </tr>`;
-                    }
-                    $("#table_crucero tbody").append(tbody);
-                }
-            }
-        });
-        $.ajax({
-            type:'POST',
-            data:{},
-            url:self.current_url+"index.php/sales/listServiciosOtro",
-            success:function(response){
-                var res = JSON.parse(response);
-                if(res.success){
-                    var tbody = "";
-                    var data = res.data;
-                    //var data_client = JSON.parse(data.data);
-                    $("#table_otro tbody").empty();
-                    if(data.length > 0){
-                        for(var i = 0;i < data.length;i++){
-                            var id = data[i].id;
-                            var cotizacion_id = data[i].cotizacion_id;
-                            var servicio = data[i].name;                            
-                            var codigo = data[i].code;
-                            var monto = data[i].amount;
-                            var fecha = data[i].created_at;
-
-                          
-
-                            tbody += `<tr>
-                                        <td>
-                                            <center>
-                                                <input type="checkbox" name="check[`+id+`]" value="`+id+`"/>
-                                            </center>
-                                        </td>
-                                        <td>`+cotizacion_id+`</td>
-                                        <td>`+servicio+`</td>
-                                        <td>`+codigo+`</td>
-                                        <td>`+monto+`</td>
-                                        <td>`+fecha+`</td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(`+id+`);" onclick="travel.getServicios(`+id+`);">
-                                                    <i class="fa fa-edit"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
-                                                    <i class="fa fa-trash"></i>
-                                                </a>
-                                            </center>
-                                        </td>
-                                    </tr>`;
-                        }
-                    }else{
-                        tbody = `<tr>
-                                    <td colspan="7">
-                                        <center>
-                                            NO SE ENCONTRARON RESULTADOS
-                                        </center>
-                                    </td>
-                                </tr>`;
-                    }
-                    $("#table_otro tbody").append(tbody);
-                }
-            }
-        });
-
-
-    };
-/*
-    self.listClients = function(){
-        $.ajax({
-            type:'POST',
-            data:{},
-            url:self.current_url+"index.php/customers/listClients",
-            success:function(response){
-                var res = JSON.parse(response);
-                if(res.success){
-                    console.log(res.data[0].data.documents);
-                    var tbody = "";
-                    var data = res.data;
-                    //var data_client = JSON.parse(data.data);
-                    $("#table_clients tbody").empty();
-                    if(data.length > 0){
-                        for(var i = 0;i < data.length;i++){
-                            var id = data[i].id;
-                            var nombres = data[i].firstname + ' ' + data[i].middlename;
-                            var apellidos = data[i].lastname + ' ' + data[i].mother_lastname;
-                            var genero = (data[i].gender === 'M') ? 'MASCULINO' : 'FEMENINO';
-
-                            //BUSCANDO VALORES EN DATA DE CLIENTES
-                            var data_client = JSON.parse(data[i].data);
-                            var document = data_client.documents.find(x => x.type_document === "dni");
-                            var email = data_client.emails.find(x => x.type_email === "personal");
-                            var phones = data_client.phones.find(x => x.type_phone === "celular_personal");
-
-                            //VALIDANDO VALORES VACIOS
-                            var val_doc = (document.nro_doc !== "") ? document.nro_doc : "";
-                            var val_email = (email.email !== "") ? email.email : "";
-                            var val_phone = (phones.nro_phone !== "") ? phones.nro_phone : "";
-
-                            tbody += `<tr>
-                                        <td><center>`+nombres+`</center></td>
-                                        <td><center>`+apellidos+`</center></td>
-                                        <td><center>`+val_doc+`</center></td>
-                                        <td><center>`+genero+`</center></td>
-                                        <td><center>`+val_email+`</center></td>
-                                        <td><center>`+val_phone+`</center></td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(0);" onclick="travel.getClient(`+id+`);">
-                                                    Editar
-                                                </a>
-                                            </center>
-                                        </td>
-                                        <td>
-                                            <center>
-                                                <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
-                                                    Eliminar
-                                                </a>
-                                            </center>
-                                        </td>
-                                    </tr>`;
-                        }
-                    }else{
-                        tbody = `<tr>
-                                    <td colspan="7">
-                                        <center>
-                                            NO SE ENCONTRARON RESULTADOS
-                                        </center>
-                                    </td>
-                                </tr>`;
-                    }
-                    $("#table_clients tbody").append(tbody);
-                }
-            }
-        });
-    };
-*/
 
 
     self.listCotizacion = function(){
@@ -3012,6 +2285,82 @@ self.listServiciosVenta = function(){
             }
         });
     };
+
+        /* ================ SET TABLE FOR REGISTER CUSTOMER PAGOS PAY ============= */
+     self.saveCustomerPay = function(){
+        var i=0;
+        var condicion = $("#condicion").val();
+        var forma_pago = $("#forma_pago").val();
+        var total = $("#total").val();
+        var banco = $("#banco").val();
+        var tipo = $("#tipo").val();
+        var referencia = $("#referencia").val();
+
+        if(condicion !== '' && forma_pago !== '' && total !== ''){
+            self.customer_pay_list.push({
+                condicion : condicion,
+                total : total,
+                forma_pago : forma_pago,
+                banco : banco,
+                tipo : tipo,
+                referencia : referencia
+            });
+
+            $("#condicion").val("");
+            $("#forma_pago").val("");
+            $("#total").val("");
+            $("#banco").val("");
+            $("#tipo").val("");
+            $("#referencia").val("");
+
+            self.makeTablePay();
+        }else{
+            console.log("errores");
+        }
+    };
+
+    self.removeCustomerPay = function(index){
+        self.customer_pay_list.splice(index,1);
+        self.makeTablePay();
+    };
+
+    self.makeTablePay = function(){
+        var html = '';
+        $("#table_customer_pay tbody").empty();
+        if(self.customer_pay_list.length > 0){
+            for(var i = 0;i < self.customer_pay_list.length; i++){
+                html += `<tr>
+                            <td><center>`+ (i+1) +`</center></td>
+                            <td><center>`+ self.customer_pay_list[i].condicion +`</center></td>
+                            <td><center>`+ self.customer_pay_list[i].forma_pago +`</center></td>
+                            <td><center>`+ self.customer_pay_list[i].banco +`</center></td>
+                            <td><center>`+ self.customer_pay_list[i].tipo +`</center></td>
+                            <td><center>`+ self.customer_pay_list[i].referencia +`</center></td>
+                            <td><center>`+ self.customer_pay_list[i].estatus +`</center></td>
+                            <td><center>`+ self.customer_pay_list[i].total +`</center></td>
+                            <td>
+                                <a href="javascript:void(0);" onclick="sales.removeCustomerPay(`+i+`);">
+                                    <center>
+                                        <i class="fa fa-trash"></i>
+                                    </center>
+                                </a>
+                            </td>
+                        </tr>`;
+            }
+        }else{
+            html += `<tr>
+                        <td colspan="9">
+                            <center>
+                                No se registraron datos.
+                            </center>
+                        </td>
+                    </tr>`;
+        }
+        $("#table_customer_pay").append(html);
+    };
+    
+
+
 
         self.listClientsCoti = function(){
         $.ajax({
@@ -3090,7 +2439,7 @@ self.listServiciosVenta = function(){
             data:{
                 id : id
             },
-            url:self.current_url+"index.php/sales/getServicios",
+            url:self.current_url+"index.php/sales/getSales",
             success:function(res){
                 var response = JSON.parse(res);
                 if(response.success){
@@ -3116,9 +2465,6 @@ self.listServiciosVenta = function(){
                     if(data_client != ''){
                         self.customer_documents_list = data_client.documents;
                         self.makeTableDocuments();
-                        //MAKE TABLE BREVETE
-                        self.customer_brevete_list = data_client.brevete;
-                        self.makeTableBrevete();
                         //MAKE TABLE PASSPORT
                         self.customer_passport_list = data_client.passport;
                         self.makeTablePassport();
@@ -3191,9 +2537,6 @@ self.listServiciosVenta = function(){
                     if(data_client != ''){
                         self.customer_documents_list = data_client.documents;
                         self.makeTableDocuments();
-                        //MAKE TABLE BREVETE
-                        self.customer_brevete_list = data_client.brevete;
-                        self.makeTableBrevete();
                         //MAKE TABLE PASSPORT
                         self.customer_passport_list = data_client.passport;
                         self.makeTablePassport();
@@ -3249,9 +2592,6 @@ self.listServiciosVenta = function(){
         //MAKE TABLE DOCUMENTS
         self.customer_documents_list = [];
         self.makeTableDocuments();
-        //MAKE TABLE BREVETE
-        self.customer_brevete_list = [];
-        self.makeTableBrevete();
         //MAKE TABLE PASSPORT
         self.customer_passport_list = [];
         self.makeTablePassport();
@@ -3367,6 +2707,17 @@ self.listServiciosVenta = function(){
 
     self.openModalDetail = function(){
         $(".content_service_detail").css("display","inline");
+    };
+
+    self.guardarPago = function(){
+        var detalle_servicio = $("#detalle_servicio_modal").val();
+        self.detalle_servicio = detalle_servicio;
+        $(".content_service_pago").css("display","none");
+        $("#detalle_servicio_modal").val("");
+    };
+
+    self.openModalPago = function(){
+        $(".content_service_pago").css("display","inline");
     };
 
     return self;
