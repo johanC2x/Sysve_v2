@@ -24,7 +24,7 @@
                 </div>
                 <div class="col-md-5">
                   <div class="form-group" >
-                    <input type="text" id="nro_customer_doc" name="nro_customer_doc" class="form-control" placeholder="Nro. Documento">
+                    <input type="text" id="nro_customer_doc" autocomplete="off" name="nro_customer_doc" class="form-control" placeholder="Nro. Documento">
                   </div>
                 </div>
                   <div class="col-md-2">
@@ -73,7 +73,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="first_name">Nombre:</label>
-                <input type="text" id="first_name" name="first_name" class="form-control"/>
+                <input type="text" id="first_name" name="first_name" autocomplete="off" class="form-control"/>
                 <input type="hidden" id="client_id" name="client_id"/>
                 <input type="hidden" id="client_data" name="client_data"/>
               </div>    
@@ -81,31 +81,31 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label for="midle_name">Pre-Nombre:</label>
-                <input type="text" id="midle_name" name="midle_name" class="form-control"/>
+                <input type="text" id="midle_name" name="midle_name" autocomplete="off" class="form-control"/>
               </div>    
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="last_name">Apellidos Paterno:</label>
-                <input type="text" id="last_name" name="last_name" class="form-control"/>
+                <input type="text" id="last_name" name="last_name" autocomplete="off" class="form-control"/>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="last_name">Apellidos Materno:</label>
-                <input type="text" id="last_name_mothers" name="last_name_mothers" class="form-control"/>
+                <input type="text" id="last_name_mothers" name="last_name_mothers" autocomplete="off" class="form-control"/>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="last_name">Apellido de Casada:</label>
-                <input type="text" id="last_name_casada" name="last_name_casada" class="form-control"/>
+                <input type="text" id="last_name_casada" name="last_name_casada" autocomplete="off" class="form-control"/>
               </div>
             </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="nacionalidad">Nacionalidad:</label>
-                <input type="text" id="nacionalidad" name="nacionalidad" class="form-control"/>
+                <input type="text" id="nacionalidad" name="nacionalidad" autocomplete="off" class="form-control"/>
               </div>
             </div>
             <div class="col-md-3">
@@ -175,7 +175,7 @@
                 <div class="col-md-4">
                 <div class="form-group">
                   <label for="customer_phone">Telefono:</label>
-                  <input type="text" id="customer_phone" name="customer_phone" class="form-control">
+                  <input type="text" id="customer_phone" name="customer_phone" autocomplete="off" class="form-control">
                 </div>
                 </div>
                   <div class="form-group" >
@@ -220,7 +220,7 @@
                 <div class="col-md-5">
                 <div class="form-group">
                   <label for="customer_email">Email:</label>
-                  <input type="text" id="customer_email" name="customer_email" class="form-control">
+                  <input type="email" id="customer_email" name="customer_email" placeholder="Ej.: usuario@servidor.com" autocomplete="off" class="form-control">
                 </div>
                 </div>
                   <div class="form-group" >
@@ -251,51 +251,56 @@
             </div>
             <!-- ===================================== -->
 
-            <!-- =========== FORM BREVETE ============ -->
+
+
+            <!-- ===== FORM CLIENTES FRECUENTES ====== -->
             <div class="col-md-12"></br>
               <fieldset>
-                <legend>Licencia de Conducir</legend>
-                <div class="col-md-3">
-                  <div class="form-group" >
-                    <label for="brevete_customer_nro">Nro. Identificador:</label>
-                    <input type="text" id="brevete_customer_nro" name="brevete_customer_nro" class="form-control">
-                  </div>  
-                </div>
-                <div class="col-md-3">
-                  <div class="form-group" >
-                    <label for="brevete_customer_date">Fecha de vcto.:</label>
-                    <input type="date" id="brevete_customer_date" name="brevete_customer_date" class="form-control">
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group" >
-                    <label for="brevete_customer_type">Tipo de Doc:</label>
-                        <select class="form-control" id="brevete_customer_type" name="brevete_customer_type">
-                          <option value="">Seleccionar</option>
-                          <option value="Nacional">NACIONAL</option>
-                          <option value="Internacional">INTERNACIONAL</option>
-                        </select>
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <div class="form-group" >
-                    <label for="brevete_customer_country">País de Emisión:</label>
-                    <input type="text" id="brevete_customer_country" name="brevete_customer_country" class="form-control">
-                  </div>
-                </div>
-                <div class="col-md-2">
-                  <br/>
+                <legend>Pasajeros Frecuentes</legend>
+                <div class="col-md-6">
                   <div class="form-group">
-                    <button id="btn_add_customer_brevete" type="button" class="btn btn-primary">Agregar</button>
+                    <label for="millaje_customer_frec">Millaje:</label>
+                    <input type="text" id="millaje_customer_frec" name="millaje_customer_frec" autocomplete="off" class="form-control">
                   </div>
                 </div>
-                <table id="table_customer_brevete" class="table table-hover table-bordered" >
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label for="nro_customer_frec">Nro:</label>
+                    <input type="text" id="nro_customer_frec" name="nro_customer_frec" autocomplete="off" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label for="user_customer_frec">Usuario:</label>
+                    <input type="text" id="user_customer_frec" name="user_customer_frec" autocomplete="off" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="pass_customer_frec">Clave:</label>
+                    <input type="text" id="pass_customer_frec" name="pass_customer_frec" autocomplete="off" class="form-control">
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label for="end_customer_frec">Pin:</label>
+                    <input type="text" id="end_customer_frec" name="end_customer_frec" autocomplete="off" class="form-control">
+                  </div>
+                </div>
+                  <div class="form-group">
+                    <label>&nbsp;</label>
+                  <div class="form-group">
+                <button id="btn_add_customer_frec" type="button" class="btn btn-primary">Agregar</button>
+                  </div>
+                  </div>
+                <table id="table_customer_frec" class="table table-hover table-bordered" >
                   <thead>
                     <tr>
-                      <th class="col-md-4"><center>Nro. Doc.</center></th>
-                      <th class="col-md-3"><center>Fec. Vencimiento</center></th>
-                      <th class="col-md-2"><center>Tipo</center></th>
-                      <th class="col-md-2"><center>Pais Emisor</center></th> 
+                      <th class="col-md-3"><center>Millaje</center></th>
+                      <th class="col-md-3"><center>Nro</center></th>
+                      <th class="col-md-3"><center>Usuario</center></th>
+                      <th class="col-md-3"><center>Clave</center></th>
+                      <th class="col-md-3"><center>Pin</center></th>
                       <th colspan="3" class="col-md-1"><center>Acción</center></th>
                     </tr>
                   </thead>
@@ -313,14 +318,16 @@
             </div>
             <!-- ===================================== -->
 
-            <!-- =========== FORM ADDRESS ============ -->
+
+
+            <!-- =========== FORM PASAPORTE ============ -->
             <div class="col-md-12"style="background-color:#EFF0F1"></br>
               <fieldset>
                 <legend>Pasaportes</legend>
                 <div class="col-md-4">
                   <div class="form-group" >
                     <label for="passport_customer_nro">Nro. Pasaporte:</label>
-                    <input type="text" id="passport_customer_nro" name="passport_customer_nro" class="form-control">
+                    <input type="text" id="passport_customer_nro" name="passport_customer_nro" autocomplete="off" class="form-control">
                   </div>  
                 </div>
                 <div class="col-md-4">
@@ -338,13 +345,13 @@
                 <div class="col-md-4">
                   <div class="form-group" >
                     <label for="passport_customer_country">País de Emisión:</label>
-                    <input type="text" id="passport_customer_country" name="passport_customer_country" class="form-control">
+                    <input type="text" id="passport_customer_country" name="passport_customer_country" autocomplete="off" class="form-control">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group" >
                     <label for="passport_customer_nationality">Nacionalidad:</label>
-                    <input type="text" id="passport_customer_nationality" name="passport_customer_nationality" class="form-control">
+                    <input type="text" id="passport_customer_nationality" name="passport_customer_nationality" autocomplete="off" class="form-control">
                   </div>
                 </div>
                 <div class="col-md-4">
@@ -395,7 +402,7 @@
                 <div class="col-md-6">
                   <div class="form-group" >
                     <label for="visado_customer_nro">Número:</label>
-                    <input type="text" id="visado_customer_nro" name="visado_customer_nro" class="form-control">
+                    <input type="text" id="visado_customer_nro" name="visado_customer_nro" autocomplete="off" class="form-control">
                   </div>
                 </div>
                 <div class="col-md-3">
@@ -413,7 +420,7 @@
                 <div class="col-md-4">
                   <div class="form-group" >
                     <label for="visado_customer_country">Pais Emisor:</label>
-                    <input type="text" name="visado_customer_country" id="visado_customer_country" class="form-control">
+                    <input type="text" name="visado_customer_country" id="visado_customer_country" autocomplete="off" class="form-control">
                   </div>
                 </div>
                 <div class="col-md-2">
@@ -450,54 +457,51 @@
               </div>
             <!-- ===================================== -->
 
-            <!-- ===== FORM CLIENTES FRECUENTES ====== -->
+            <!-- =========== FORM BREVETE ============ -->
             <div class="col-md-12" style="background-color:#EFF0F1"></br>
               <fieldset>
-                <legend>Pasajeros Frecuentes</legend>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="millaje_customer_frec">Millaje:</label>
-                    <input type="text" id="millaje_customer_frec" name="millaje_customer_frec" class="form-control">
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="form-group">
-                    <label for="nro_customer_frec">Nro:</label>
-                    <input type="text" id="nro_customer_frec" name="nro_customer_frec" class="form-control">
-                  </div>
-                </div>
-                <div class="col-md-4">
-                  <div class="form-group">
-                    <label for="user_customer_frec">Usuario:</label>
-                    <input type="text" id="user_customer_frec" name="user_customer_frec" class="form-control">
-                  </div>
+                <legend>Licencia de Conducir</legend>
+                <div class="col-md-3">
+                  <div class="form-group" >
+                    <label for="brevete_customer_nro">Nro. Identificador:</label>
+                    <input type="text" id="brevete_customer_nro" name="brevete_customer_nro" autocomplete="off" class="form-control">
+                  </div>  
                 </div>
                 <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="pass_customer_frec">Clave:</label>
-                    <input type="text" id="pass_customer_frec" name="pass_customer_frec" class="form-control">
+                  <div class="form-group" >
+                    <label for="brevete_customer_date">Fecha de vcto.:</label>
+                    <input type="date" id="brevete_customer_date" name="brevete_customer_date" autocomplete="off" class="form-control">
                   </div>
                 </div>
-                <div class="col-md-3">
-                  <div class="form-group">
-                    <label for="end_customer_frec">Pin:</label>
-                    <input type="text" id="end_customer_frec" name="end_customer_frec" class="form-control">
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="brevete_customer_type">Tipo de Doc:</label>
+                        <select class="form-control" id="brevete_customer_type" name="brevete_customer_type">
+                          <option value="">Seleccionar</option>
+                          <option value="Nacional">NACIONAL</option>
+                          <option value="Internacional">INTERNACIONAL</option>
+                        </select>
                   </div>
                 </div>
-                  <div class="form-group">
-                    <label>&nbsp;</label>
-                  <div class="form-group">
-                <button id="btn_add_customer_frec" type="button" class="btn btn-primary">Agregar</button>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="brevete_customer_country">País de Emisión:</label>
+                    <input type="text" id="brevete_customer_country" name="brevete_customer_country" autocomplete="off" class="form-control">
                   </div>
+                </div>
+                <div class="col-md-2">
+                  <br/>
+                  <div class="form-group">
+                    <button id="btn_add_customer_brevete" type="button" class="btn btn-primary">Agregar</button>
                   </div>
-                <table id="table_customer_frec" class="table table-hover table-bordered" >
+                </div>
+                <table id="table_customer_brevete" class="table table-hover table-bordered" >
                   <thead>
                     <tr>
-                      <th class="col-md-3"><center>Millaje</center></th>
-                      <th class="col-md-3"><center>Nro</center></th>
-                      <th class="col-md-3"><center>Usuario</center></th>
-                      <th class="col-md-3"><center>Clave</center></th>
-                      <th class="col-md-3"><center>Pin</center></th>
+                      <th class="col-md-4"><center>Nro. Doc.</center></th>
+                      <th class="col-md-3"><center>Fec. Vencimiento</center></th>
+                      <th class="col-md-2"><center>Tipo</center></th>
+                      <th class="col-md-2"><center>Pais Emisor</center></th> 
                       <th colspan="3" class="col-md-1"><center>Acción</center></th>
                     </tr>
                   </thead>
@@ -530,31 +534,31 @@
                 <div class="col-md-4">
                   <div class="form-group" >
                     <label for="address_customer_travel">Dirección:</label>
-                    <input type="text" id="address_customer_travel" name="address_customer_travel" class="form-control">
+                    <input type="text" id="address_customer_travel" name="address_customer_travel" autocomplete="off" class="form-control">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group" >
                     <label for="district_customer_travel">Distrito/Estado:</label>
-                    <input type="text" id="district_customer_travel" name="district_customer_travel" class="form-control">
+                    <input type="text" id="district_customer_travel" name="district_customer_travel" autocomplete="off" class="form-control">
                   </div>  
                 </div>
                 <div class="col-md-4">
                   <div class="form-group" >
                     <label for="country_customer_travel">País:</label>
-                    <input type="text" id="country_customer_travel" name="country_customer_travel" class="form-control">
+                    <input type="text" id="country_customer_travel" name="country_customer_travel" autocomplete="off" class="form-control">
                   </div>  
                 </div>
                 <div class="col-md-3">
                   <div class="form-group" >
                     <label for="phone_customer_travel">Teléfono:</label>
-                    <input type="text" id="phone_customer_travel" name="phone_customer_travel" class="form-control">
+                    <input type="text" id="phone_customer_travel" name="phone_customer_travel" autocomplete="off" class="form-control">
                   </div>  
                 </div>
                 <div class="col-md-3">
                   <div class="form-group" >
                     <label for="reference_customer_travel">Referencia:</label>
-                    <input type="text" id="reference_customer_travel" name="reference_customer_travel" class="form-control">
+                    <input type="text" id="reference_customer_travel" name="reference_customer_travel" autocomplete="off" class="form-control">
                   </div>  
                 </div>
                 <div class="col-md-2">
@@ -597,43 +601,43 @@
                 <div class="col-md-6">
                     <div class="form-group" >
                       <label for="company_customer_ruc">Ruc:</label>
-                      <input type="text" id="company_customer_ruc" name="company_customer_ruc" class="form-control">
+                      <input type="text" id="company_customer_ruc" name="company_customer_ruc" autocomplete="off" class="form-control">
                     </div>
                   </div>
                   <div class="col-md-6">
                     <div class="form-group" >
                       <label for="company_customer_name">Razón Social:</label>
-                      <input type="text" id="company_customer_name" name="company_customer_name" class="form-control">
+                      <input type="text" id="company_customer_name" name="company_customer_name" autocomplete="off" class="form-control">
                     </div>  
                   </div>
                   <div class="col-md-8">
                     <div class="form-group" >
                       <label for="company_customer_address">Dirección:</label>
-                      <input type="text" id="company_customer_address" name="company_customer_address" class="form-control">
+                      <input type="text" id="company_customer_address" name="company_customer_address" autocomplete="off" class="form-control">
                     </div>  
                   </div>
                   <div class="col-md-4">
                     <div class="form-group" >
                       <label for="company_customer_district">Distrito:</label>
-                      <input type="text" id="company_customer_district" name="company_customer_district" class="form-control">
+                      <input type="text" id="company_customer_district" name="company_customer_district" autocomplete="off" class="form-control">
                     </div>  
                   </div>
                   <div class="col-md-3">
                     <div class="form-group" >
                       <label for="company_customer_mail">Correo:</label>
-                      <input type="text" id="company_customer_mail" name="company_customer_mail" class="form-control">
+                      <input type="email" id="company_customer_mail" name="company_customer_mail" placeholder="Ej.: usuario@servidor.com" autocomplete="off" class="form-control">
                     </div>  
                   </div>
                   <div class="col-md-3">
                     <div class="form-group" >
                       <label for="company_customer_phone">Teléfono:</label>
-                      <input type="text" id="company_customer_phone" name="company_customer_phone" class="form-control">
+                      <input type="text" id="company_customer_phone" name="company_customer_phone" autocomplete="off" class="form-control">
                     </div>
                   </div>
                   <div class="col-md-4">
                     <div class="form-group" >
                       <label for="company_customer_reference">Referencia:</label>
-                      <input type="text" id="company_customer_reference" name="company_customer_reference" class="form-control">
+                      <input type="text" id="company_customer_reference" name="company_customer_reference" autocomplete="off" class="form-control">
                     </div>  
                   </div>
                   <div class="col-md-2">
@@ -678,19 +682,19 @@
                 <div class="col-md-4">
                   <div class="form-group" >
                     <label for="contact_customer_ruc">Nombre:</label>
-                    <input type="text" id="contact_customer_ruc" name="contact_customer_ruc" class="form-control">
+                    <input type="text" id="contact_customer_ruc" name="contact_customer_ruc" autocomplete="off" class="form-control">
                   </div>
                 </div>
                 <div class="col-md-3">
                   <div class="form-group" >
                     <label for="contact_customer_name">Teléfono:</label>
-                    <input type="text" id="contact_customer_name" name="contact_customer_name" class="form-control">
+                    <input type="text" id="contact_customer_name" name="contact_customer_name" autocomplete="off" class="form-control">
                   </div>  
                 </div>
                 <div class="col-md-3">
                   <div class="form-group" >
                     <label for="contact_customer_address">Correo:</label>
-                    <input type="text" id="contact_customer_address" name="contact_customer_address" class="form-control">
+                    <input type="email" id="contact_customer_address" name="contact_customer_address" placeholder="Ej.: usuario@servidor.com" autocomplete="off" class="form-control">
                   </div>  
                 </div>
                 <div class="col-md-2">
@@ -730,19 +734,19 @@
                 <div class="col-md-3">
                   <div class="form-group" >
                     <label for="tipo_tarjeta">Tipo de Tarjeta:</label>
-                    <input type="text" id="tipo_tarjeta" name="tipo_tarjeta" class="form-control">
+                    <input type="text" id="tipo_tarjeta" name="tipo_tarjeta" autocomplete="off" class="form-control">
                   </div>
                 </div>
                 <div class="col-md-4">
                   <div class="form-group" >
                     <label for="nro_tarjeta">Nro de tarjeta:</label>
-                    <input type="text" id="nro_tarjeta" name="nro_tarjeta" class="form-control">
+                    <input type="text" id="nro_tarjeta" name="nro_tarjeta" autocomplete="off" class="form-control">
                   </div>  
                 </div>
                 <div class="col-md-3">
                   <div class="form-group" >
                     <label for="debito_credito">Débito o Crédito:</label>
-                    <input type="text" id="debito_credito" name="debito_credito" class="form-control">
+                    <input type="text" id="debito_credito" name="debito_credito" autocomplete="off" class="form-control">
                   </div>  
                 </div>
                 <div class="col-md-2">
@@ -782,19 +786,19 @@
                 <div class="col-md-2">
                   <div class="form-group" >
                     <label for="contact_familiar_relacion">Relacion:</label>
-                    <input type="text" id="contact_familiar_relacion" name="contact_familiar_relacion" class="form-control">
+                    <input type="text" id="contact_familiar_relacion" name="contact_familiar_relacion" autocomplete="off" class="form-control">
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="form-group" >
                     <label for="contact_familiar_nombre">Nombre:</label>
-                    <input type="text" id="contact_familiar_nombre" name="contact_familiar_nombre" class="form-control">
+                    <input type="text" id="contact_familiar_nombre" name="contact_familiar_nombre" autocomplete="off" class="form-control">
                   </div>  
                 </div>
                 <div class="col-md-2">
                   <div class="form-group" >
                     <label for="contact_familiar_telefono">Teléfono:</label>
-                    <input type="text" id="contact_familiar_telefono" name="contact_familiar_telefono" class="form-control">
+                    <input type="text" id="contact_familiar_telefono" name="contact_familiar_telefono" autocomplete="off" class="form-control">
                   </div>  
                 </div>
                 <div class="col-md-2">
@@ -815,7 +819,7 @@
                 <div class="col-md-2">
                   <div class="form-group" >
                     <label for="contact_familiar_indicaciones">Indicaciones:</label>
-                    <input type="text" id="contact_familiar_indicaciones" name="contact_familiar_indicaciones" class="form-control">
+                    <input type="text" id="contact_familiar_indicaciones" name="contact_familiar_indicaciones" autocomplete="off" class="form-control">
                   </div>  
                 </div>
                 <div class="col-md-1">
@@ -860,10 +864,12 @@
             <!-- ===================================== -->
             <div id="messages" class="col-md-12"></div></br>
           </div>
-
+</div>
       <div class="modal-footer">
-                  <button type="submit" class="btn btn-primary">Guardar</button>
-        <?php echo form_close();?>
+
+            <!--<button type="submit" id="myBtn" class="btn btn-primary">Guardar Nuevo</button>-->
+            <button class="btn btn-primary" >Guardar</button>
+          <?php echo form_close();?>
       
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
@@ -872,6 +878,16 @@
 </div>
 </div>
 
+<script type="text/javascript">
+  function imprSelec(historial){
+  var ficha=document.getElementById(historial);
+  var ventimp=window.open(' ','popimpr');
+  ventimp.document.write(ficha.innerHTML);
+  ventimp.document.close();
+  ventimp.print();
+  ventimp.close();
+}
+</script>
 <!-- MODAL DE REGISTRO DE VIAJES -->
 <div id="modal_travel" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
   <div class="modal-dialog modal-lg">
