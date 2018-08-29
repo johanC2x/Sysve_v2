@@ -10,6 +10,8 @@
         </button>
     </div>
 </div>
+
+
 <div class="input-group"> <span class="input-group-addon">Buscar</span>
 
     <input id="filter" type="text" class="form-control" placeholder="Escriba aquí...">
@@ -61,6 +63,13 @@
 	</div>
 </div>
 </div>
+
+<script type="text/javascript">
+        $("#table_holder").dataTable({
+        order: [[0, "asc"], [1, "desc"]]
+    });
+</script>
+
 <script type="text/javascript">
     $(document).ready(function(){
         travel.current_url = "<?= base_url();?>";
