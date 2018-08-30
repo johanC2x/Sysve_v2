@@ -187,10 +187,50 @@ var sales = function () {
             url: travel.current_url + "index.php/travel/info",
             success:function(response){
                 var data = JSON.parse(response);
-                console.log(data);
+                    console.log(data);
                 if(data.success){
-                    self.list_customer.push(data.data);
-                    self.populateTable();
+                    data = data.data;
+                    //armamos apellidos y nombres
+                    nombre_completo = data.lastname+' '+data.mother_lastname+' '+data.firstname+' '+data.middlename;
+                    $('input[name="name"]').val(nombre_completo);
+                    //seteamos el primer tipo de documento y nro de documento, primera direccion, primer email y primer telefono
+                    personal_data = JSON.parse(data.data); //info parseada del campo DATA
+                    info_doc1 = personal_data.documents[0];
+                    info_direc1 = personal_data.address[0];
+                    info_email1 = personal_data.emails[0];
+                    info_phone1 = personal_data.phones[0];
+
+                    if(personal_data.address.length > 0){
+                        val_direccion = info_direc1.address;
+                        $('input[name="dir_des_rct"]').val(val_direccion);
+                    }
+
+                    if(personal_data.emails.length > 0){
+                        val_email = info_email1.email || '';
+                        $('input[name="email"]').val(val_email);
+                    }
+
+
+                    if(personal_data.phones.length > 0){
+                        val_telefono = info_phone1.nro_phone || '';
+                        $('input[name="telefono"]').val(val_telefono);
+                    }
+
+                    
+                    if(personal_data.documents.length > 0){
+                        val_nrodoc = info_doc1.nro_doc;
+                        $('input[name="nro_doc_rct"]').val(val_nrodoc);
+
+                        if(info_doc1.type_document == 'dni') {
+                            val_tipodoc = 1;   
+                        }else{
+                            val_tipodoc = 6;   
+                        } 
+                        $('select[name="tip_doc_rct"]').val(val_tipodoc);
+                    }
+                    
+                   
+
                 }
             }
         });
@@ -2050,6 +2090,8 @@ var sales = function () {
         self.makeTableAddress();
         self.customer_passport_list = [];
         self.makeTablePassport();
+        self.list_service_doc = [];
+        self.makeTableServiceDoc();
         self.customer_card_list = [];
         self.makeTableCard();
         self.customer_company_list = [];
@@ -2229,7 +2271,7 @@ self.listServicios = function(){
         $.ajax({
             type:'POST',
             data:{},
-            url:self.current_url+"index.php/customers/listCotizacion",
+            url:self.current_url+"index.php/customers/listSales",
             success:function(response){
                 var res = JSON.parse(response);
                 if(res.success){
@@ -2239,32 +2281,31 @@ self.listServicios = function(){
                     $("#table_clients tbody").empty();
                     if(data.length > 0){
                         for(var i = 0;i < data.length;i++){
-                            var id = data[i].id;                            
-                            var cliente_id = data[i].cliente_id;
+                            var id = data[i].id;                 
                             var cotizacion_id = data[i].cotizacion_id;                            
-                            var asesor = data[i].username.toUpperCase(); 
+                            var name = data[i].name.toUpperCase(); 
                             var estat = data[i].estatus;                           
-                            var estatus = (data[i].estatus === 'C') ? ('COTIZADO').fontcolor("red") : ('VENDIDO').fontcolor("green");
-                            var fecha = data[i].fecha;
-                            var name_client = data[i].firstname.toUpperCase() + ' ' + data[i].middlename.toUpperCase() + ' ' + data[i].lastname.toUpperCase() + ' ' + data[i].mother_lastname.toUpperCase();
-                            var correlativo = data[i].num_corre_cpe_ref; 
+                            var estatus = (data[i].estatus === 'C') ? ('VENDIDO').fontcolor("green") : ('COTIZADO').fontcolor("red");
+                            var fecha = moment(data[i].fec_doc_ref).format("DD / MM / YYYY");
+                            var monto = data[i].mnt_tot;                 
+
 
                             tbody += `<tr>
-                                        <td>`+id+`</td>
+                                        <td><center>`+id+`</center></td>
                                         <td>`+cotizacion_id+`</td>
-                                        <td>`+asesor+`</td>
-                                        <td>`+estatus+`</td>
-                                        <td>`+fecha+`</td>
-                                        <td>`+name_client+`</td>
+                                        <td>`+name+`</td>
+                                        <td><center><small class="label bg-green">`+estatus+`</small></center></td>
+                                        <td><center>`+fecha+`</center></td>
+                                        <td align="right">`+monto+`</td>
                                         <td>
                                             <center>
-                                                <a href="index.php/sales/venta/?id=`+ id +`&cotizacion_id=`+ cotizacion_id +`&estatus=`+ estat +`&name_client=`+name_client+`&correlativo="`+correlativo+`" onclick="travel.addCoti(`+cotizacion_id +`);"><i class="fa fa-eye"></i>
+                                                <a href="index.php/sales/venta/?id=`+ id +`&cotizacion_id=`+ cotizacion_id +`" onclick="travel.addCoti(`+cotizacion_id +`);"><i class="fa fa-eye"></i>
                                                 </a>
                                             </center>
                                         </td>
                                         <td>
                                             <center>
-                                                <a href="index.php/sales/document/?id=`+ id +`&cotizacion_id=`+ cotizacion_id +`&estatus=`+ estat +`&name_client=`+name_client+`&correlativo="`+correlativo+`" onclick="travel.addCoti(`+cotizacion_id +`);">
+                                                <a href="index.php/sales/document/?id=`+ id +`&cotizacion_id=`+ cotizacion_id +`" onclick="travel.addCoti(`+cotizacion_id +`);">
                                                     <i class="fa fa-shopping-cart"></i>
                                                 </a>
                                             </center>
@@ -2586,12 +2627,15 @@ self.listServicios = function(){
         $("#last_name_casada").val("");
         $("#fecha_vcto").val("");
         $("#nacionalidad").val("");
-        $("#gender").val("");
-        $("#age").val("");
+        $("#telefono").val("");
+        $("#email").val("");
         $("#user_date").val("");
         //MAKE TABLE DOCUMENTS
         self.customer_documents_list = [];
         self.makeTableDocuments();
+        //MAKE TABLE SALES        
+        self.list_service_doc = [];
+        self.makeTableServiceDoc();
         //MAKE TABLE PASSPORT
         self.customer_passport_list = [];
         self.makeTablePassport();
