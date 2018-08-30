@@ -37,18 +37,18 @@ $name_client = $_GET["name_client"];
 </div>
 
     <div class="input-group"> <span class="input-group-addon">Buscar</span>
-        <input id="filter" type="text" class="form-control" placeholder="Nro. de Cotizacion">
+        <input id="filter" type="text" class="form-control" placeholder="Nro. Referencia">
     </div>
 <div id="table_holder">
     <table class="table table-bordered" id="table_clients">
         <thead>
             <tr class="well">
                 <th><center>ID</center></th>
-                <th><center>Nro. Cotizacion</center></th>
-                <th><center>Asesor</center></th>
+                <th><center>Nro. Referencia</center></th>
+                <th><center>Nombre del Cliente</center></th>
                 <th><center>Estatus</center></th>
                 <th><center>Fecha</center></th>
-                <th><center>Cliente</center></th>
+                <th><center>Monto</center></th>
                 <th colspan="2"><center>Acción</center></th>
             </tr>
         </thead>
@@ -90,7 +90,10 @@ $name_client = $_GET["name_client"];
                         <input type="hidden" name="ref_id" value="<?php echo $ref_id;?>">
 
             </div>
-  
+                  
+                        <div class="modal-header" id="buscador"></div>
+            
+
         <div class="modal-header">
             <h5 class="modal-title">Datos del Cliente a facturar</h5>
                 <?php echo form_open('sales/ventas',array('id'=>'employee_form')); ?>
@@ -116,7 +119,7 @@ $name_client = $_GET["name_client"];
                     </div>
                     <div class="col-md-6">
                         <label for="name">Apellido / Nombre:</label>
-                        <input type="text" id="name" name="name" placeholder="Nombre del Cliente" class="form-control" />
+                        <input type="text" id="name" name="name" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Nombre del Cliente" class="form-control" />
                     </div><br></br><br></br>
                     <div class="col-md-6">
                         <label for="dir_des_rct">Direccion:</label>
@@ -842,6 +845,9 @@ function closeDialog() {
     $(document).ready(function(){
         $(".error_comision").hide();
         sales.setTravelCode();
+        //dibujar buscador
+        $('#buscador').html('<div class="form-group"><form id="form_travel_search" action="index.php/travel/suggest" class="form-inline"><label for="search_value"><i style="color:#337ab7" class="fa fa-search"></i>&nbsp;</label><input placeholder="Buscar Cliente..." type="text" class="form-control" id="search_value" onkeyup="travel.suggest(this);" style="width: 300px;" list="list_travel_search" autocomplete="off"/><datalist id="list_travel_search"></datalist></form></div>');
+        //fin dibujar buscador
         $("#search_value").on('input', function () {
            sales.setCustomerFilter();
         });
