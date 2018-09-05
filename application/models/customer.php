@@ -40,32 +40,33 @@ class Customer extends Person
 	*/
 	function get_info($customer_id)
 	{
-		$this->db->from('customers');	
-		$this->db->join('people', 'people.person_id = customers.person_id');
-		$this->db->where('customers.person_id',$customer_id);
+		$this->db->from('clients');	
+		// $this->db->join('people', 'people.person_id = customers.person_id');
+		$this->db->where('id',$customer_id);
 		$this->db->limit(1);
 		$query = $this->db->get();
-		
-		if($query->num_rows()==1)
-		{
-			return $query->row();
-		}
-		else
-		{
-			//Get empty base parent object, as $customer_id is NOT an customer
-			$person_obj=parent::get_info(-1);
+		// return $this->db->last_query();
+		return $query->row();
+		// if($query->num_rows()==1)
+		// {
+		// 	return $query->row();
+		// }
+		// else
+		// {
+		// 	//Get empty base parent object, as $customer_id is NOT an customer
+		// 	$person_obj=parent::get_info(-1);
 			
-			//Get all the fields from customer table
-			$fields = $this->db->list_fields('customers');
+		// 	//Get all the fields from customer table
+		// 	$fields = $this->db->list_fields('customers');
 			
-			//append those fields to base parent object, we we have a complete empty object
-			foreach ($fields as $field)
-			{
-				$person_obj->$field='';
-			}
+		// 	//append those fields to base parent object, we we have a complete empty object
+		// 	foreach ($fields as $field)
+		// 	{
+		// 		$person_obj->$field='';
+		// 	}
 			
-			return $person_obj;
-		}
+		// 	return $person_obj;
+		// }
 	}
 	
 	/*
@@ -142,18 +143,18 @@ class Customer extends Person
  	*/
  	function get_search_customer($search,$limit=25){
  		$suggestions = array();
-		$this->db->from('customers');
-		$this->db->join('people','customers.person_id=people.person_id');	
-		$this->db->where("(first_name LIKE '%".$this->db->escape_like_str($search)."%' or 
-		last_name LIKE '%".$this->db->escape_like_str($search)."%' or 
-		CONCAT(`first_name`,' ',`last_name`) LIKE '%".$this->db->escape_like_str($search)."%') and deleted=0");
-		$this->db->order_by("last_name", "asc");		
+		$this->db->from('clients');
+		// $this->db->join('people','customers.person_id=people.person_id');	
+		$this->db->where("(firstname LIKE '%".$this->db->escape_like_str($search)."%' or 
+		lastname LIKE '%".$this->db->escape_like_str($search)."%' or 
+		CONCAT(`firstname`,' ',`lastname`) LIKE '%".$this->db->escape_like_str($search)."%') and deleted=0");
+		$this->db->order_by("lastname", "asc");		
 		$by_name = $this->db->get();
 		foreach($by_name->result() as $row){
 			$suggestions[] = array(
-				"person_id" => $row->person_id,
-				"name" => $row->first_name.' '.$row->last_name,
-				"address" => $row->address_1
+				"person_id" => $row->id,
+				"name" => $row->firstname.' '.$row->middlename.' '.$row->lastname.' '.$row->mother_lastname,
+				"address" => $row->address
 			);
 		}
 		return $suggestions;
@@ -329,6 +330,21 @@ class Customer extends Person
 		$this->db->join('employees', 'cotizaciones.asesor = employees.person_id');	
 	//	$this->db->where('deleted',0);
 		$this->db->order_by("cotizaciones.fecha", "desc");
+		$clients = $this->db->get();
+		foreach($clients->result() as $row){
+			$response[] = $row;
+		}
+		return $response;
+
+	}
+
+	function listSales(){
+		$response = [];
+		$this->db->from('ventas');
+	//	$this->db->join('clients', 'cotizaciones.cliente_id = clients.id');
+	//	$this->db->join('ventas', 'ventas.cotizacion_id != clients.id');				
+	//	$this->db->where('deleted',0);
+		$this->db->order_by("ventas.fec_doc_ref", "desc");
 		$clients = $this->db->get();
 		foreach($clients->result() as $row){
 			$response[] = $row;

@@ -53,6 +53,18 @@ class Sale extends CI_Model
 	 }
 
 
+	function getSales($id){
+		$response = null;
+		$this->db->from('ventas');
+		$this->db->where('id', $id);
+		$this->db->order_by('id', 'desc');
+		$clients = $this->db->get();
+		foreach($clients->result() as $row){
+			$response[] = $row;
+		}
+		return $response;
+	}
+
 	function listServicios($data){	
 		$response = null;
 		$this->db->from('cotizaciones_servicios');
