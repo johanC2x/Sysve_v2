@@ -81,7 +81,7 @@ class Travel extends Secure_area {
 	function info(){
 		$response = [];
 		$customer = $this->customer->get_info($this->input->post('person_id'));
-		if(!empty($customer->person_id)){
+		if(!empty($customer->id)){
 			$response['success'] = true;
 			$response['data'] = $customer;
 		}else{
@@ -256,6 +256,29 @@ class Travel extends Secure_area {
 		}
 		$data["travelid"] = $travelid;
 		$this->load->view('travel/new',$data);
+	}
+
+
+	function cotizaciones(){
+		if($this->input->post()){
+			$client_data = array(
+				'cotizacion_id'=>$this->input->post('cotizacion_id'),
+				'estatus'=>$this->input->post('estatus'),
+				'cliente_id'=>$this->input->post('cliente_id'),			
+				'asesor'=>$this->input->post('asesor'),
+				'codigo'=>$this->input->post('codigo'),
+				'monto'=>$this->input->post('monto')
+			);
+			$response = $this->Customer->insertCotizacion($client_data);
+			if(!empty($response) && (int)$response === 1){		
+				$this->load->view('home', $client_data);
+				echo json_encode(array('success'=>true,'message'=>"Operación correcta"));
+			}else{
+				echo json_encode(array('success'=>false,'message'=>"Ha ocurrido un error interno"));
+			}
+		}else{
+			echo json_encode(array('success'=>false,'message'=>"No se ha enviado ningún registro"));
+		}
 	}
 
 }

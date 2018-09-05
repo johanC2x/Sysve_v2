@@ -91,6 +91,8 @@ class Customers extends Person_controller
 			'comments'=>$this->input->post('comments'),
 			'person_id'=>$this->input->post('person_id'),
 			'type_person_id'=>$this->input->post('type_person_id'),
+			'has_brevete'=>$this->input->post('has_brevete'),
+			'num_brevete'=>$this->input->post('num_brevete'),
 			'has_passport'=>$this->input->post('has_passport'),
 			'num_passport'=>$this->input->post('num_passport'),
 		);
@@ -256,6 +258,25 @@ class Customers extends Person_controller
 		}
 	}
 
+	function listCotizacion(){
+		$response = $this->Customer->listCotizacion();
+		$correlativo = $this->Sale->correlativo();
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response, $correlativo));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
+	function listSales(){
+		$response = $this->Customer->listSales();
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
+		}else{
+			echo json_encode(array('success'=>false,'data'=>[]));
+		}
+	}
+
 	function getClient(){
 		$response = [];
 		if($this->input->post()){
@@ -282,6 +303,8 @@ class Customers extends Person_controller
 				'mother_lastname'=>$this->input->post('last_name_mothers'),
 				'last_name_casada'=>$this->input->post('last_name_casada'),
 				'age'=>$this->input->post('age'),
+				'fecha_vcto'=>$this->input->post('fecha_vcto'),
+				'nacionalidad'=>$this->input->post('nacionalidad'),
 				'gender'=>$this->input->post('gender'),
 				'fec_nac'=>$this->input->post('user_date'),
 				'data'=>$this->input->post('client_data')
@@ -301,9 +324,9 @@ class Customers extends Person_controller
 	function saveClientBasico(){
 		$cliente['datos']     = array(
 		    	'person_id'       =>$this->input->post('person_id'),
-	            'firstname'       => $this->input->post('first_name'),
-	            'middlename'      => $this->input->post('midle_name'),
-	            'lastname'        => $this->input->post('last_name'),
+	            'firstname'       =>$this->input->post('first_name'),
+	            'middlename'      =>$this->input->post('midle_name'),
+	            'lastname'        =>$this->input->post('last_name'),
 	            'mother_lastname' =>$this->input->post('last_name_mothers'),
 				'last_name_casada'=>$this->input->post('last_name_casada'),
 				'descripcion'     =>$this->input->post('descripcion'),
@@ -317,6 +340,7 @@ class Customers extends Person_controller
 				'mother_lastname'=>$this->input->post('last_name_mothers'),
 				'last_name_casada'=>$this->input->post('last_name_casada'),
 				'age'=>$this->input->post('age'),
+				'fecha_vcto'=>$this->input->post('fecha_vcto'),
 				'gender'=>$this->input->post('gender'),
 				'fec_nac'=>$this->input->post('user_date'),
 				'data'=>$this->input->post('client_data')
@@ -337,7 +361,22 @@ class Customers extends Person_controller
 		if(!empty($id)){
 			$client = $this->Customer->getClient($id);
 			$data = json_decode($client->data);
-			//echo "<pre/>";print_r($data->documents);exit();
+
+			//OBTENIENDO DATOS DE EMAIL
+			$email_pos = array_search('empresa', array_column($data->emails, 'type_email'));
+			$email_arr = $data->emails[$email_pos];
+			$email = (!empty($email_arr)) ? $email_arr->email : "";
+
+			//OBTENIENDO DATOS DE TELEFONO
+			$phone_pos = array_search('celular_personal', array_column($data->emails, 'type_phone'));
+			$phone_arr = $data->phones[$phone_pos];
+			$phone = (!empty($phone_arr)) ? $phone_arr->nro_phone : "";
+
+			//OBTENIENDO DATOS DE DOCUMENTO
+			$document_pos = array_search('dni', array_column($data->documents, 'type_document'));
+			$document_arr = $data->documents[$document_pos];
+			$document = (!empty($document_arr)) ? $document_arr->nro_doc : "";
+			
 			$cliente['datos']     = array(
 		    	'person_id'       => $client->id,
 	            'firstname'       => $client->firstname,
@@ -345,10 +384,13 @@ class Customers extends Person_controller
 	            'lastname'        => $client->lastname,
 	            'mother_lastname' => $client->mother_lastname,
 				'last_name_casada'=> $client->last_name_casada,
-				'descripcion' 	  => $client->descripcion,
+				'documents' 	  => $document,
+				'description' 	  => $data->description,
+				'emails'		  => $email,
+				'phones'	      => $phone,	  
         	);
 		}
-		$this->load->view('customers/cotizar',$cliente);
+		$this->load->view('customers/cotizar',$cliente, $data);
 	}
 
 
@@ -401,6 +443,8 @@ class Customers extends Person_controller
 				'mother_lastname'=>$this->input->post('last_name_mothers'),
 				'last_name_casada'=>$this->input->post('last_name_casada'),
 				'age'=>$this->input->post('age'),
+				'fecha_vcto'=>$this->input->post('fecha_vcto'),
+				'nacionalidad'=>$this->input->post('nacionalidad'),
 				'gender'=>$this->input->post('gender'),
 				'fec_nac'=>$this->input->post('user_date'),
 				'data'=>$this->input->post('client_data')
@@ -434,6 +478,52 @@ class Customers extends Person_controller
 	function customers_edit($customer_id){
 		$data['person_info']=$this->Customer->get_info($customer_id);
 		$this->load->view('customers/mantenimiento', $data);
+	}
+
+	function saveCotizacion(){
+		if($this->input->post()){
+			$id = 0;
+			$cliente_id = $this->input->post('person_id');
+			$cotizacion_id = $this->input->post('code_coti');
+			$user_id = $this->session->userdata["person_id"];
+			$descripcion = $this->input->post('descripcion');
+			$cotizaciones_data = array(
+				'cliente_id' => $cliente_id,
+				'cotizacion_id' => $cotizacion_id,
+				'descripcion' => $descripcion,
+				'estatus' => 'C',
+				'asesor' => $user_id,
+				'fecha' => date('Y-m-d H:i:s')
+			);
+			$response = $this->Customer->addCotizacion($cotizaciones_data);
+			$obj_cotizacion = $this->Customer->getCotizacionBycode($cotizacion_id);
+			if(!empty($obj_cotizacion)){
+				$id = $obj_cotizacion->cotizacion_id;
+			}
+			if(!empty($response) && (int)$response === 1){
+				$cotizaciones = json_decode($this->input->post('comisiones'));
+				foreach($cotizaciones as $cotizacion){
+					$cotizaciones_service_data = array(
+						'name' => $cotizacion->name,
+						'cotizacion_id' => $id,
+						'descripcion' => $cotizacion->descripcion,
+						'created_at' => date('Y-m-d H:i:s'),
+						'created_by' => $user_id,
+						'code' => $cotizacion->ammount,
+						'amount' => $cotizacion->monto,
+						'data' => json_encode($cotizacion->childrens)
+					);
+					$response_coti = $this->Customer->addCotizacionService($cotizaciones_service_data);
+					if(empty($response) || (int)$response !== 1){
+						echo json_encode(array('success'=>false));
+						exit();
+					}
+				}
+				echo json_encode(array('success'=>true));
+			}else{
+				echo json_encode(array('success'=>false));
+			}
+		}
 	}
 
 }

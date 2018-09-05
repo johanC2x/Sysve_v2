@@ -213,21 +213,18 @@ class Sales extends Secure_area{
 		}
 	}
 
-	function getSales(){
-		$response = [];
-		if($this->input->post()){
-			$servicio_id = $this->input->post("id");
-			$result = $this->Sale->getServicios($servicio_id);
-			if(!empty($result)){
-				$response = array('success'=>true,'data'=>$result);
-			}else{
-				$response = array('success'=>false);
-			}
+
+
+  	function getSales($id){
+ 		$id = $this->input->post('id');
+		$response = $this->Sale->getSales($id);
+		if(!empty($response)){
+			echo json_encode(array('success'=>true,'data'=>$response));
 		}else{
-			$response = array('success'=>false);
+			echo json_encode(array('success'=>false,'data'=>[]));
 		}
-		echo json_encode($response);
 	}
+
 
 
 	function getServicios(){
