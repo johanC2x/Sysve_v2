@@ -20,6 +20,7 @@ var sales = function () {
         customer_familiares_list: [],
         customer_tarjtas_list: [],
         customer_description: '',
+        modal_views: '',
         action_form: "",
         current_id: 0,
         current_service:-1,
@@ -60,6 +61,7 @@ var sales = function () {
         var otros = $("#otros").val();
         var costo = $("#costo").val();
         var incentivo = $("#incentivo").val();
+        var observaciones = $("#observaciones").val();
 
 
         if(tipo_servicio !== '' && codigo !== '' && cantidad !== '' && valor_unitario !== ''){
@@ -81,6 +83,7 @@ var sales = function () {
             data.otros = otros;
             data.costo = costo;
             data.incentivo = incentivo;
+            data.observaciones = observaciones;
 
 
 
@@ -114,7 +117,7 @@ var sales = function () {
                 var utilidad = ((parseInt(element.tarifa_neta) * parseFloat(element.comi_proveedor_porcentaje))/100)+parseInt(element.comi_proveedor_fija)+parseInt(element.fee_agencia);
 
 
-
+                //getServicios estaba con un ID estatico de 8 y hacia un ajax
                 html += `<tr  style="background-color:#FFFFFF">
                             <td><center>`+ (count + 1) +`</center></td>
                             <td><center>`+ element.tipo_servicio +`</center></td>
@@ -126,7 +129,7 @@ var sales = function () {
                             <td><center>`+ utilidad.toFixed(2) +`</td>
                             <td>
                                 <center>
-                                    <a href="javascript:void(`+ count +`);" onclick="sales.getServicios(8);"><i class="fa fa-edit"></i></a>
+                                    <a href="javascript:void(`+ count +`);" onclick="sales.getServicios(`+ count +`);"><i class="fa fa-edit"></i></a>
                                 </center>
                             </td>
                             <td>
@@ -170,6 +173,44 @@ var sales = function () {
         self.makeTableServiceDoc();
     };
 
+    self.modal_views = function(id){
+        console.log('modal_views');
+        $.ajax({
+            type:'POST',
+            data:{
+                id : id
+            },
+            url:self.current_url+"index.php/sales/getSales",
+            success:function(res){
+                var response = JSON.parse(res);
+                if(response.success){
+                    self.action_form = self.current_url+"index.php/sales/updateSales";
+                    var data = response.data[0];
+                    var data_sales = '';
+                    if(data.data == ''){
+                        var data_sales = JSON.parse(data.data);
+                    }
+                    $("#id").val(id);
+                    $("#name").val(data.name);
+                    $("#email").val(data.email);
+                    console.log(data);
+
+                    $("#modal_views").modal("show");        
+                    $('#modal_views input[name="name"]').val(data.name);
+                    $('#modal_views input[name="nro_doc_rct"]').val(data.num_doc_rct);
+                    $('#modal_views input[name="email"]').val(data.email);
+                    $('#modal_views input[name="telefono"]').val(data.telefono);
+                    $('#modal_views input[name="dir_des_rct"]').val(data.dir_des_rct);
+                    $('#modal_views input[name="tip_doc_rct"]').val(data.tip_doc_rct);
+                    $('#modal_views input[name="data"]').val(data.data);
+                   
+
+
+                }
+            }
+        });
+    };
+
     self.setOcultoDetalleServicio = function(){
         var list_service_doc = self.list_service_doc;
         $('#detalle_servicio_json').val(JSON.stringify(list_service_doc));
@@ -209,7 +250,6 @@ var sales = function () {
                         val_email = info_email1.email || '';
                         $('input[name="email"]').val(val_email);
                     }
-
 
                     if(personal_data.phones.length > 0){
                         val_telefono = info_phone1.nro_phone || '';
@@ -1277,7 +1317,6 @@ var sales = function () {
 
             json = $('#json_'+contenedor).val(JSON.stringify(arr));
 
-
         }
         tabla += '<td><button class="borrar fa fa-trash"></button></td></tr>';
         tabla += '<table>';
@@ -2299,8 +2338,7 @@ self.listServicios = function(){
                                         <td align="right">`+monto+`</td>
                                         <td>
                                             <center>
-                                                <a href="index.php/sales/venta/?id=`+ id +`&cotizacion_id=`+ cotizacion_id +`" onclick="travel.addCoti(`+cotizacion_id +`);"><i class="fa fa-eye"></i>
-                                                </a>
+                                                <a href="javascript:void(0);" onclick="sales.modal_views(`+id+`);"><i class="fa fa-eye"></i>
                                             </center>
                                         </td>
                                         <td>
@@ -2475,6 +2513,9 @@ self.listServicios = function(){
     };
 
     self.getServicios = function(id){
+    	//siempre enviaba el id=8 y traia la info del cliente (patricia), no entiendo bien para que
+    	console.log(id);
+    	//este ajax sobra? yo lo borraria
         $.ajax({
             type:'POST',
             data:{
@@ -2502,48 +2543,34 @@ self.listServicios = function(){
                     $("#age").val(data.age);
                     $("#user_date").val(data.fec_nac);
                     console.log(data);
-                    //MAKE TABLE DOCUMENTS
-                    if(data_client != ''){
-                        self.customer_documents_list = data_client.documents;
-                        self.makeTableDocuments();
-                        //MAKE TABLE PASSPORT
-                        self.customer_passport_list = data_client.passport;
-                        self.makeTablePassport();
-                        //MAKE TABLE VISADO
-                        self.customer_visado_list = data_client.visado;
-                        self.makeTableVisado();
-                        //MAKE TABLE PHONES
-                        self.customer_phones_list = data_client.phones;
-                        self.makeTablePhones();
-                        //MAKE TABLE EMAILS
-                        self.customer_emails_list = data_client.emails;
-                        self.makeTableEmails();
-                        //MAKE TABLE CLIENTES FRECUENTES
-                        self.customer_frec_list = data_client.frec;
-                        self.makeTableFrec();
-                        //MAKE TABLE ADDRESS
-                        self.customer_address_list = data_client.address;
-                        self.makeTableAddress();
-                        //MAKE TABLE COMPANY
-                        self.customer_company_list = data_client.company;
-                        self.makeTableCompany();
-                        //MAKE TABLE CONTACT
-                        self.customer_contact_list = data_client.contact;
-                        self.makeTableContact();
-                        //MAKE TABLE CARDS
-                        self.customer_tarjtas_list = data_client.tarjtas;
-                        self.makeTableTarjetas();
-                        //MAKE TABLE FAMILIARES
-                        self.customer_familiares_list = data_client.familiares;
-                        self.makeTableDatosFamilares();
-                        console.log(data_client.description);
-                        $("#descripcion").val(data_client.description);
-                    }
-                    
-                    $("#modal_servicios").modal("show");
+                    console.log(self.list_service_doc);
+                    console.log(self.list_service_doc[id]);
                 }
             }
         });
+
+        $("#modal_servicios").modal("show");
+        detalle_data = self.list_service_doc[id];
+        console.log(detalle_data);
+        $('input[name="tipo_servicio"]').val(detalle_data.tipo_servicio);
+        $('input[name="proveedor"]').val(detalle_data.proveedor);
+        $('input[name="codigo"]').val(detalle_data.codigo);
+        $('input[name="cantidad"]').val(detalle_data.cantidad);
+        $('input[name="valor_unitario"]').val(detalle_data.valor_unitario);
+        $('input[name="detalle"]').val(detalle_data.detalle);
+        $('input[name="tarifa_neta"]').val(detalle_data.tarifa_neta);
+        $('input[name="comi_proveedor_porcentaje"]').val(detalle_data.comi_proveedor_porcentaje);
+        $('input[name="comi_proveedor_fija"]').val(detalle_data.comi_proveedor_fija);
+        $('input[name="fee_proveedor"]').val(detalle_data.fee_proveedor);
+        $('input[name="fee_proveedor_conf"]').val(detalle_data.fee_proveedor_conf);
+        $('input[name="fee_agencia"]').val(detalle_data.fee_agencia);
+        $('input[name="impuesto"]').val(detalle_data.impuesto);
+        $('input[name="incentivo_add"]').val(detalle_data.incentivo_add);
+        $('input[name="otros"]').val(detalle_data.otros);
+        $('input[name="detalle"]').val(detalle_data.detalle);
+        $('span[name="costo"]').val(detalle_data.costo);
+        $('input[name="incentivo"]').val(detalle_data.incentivo);
+        $('textarea[name="observaciones"]').val(detalle_data.observaciones);
     };
 
     self.getClient = function(id){
