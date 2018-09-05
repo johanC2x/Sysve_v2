@@ -940,12 +940,12 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                                     <th><center>Prc. Unit.</center></th>
                                     <th><center>Val. Unit.</center></th>
                                     <th><center>Val. Total.</center></th>
-                                    <th><center>Accion</center></th>
+                                    <th colspan="2"><center>Accion</center></th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td colspan="9">
+                                    <td colspan="10">
                                         <center>
                                             No se registraron datos.
                                         </center>
