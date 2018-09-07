@@ -62,6 +62,13 @@ var sales = function () {
         var costo = $("#costo").val();
         var incentivo = $("#incentivo").val();
         var observaciones = $("#observaciones").val();
+        var subtotal = $("#subtotal").val();
+        var utilidad1 = $("#utilidad1").val();
+        var igv = $("#igv").val();
+        var total = $("#total").val();
+
+
+
 
 
         if(tipo_servicio !== '' && codigo !== '' && cantidad !== '' && valor_unitario !== ''){
@@ -84,7 +91,10 @@ var sales = function () {
             data.costo = costo;
             data.incentivo = incentivo;
             data.observaciones = observaciones;
-
+            data.subtotal = subtotal;
+            data.utilidad1 = utilidad1;
+            data.igv = igv;
+            data.total = total;
 
 
             if(self.current_serice_doc === -1){
@@ -103,7 +113,15 @@ var sales = function () {
     self.makeTableServiceDoc = function(){
         var html = '';
         var count = 0;
+        var tarifa_neta = 0;
         var utilidad = 0;
+        var utilidad1 = 0;
+        var subtotal = 0;
+        var valor = 0;
+        var tasa = 18;  
+        var iva = 0;
+        var total1 = 0;
+
         if(self.list_service_doc.length === 0){
             html += `<tr>
                         <td colspan="9">
@@ -115,8 +133,8 @@ var sales = function () {
         }else{
             self.list_service_doc.forEach(function(element){
                 var utilidad = ((parseInt(element.tarifa_neta) * parseFloat(element.comi_proveedor_porcentaje))/100)+parseInt(element.comi_proveedor_fija)+parseInt(element.fee_agencia);
-
-
+                var valor = (element.cantidad)*parseFloat(element.valor_unitario).toFixed(2);
+                
                 //getServicios estaba con un ID estatico de 8 y hacia un ajax
                 html += `<tr  style="background-color:#FFFFFF">
                             <td><center>`+ (count + 1) +`</center></td>
@@ -124,7 +142,7 @@ var sales = function () {
                             <td><center>`+ element.detalle +`</center></td>
                             <td><center>`+ element.codigo +`</center></td>
                             <td><center>`+ element.cantidad +`</center></td>
-                            <td><center>`+ (element.cantidad)*parseFloat(element.valor_unitario).toFixed(2) +`</center></td>
+                            <td><center>`+ valor.toFixed(2) +`</center></td>
                             <td><center>`+ element.proveedor +`</td>
                             <td><center>`+ utilidad.toFixed(2) +`</td>
                             <td>
@@ -140,10 +158,20 @@ var sales = function () {
                                 </center>
                             </td>
                         </tr>`;
+
+                subtotal = subtotal + (element.cantidad)*parseFloat(element.valor_unitario).toFixed(2);
+                total1 = subtotal;
+                iva = (subtotal * tasa)/100;
                 count++;
             });
         }
-        $("#table_customer_travel_children tbody").empty().append(html);     
+        $("#table_customer_travel_children tbody").empty().append(html); 
+        $("#subtotal").text((subtotal).toFixed(2));
+        $('input[id="subtotal"]').val(subtotal.toFixed(2));
+        $("#total1").text((total1).toFixed(2));
+        $('input[id="total1"]').val(total1.toFixed(2));
+
+
     };
     self.resetServiceDocReset = function(){
         $("#detalle_servicio").val("");
@@ -203,9 +231,6 @@ var sales = function () {
                     $('#modal_views input[name="dir_des_rct"]').val(data.dir_des_rct);
                     $('#modal_views input[name="tip_doc_rct"]').val(data.tip_doc_rct);
                     $('#modal_views input[name="data"]').val(data.data);
-                   
-
-
                 }
             }
         });
@@ -2374,6 +2399,7 @@ self.listServicios = function(){
         var banco = $("#banco").val();
         var tipo = $("#tipo").val();
         var referencia = $("#referencia").val();
+        var fecha_exp = $("#fecha_exp").val();
 
         if(condicion !== '' && forma_pago !== '' && total !== ''){
             self.customer_pay_list.push({
@@ -2382,7 +2408,8 @@ self.listServicios = function(){
                 forma_pago : forma_pago,
                 banco : banco,
                 tipo : tipo,
-                referencia : referencia
+                referencia : referencia,
+                fecha_exp : fecha_exp
             });
 
             $("#condicion").val("");
@@ -2391,6 +2418,7 @@ self.listServicios = function(){
             $("#banco").val("");
             $("#tipo").val("");
             $("#referencia").val("");
+            $("#fecha_exp").val("");
 
             self.makeTablePay();
         }else{
@@ -2414,6 +2442,7 @@ self.listServicios = function(){
                             <td><center>`+ self.customer_pay_list[i].forma_pago +`</center></td>
                             <td><center>`+ self.customer_pay_list[i].banco +`</center></td>
                             <td><center>`+ self.customer_pay_list[i].tipo +`</center></td>
+                            <td style="display: none;"><center>`+ self.customer_pay_list[i].fecha_exp +`</center></td>                            
                             <td><center>`+ self.customer_pay_list[i].referencia +`</center></td>
                             <td><center>`+ self.customer_pay_list[i].estatus +`</center></td>
                             <td><center>`+ self.customer_pay_list[i].total +`</center></td>
@@ -2571,6 +2600,10 @@ self.listServicios = function(){
         $('span[name="costo"]').val(detalle_data.costo);
         $('input[name="incentivo"]').val(detalle_data.incentivo);
         $('textarea[name="observaciones"]').val(detalle_data.observaciones);
+        $('input[name="subtotal"]').val(detalle_data.subtotal);
+        $('input[name="utilidad1"]').val(detalle_data.utilidad1);
+        $('input[name="igv"]').val(detalle_data.igv);
+        $('input[name="total"]').val(detalle_data.total);
     };
 
     self.getClient = function(id){

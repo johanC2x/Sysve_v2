@@ -2200,7 +2200,8 @@ var travel = function () {
                                     </td>
                                 </tr>`;
                     }
-                    $("#table_clients tbody").append(tbody);
+                    $("#table_clients tbody").append(tbody);                    
+                    $('#areaimprimir input[name="firstname"]').val(data.firstname);
                 }
             }
         });
@@ -3177,6 +3178,7 @@ self.listServiciosVenta = function(){
                     }
                     $("#client_id").val(id);
                     $("#first_name").val(data.firstname);
+                    $('#areaimprimir input[name="firstname"]').val(data.firstname);
                     $("#midle_name").val(data.middlename);
                     $("#last_name").val(data.lastname);
                     $("#last_name_mothers").val(data.mother_lastname);
@@ -3189,6 +3191,7 @@ self.listServiciosVenta = function(){
                     console.log(data);
                     //MAKE TABLE DOCUMENTS
                     if(data_client != ''){
+
                         self.customer_documents_list = data_client.documents;
                         self.makeTableDocuments();
                         //MAKE TABLE BREVETE
