@@ -1,4 +1,5 @@
 <div id="modal_customer" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
@@ -866,7 +867,7 @@
           </div>
 </div>
       <div class="modal-footer">
-
+            <input type="button" onclick="printDiv('areaImprimir')" value="Imprimir" />
             <!--<button type="submit" id="myBtn" class="btn btn-primary">Guardar Nuevo</button>-->
             <button class="btn btn-primary" >Guardar</button>
           <?php echo form_close();?>
@@ -878,10 +879,19 @@
 </div>
 </div>
 
+
+  
+
+
+
+
+
+
+
 <script type="text/javascript">
-  function imprSelec(historial){
-  var ficha=document.getElementById(historial);
-  var ventimp=window.open(' ','popimpr');
+  function printDiv(nombreDiv){
+  var ficha=document.getElementById(nombreDiv);
+  var ventimp=window.open(ficha.innerHTML,'_blank', 'toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,left=10000, top=10000, visible=none', '');
   ventimp.document.write(ficha.innerHTML);
   ventimp.document.close();
   ventimp.print();
@@ -1387,6 +1397,437 @@
 
 
 
+
+
+
+
+<div id="areaImprimir" style="font-size:10px;" class="modal fade" role="dialog" data-keyboard="false">
+
+        <h6 class="modal-title">IMPRIMIR DATOS DEL CLIENTE</h6>
+   <div class="modal-body">
+          <div style="font-size:10px;" class="row">
+            <div class="col-md-6">
+              <fieldset>
+                <legend>Documentos</legend>
+                <!-- ===================================== -->
+                <table style="font-size:10px;" id="table_customer_doc" class="table table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-1"><center>Tipo Documento</center></th>
+                      <th class="col-md-4"><center>Nro. de Documento </center></th>
+                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="4">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="first_name">Nombre:</label>
+                <span id="firstname"></span>
+                <span id="first_name"></span>
+                <input id="first_name" name="first_name" autocomplete="off" class="form-control" type="text">
+                <input type="text" id="firstname" name="firstname" class="form-control"/>
+                <input type="text" id="first_name" v name="first_name" class="form-control"/>
+              </div>    
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="midle_name">Pre-Nombre:</label>
+                <input type="text" id="midle_name" name="midle_name" class="form-control"/>
+              </div>    
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="last_name">Apellidos Paterno:</label>
+                <input type="text" id="last_name" name="last_name" class="form-control"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="last_name">Apellidos Materno:</label>
+                <input type="text" id="last_name_mothers" name="last_name_mothers" class="form-control"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="last_name">Apellido de Casada:</label>
+                <input type="text" id="last_name_casada" name="last_name_casada" class="form-control"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="nacionalidad">Nacionalidad:</label>
+                <input type="text" id="nacionalidad" name="nacionalidad" class="form-control"/>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="fecha_vcto">Vcto. Doc. Identidad:</label>
+                <input type="date" id="fecha_vcto" name="fecha_vcto" class="form-control"/>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="gender">Género:</label>
+                <input type="text" class="form-control" id="gender" name="gender">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="user_date">Fecha de Nacimiento:</label>
+                <input type="date" id="fec_nac" name="fec_nac" class="form-control"/>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="form-group">
+                <label for="age">Edad:</label>
+          <table width="100%">
+            <td>
+          <div id="age"></div>  
+            </td>
+          </table>
+              </div>
+            </div>
+
+            <!-- =========== FORM TELEFONOS Y CORREOS ============ -->
+
+            
+            <div style="font-size:10px;" class="col-md-6" style="background-color:#EFF0F1"><br>
+              <fieldset>
+                <legend>Teléfonos</legend>
+                <table style="font-size:10px;" id="table_customer_phones" class="table table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-2"><center>T. Contacto</center></th>
+                      <th class="col-md-4"><center>Teléfono</center></th>
+                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="3">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+            <div style="font-size:10px;" class="col-md-6" style="background-color:#EFF0F1"><br>
+            <fieldset>
+                <legend>Correos</legend>
+                <table style="font-size:10px;" id="table_customer_emails" class="table table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-2"><center>T. Email</center></th>
+                      <th class="col-md-4"><center>Email</center></th>
+                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="3">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+            <!-- ===================================== -->
+
+
+
+            <!-- ===== FORM CLIENTES FRECUENTES ====== -->
+            <div style="font-size:10px;" class="col-md-12"><br>
+              <fieldset>
+                <legend>Pasajeros Frecuentes</legend>
+                <table style="font-size:10px;" id="table_customer_frec" class="table table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-3"><center>Millaje</center></th>
+                      <th class="col-md-3"><center>Nro</center></th>
+                      <th class="col-md-3"><center>Usuario</center></th>
+                      <th class="col-md-3"><center>Clave</center></th>
+                      <th class="col-md-3"><center>Pin</center></th>
+                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="6">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+            <!-- ===================================== -->
+
+            <!-- =========== FORM PASAPORTE ============ -->
+            <div style="font-size:10px;" class="col-md-12"style="background-color:#EFF0F1"><br>
+              <fieldset>
+                <legend>Pasaportes</legend>
+                <table style="font-size:10px;" id="table_customer_passport" class="table table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-4"><center>Nro de Pasaporte </center></th>
+                      <th class="col-md-3"><center>Pais Origen</center></th>
+                      <th class="col-md-2"><center>Fec. Vencimiento</center></th>
+                      <th class="col-md-2"><center>Fec. Emisión</center></th> 
+                      <th class="col-md-2"><center>Nacionalidad</center></th>
+                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="6">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+            <!-- ===================================== -->
+
+            <!-- =========== FORM VISADO ============ -->
+            <div style="font-size:10px;" class="col-md-12"><br>
+              <fieldset>
+                <legend>Visado</legend>
+                <table style="font-size:10px;" id="table_customer_visado" class="table table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-2"><center>Pais Emisor</center></th>
+                      <th class="col-md-2"><center>Tipo</center></th>
+                      <th class="col-md-2"><center>Número</center></th>
+                      <th class="col-md-2"><center>Fec. Emisión</center></th> 
+                      <th class="col-md-2"><center>Fec. Vencimiento</center></th>
+                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="5">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+              </div>
+            <!-- ===================================== -->
+
+            <!-- =========== FORM BREVETE ============ -->
+            <div style="font-size:10px;" class="col-md-12" style="background-color:#EFF0F1"><br>
+              <fieldset>
+                <legend>Licencia de Conducir</legend>
+                <table style="font-size:10px;" id="table_customer_brevete" class="table table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-4"><center>Nro. Doc.</center></th>
+                      <th class="col-md-3"><center>Fec. Vencimiento</center></th>
+                      <th class="col-md-2"><center>Tipo</center></th>
+                      <th class="col-md-2"><center>Pais Emisor</center></th> 
+                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="6">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+            <!-- ===================================== -->
+            <!-- =========== FORM ADDRESS ============ -->
+            <div style="font-size:10px;" class="col-md-12"><br>
+              <fieldset>
+                <legend>Direcciones Propias y de Entrega</legend>
+                <table style="font-size:10px;" id="table_customer_address" class="table table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-1"><center>Tipo</center></th>
+                      <th class="col-md-1"><center>Dirección</center></th>
+                      <th class="col-md-4"><center>Distrito</center></th>
+                      <th class="col-md-4"><center>País</center></th>
+                      <th class="col-md-4"><center>Teléfono</center></th>
+                      <th class="col-md-2"><center>Referencia</center></th> 
+                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="7">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+            <!-- ===================================== -->
+            <!-- =========== FORM COMPANY ============ -->
+            <div style="font-size:10px;" class="col-md-12" style="background-color:#EFF0F1"><br>
+              <fieldset>
+                <legend>Datos de Empresas</legend>
+                <table style="font-size:10px;" id="table_customer_company" class="table table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-1"><center>Ruc</center></th>
+                      <th class="col-md-4"><center>Razon Social</center></th>
+                      <th class="col-md-2"><center>Correo</center></th> 
+                      <th class="col-md-2"><center>Dirección</center></th>
+                      <th class="col-md-3"><center>Distrito</center></th> 
+                      <th class="col-md-2"><center>Teléfono</center></th> 
+                      <th class="col-md-2"><center>Referencia</center></th> 
+                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="8">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+            <!-- ===================================== -->
+
+             <!-- =========== FORM CONTACTS ============ -->
+            <div style="font-size:10px;" class="col-md-12"><br>
+              <fieldset>
+                <legend>Contacto en Caso de Emergencia</legend>
+                <table style="font-size:10px;" id="table_customer_contacts" class="table table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-1"><center>Nombre</center></th>
+                      <th class="col-md-4"><center>Teléfono</center></th>
+                      <th class="col-md-2"><center>Correo</center></th>
+                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="4">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+            <!-- ===================================== -->
+            <!-- =========== FORM DATOS TARJETAS ============ -->
+            <div style="font-size:10px;" class="col-md-12" style="background-color:#EFF0F1"><br>
+              <fieldset>
+                <legend>Datos de Tarjetas</legend>
+                <table style="font-size:10px;" id="table_tarjetas" class="table table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-1"><center>Tipo de Tarjeta</center></th>
+                      <th class="col-md-4"><center>Nro de Tarjeta</center></th>
+                      <th class="col-md-2"><center>Débito o Crédito</center></th>
+                      <th colspan="3" class="col-md-1"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="4">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+            <!-- ===================================== -->
+            <!-- =========== FORM DATOS FAMILIARES ============ -->
+            <div style="font-size:10px;" class="col-md-12"><br>
+              <fieldset>
+                <legend>Datos de Familiares</legend>
+                <table style="font-size:10px;" id="table_familiares" class="table table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-2"><center>Relacion</center></th>
+                      <th class="col-md-2"><center>Nombre</center></th>
+                      <th class="col-md-2"><center>Teléfono</center></th>
+                      <th class="col-md-2"><center>Preferencia de Asiento</center></th>
+                      <th class="col-md-2"><center>Indicaciones</center></th>
+                      <th class="col-md-2"><center>Acción</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="6">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </fieldset>
+            </div>
+            <div style="font-size:10px;" class="col-md-12" style="background-color:#EFF0F1"><br>
+              <fieldset>
+                <legend>Observaciones</legend>
+                <div class="form-group">
+                  <textarea placeholder="Comentarios..." id="descripcion" name="descripcion" class="form-control" style="height: 150px;"></textarea>
+                </div>
+              </fieldset>
+            </div>
+            <!-- ===================================== -->
+          </div>
+   </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
 <script type="text/javascript">
     $(document).ready(function(){
     $("#mostrar").on( "click", function() {
@@ -1492,3 +1933,5 @@ function calcularEdad()
     }
 }
 </script>
+
+
