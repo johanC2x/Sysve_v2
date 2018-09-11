@@ -11,6 +11,13 @@ $name_client = $_GET["name_client"];
 ?>
 
 
+<script>
+function pulsar(e) {
+  tecla = (document.all) ? e.keyCode :e.which;
+  return (tecla!=13);
+}
+</script>
+
 <script src="<?php echo base_url();?>js/lib/sales.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
 
 
@@ -70,7 +77,7 @@ $name_client = $_GET["name_client"];
 
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <?php echo form_open('sales/ventas'); ?>
+        <?php echo form_open('sales/ventas');?>
                         <h4 class="modal-title">Emitir Venta: <span id="modal-title-coti"><?php echo $ref_id;?></span><span id="modal-coti"><?php echo "-V"?></span></h4><br>
                         <input type="hidden" name="ref_id" value="<?php echo $ref_id;?>">
             </div>
@@ -98,23 +105,23 @@ $name_client = $_GET["name_client"];
                     </div>
                     <div class="col-md-3">
                         <label for="nro_doc_rct">Nro. Identidad:</label>
-                        <input type="number" name="nro_doc_rct" id="nro_doc_rct" class="form-control"/>
+                        <input type="number" name="nro_doc_rct" id="nro_doc_rct"  onkeypress="return pulsar(event)" class="form-control"/>
                     </div>
                     <div class="col-md-6">
                         <label for="name">Apellido / Nombre:</label>
-                        <input type="text" id="name" name="name" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Nombre del Cliente" class="form-control" />
+                        <input type="text" id="name" name="name"  onkeypress="return pulsar(event)" onKeyUp="document.getElementById(this.id).value=document.getElementById(this.id).value.toUpperCase()" placeholder="Nombre del Cliente" class="form-control" />
                     </div><br><br><br><br>
                     <div class="col-md-6">
                         <label for="dir_des_rct">Direccion:</label>
-                        <input type="text" name="dir_des_rct" id="dir_des_rct" class="form-control"/>
+                        <input type="text" name="dir_des_rct"  onkeypress="return pulsar(event)" id="dir_des_rct" class="form-control"/>
                     </div>
                     <div class="col-md-3">
                         <label for="email">Email:</label>
-                        <input type="email" name="email" id="email" placeholder="Ej.: usuario@servidor.com" autocomplete="off" class="form-control">
+                        <input type="email" name="email" id="email" onkeypress="return pulsar(event)" placeholder="Ej.: usuario@servidor.com" autocomplete="off" class="form-control">
                     </div>
                     <div class="col-md-3">
                         <label for="telefono">Telefono:</label>
-                        <input type="text" name="telefono" id="telefono" class="form-control"/>
+                        <input type="text" name="telefono" id="telefono" onkeypress="return pulsar(event)" class="form-control"/>
                     </div>
         </div>
 
@@ -131,7 +138,7 @@ $name_client = $_GET["name_client"];
                         <option value="Boleto Aereo">Boleto Publicado</option>
                         <option value="Boleto BT/IT">Boleto BT/IT</option>
                         <option value="Remision">Remision / Millas</option>
-                        <option value="Paquete">Paquete</option>
+                        <option value="Paquete">Paquete Operador</option>
                         <option value="Paquetes Netos">Paquetes Netos</option>
                         <option value="Tarjetas de Asistencias">Tarjetas de Asistencias</option>
                         <option value="Hotel">Hotel</option>                        
@@ -147,21 +154,21 @@ $name_client = $_GET["name_client"];
                     </div>
                     <div class="col-md-4">
                         <label for="codigo">Codigo:</label>
-                        <input type="text" id="codigo" name="codigo" placeholder="Codigo" class="form-control" autocomplete="off">
+                        <input type="text" id="codigo" name="codigo" onkeypress="return pulsar(event)" placeholder="Codigo" class="form-control" autocomplete="off">
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="cantidad">Cant.:</label>
-                        <input type="number" name="cantidad" id="cantidad" class="form-control" autocomplete="off" />
+                        <input type="number" name="cantidad" id="cantidad" onkeypress="return pulsar(event)" class="form-control" autocomplete="off" />
                     </div>
                     <div class="col-md-2">
                         <label for="valor_unitario">Valor Vta.:</label>
-                        <input type="number" name="valor_unitario" id="valor_unitario" class="form-control"
+                        <input type="number" name="valor_unitario" onkeypress="return pulsar(event)" id="valor_unitario" class="form-control"
                             step="0.01" placeholder="0,00" autocomplete="off" />
                     </div>
                     <br><br><br><br>
                     <div class="col-md-8" class="form-group">
                         <label for="detalle">Detalle:</label>
-                        <input type="text" name="detalle" id="detalle" class="form-control" placeholder="Descripcion" autocomplete="off" />
+                        <input type="text" name="detalle" id="detalle" onkeypress="return pulsar(event)" class="form-control" placeholder="Descripcion" autocomplete="off" />
                     </div>
                     <div class="col-md-2">
                         <label for="code_travel">&nbsp;</label><br>
@@ -182,58 +189,58 @@ $name_client = $_GET["name_client"];
                 <div class="col-md-2">
                   <div class="form-group" >
                     <label for="proveedor">Proveedor</label>
-                    <input type="text" id="proveedor" name="proveedor" placeholder="Proveedor" class="form-control" autocomplete="off">
+                    <input type="text" id="proveedor" name="proveedor" onkeypress="return pulsar(event)" placeholder="Proveedor" class="form-control" autocomplete="off">
                   </div>
                 </div>
                 <div class="col-md-2">
                   <div class="form-group" >
                     <label for="tarifa_neta">Tarifa Neta</label>
-                    <input type="text" step="0.01" id="tarifa_neta" name="tarifa_neta" onkeyup="sumar();" class="monto form-control" autocomplete="off">
+                    <input type="text" step="0.01" id="tarifa_neta" name="tarifa_neta" onkeypress="return pulsar(event)" onkeyup="sumar();" class="monto form-control" autocomplete="off">
                   </div>  
                 </div>
                 <div class="col-md-2">
                   <div class="form-group" >
                     <label for="comi_proveedor_porcentaje">Com. %</label>
-                    <input type="text" step="0.01" id="comi_proveedor_porcentaje" name="comi_proveedor_porcentaje" class="form-control" autocomplete="off">
+                    <input type="text" step="0.01" id="comi_proveedor_porcentaje" name="comi_proveedor_porcentaje" onkeypress="return pulsar(event)" class="form-control" autocomplete="off">
                   </div>  
                 </div>
                 <div class="col-md-2">
                   <div class="form-group" >
                     <label for="comi_proveedor_fija">Com. Fija.</label>
-                    <input type="text" step="0.01" id="comi_proveedor_fija" name="comi_proveedor_fija" onkeyup="sumar();" class="monto form-control" autocomplete="off">
+                    <input type="text" step="0.01" id="comi_proveedor_fija" name="comi_proveedor_fija" onkeypress="return pulsar(event)" onkeyup="sumar();" class="monto form-control" autocomplete="off">
                   </div>  
                 </div>
                 <div class="col-md-2">
                   <div class="form-group" >
                     <label for="fee_proveedor">Fee Proveedor</label>
-                    <input type="text" step="0.01" id="fee_proveedor" name="fee_proveedor" onkeyup="sumar();" class="monto form-control" autocomplete="off">
+                    <input type="text" step="0.01" id="fee_proveedor" name="fee_proveedor" onkeypress="return pulsar(event)" onkeyup="sumar();" class="monto form-control" autocomplete="off">
                   </div>  
                 </div>
                 <div class="col-md-2">
                   <div class="form-group" >
                     <label for="fee_proveedor_conf">Fee x Conf.</label>
-                    <input type="text" step="0.01" id="fee_proveedor_conf" name="fee_proveedor_conf" onkeyup="sumar();" class="monto form-control" autocomplete="off">
+                    <input type="text" step="0.01" id="fee_proveedor_conf" name="fee_proveedor_conf" onkeypress="return pulsar(event)" onkeyup="sumar();" class="monto form-control" autocomplete="off">
                   </div>  
                 </div>
                 <div class="col-md-2">
                   <div class="form-group" >
                     <label for="fee_agencia">Fee Agencia</label>
-                    <input type="text" step="0.01" id="fee_agencia" name="fee_agencia" onkeyup="sumar();" class="monto form-control" autocomplete="off">
+                    <input type="text" step="0.01" id="fee_agencia" name="fee_agencia" onkeyup="sumar();" onkeypress="return pulsar(event)" class="monto form-control" autocomplete="off">
                   </div>  
                 </div>
                 <div class="col-md-2">
                   <div class="form-group" >
                     <label for="impuesto">Impuestos</label>
-                    <input type="text" step="0.01" id="impuesto" name="impuesto" onkeyup="sumar();" class="monto form-control" autocomplete="off" >
+                    <input type="text" step="0.01" id="impuesto" name="impuesto" onkeyup="sumar();" onkeypress="return pulsar(event)" class="monto form-control" autocomplete="off" >
                   </div>  
                 </div>
                 <div class="col-md-2" class="form-group">
                     <label for="incentivo_add">Incen. Turifax:</label>
-                    <input type="text" name="incentivo_add" id="incentivo_add" step="0.1" onkeyup="sumar();" class="monto form-control" autocomplete="off" />
+                    <input type="text" name="incentivo_add" id="incentivo_add" step="0.1" onkeypress="return pulsar(event)" onkeyup="sumar();" class="monto form-control" autocomplete="off" />
                 </div>
                 <div class="col-md-2" class="form-group">
                     <label for="otros">Otros</label>
-                    <input type="text" name="otros" id="otros" step="0.1" onkeyup="sumar();" class="monto form-control" autocomplete="off" />
+                    <input type="text" name="otros" id="otros" step="0.1" onkeypress="return pulsar(event)" onkeyup="sumar();" class="monto form-control" autocomplete="off" />
                 </div>
                 <div class="col-md-2">
                   <div class="form-group" >
@@ -243,7 +250,7 @@ $name_client = $_GET["name_client"];
                 </div>
                 <div class="col-md-2" class="form-group">
                     <label for="incentivo">Incentivo:</label>
-                    <input type="text" name="incentivo" id="incentivo" onkeyup="sumar();" class="monto form-control" autocomplete="off" />
+                    <input type="text" name="incentivo" id="incentivo" onkeypress="return pulsar(event)" onkeyup="sumar();" class="monto form-control" autocomplete="off" />
                 </div>
                 <div class="col-md-12">
                   <h5>Observaciones</h5>
@@ -254,15 +261,13 @@ $name_client = $_GET["name_client"];
               </fieldset>
             </div>
 
-
+                    </div>
 
 
 
             <!-- ===================================== -->
                         
                 
-
-                    </div>
 
                     <br><br>
                     <br><br>
@@ -295,6 +300,64 @@ $name_client = $_GET["name_client"];
             </div>
         </div>
   
+
+<!--============================== INICIO SUB TOTALES======================-->
+
+        <dir class="modal-header" style="background-color:#90B3B3">        
+                <div class="col-md-3">
+                  <div class="form-group" >
+                    <label for="subtotal">Sub-Total</label>
+                    <input type="text" step="0.01" id="subtotal" name="subtotal" onkeypress="return pulsar(event)" class="form-control"  autocomplete="off">
+                  </div>  
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="porcentaje">%</label>
+                    <input type="text" step="0.01" id="porcentaje" name="porcentaje" onkeypress="return pulsar(event)" class="form-control" onChange="calculo();" autocomplete="off" >
+                  </div>  
+                </div>
+                <div class="col-md-2">
+                  <div class="form-group" >
+                    <label for="utilidad1">Utilidad</label>
+                    <input type="text" step="0.01" id="utilidad1" name="utilidad1" onkeypress="return pulsar(event)" class="form-control" readonly="true" autocomplete="off" >
+                  </div>  
+                </div>
+                <div class="col-md-2" class="form-group">
+                    <label for="igv">IGV</label>
+                    <input type="text" name="igv" id="igv" step="0.1" class="form-control" onkeypress="return pulsar(event)" autocomplete="off" readonly="true" />
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group" >
+                    <label for="total1">Total</label><br>
+                     <input type="text" class="form-control" name="total1" onkeypress="return pulsar(event)" id="total1" readonly="true" autocomplete="off">
+                  </div>  
+                </div>
+        </dir>
+
+
+<script type="text/javascript">
+    function calculo(){
+    //tasa de impuesto
+  var porcentaje = $("input[name=porcentaje]").val();
+  var total1 = $("input[name=total1]").val();
+  var subtotal = $("input[name=subtotal]").val();  
+  var tasa = 18;
+  var utilidad1 = (subtotal * porcentaje)/100;
+  var igv = (utilidad1 * tasa/100);
+  //se carga el iva en el campo correspondien te
+  $("input[name=utilidad1]").val(utilidad1.toFixed(2));
+  $("input[name=igv]").val(igv.toFixed(2)); 
+  $("input[name=total1]").val((parseFloat(subtotal)+parseFloat(igv)+parseFloat(utilidad1)).toFixed(2));
+   
+}
+</script>
+
+
+
+<!--============================== FIN SUB TOTALES======================-->
+
+
+
 
         <div class="modal-header" style="background-color:#FFFFFF">
             <h5 class="modal-title">Condicion de Pago</h5>
@@ -335,7 +398,7 @@ $name_client = $_GET["name_client"];
                     </div>
                     <div class="col-md-2">
                         <label for="total">Monto</label>
-                        <input type="number" name="total" id="total" class="form-control"
+                        <input type="number" name="total" id="total" onkeypress="return pulsar(event)" class="form-control"
                             step="0.01" placeholder="0,00"/>
                     </div>
                     <div class="col-md-2">
@@ -346,14 +409,14 @@ $name_client = $_GET["name_client"];
                     </div> 
                                         <div class="col-md-2">
                         <label for="code_travel">&nbsp;</label><br>
-                        <input type="button" id="btn_save_pay" class="btn btn-primary" value="Agregar"/>
+                        <input type="button" id="btn_save_pay" onkeypress="return pulsar(event)" class="btn btn-primary" value="Agregar"/>
                     </div>
                     <div class="col-md-12 content_service_pago" class="form-group" style="display:none;">
 
                     <br>
                     <div class="col-md-3" class="form-group">
                         <label for="banco">Banco</label>
-                             <input type="text" name="banco" id="banco" class="form-control">
+                             <input type="text" name="banco" id="banco" onkeypress="return pulsar(event)" class="form-control">
                     </div>
                     <div class="col-md-3" class="form-group">
                         <label for="tipo">Tipo</label>
@@ -370,11 +433,11 @@ $name_client = $_GET["name_client"];
                     </div>
                     <div class="col-md-4" class="form-group">
                         <label for="referencia">Numero</label>
-                        <input type="text" name="referencia" id="referencia" class="form-control" placeholder="Numero"/>
+                        <input type="text" name="referencia" id="referencia" onkeypress="return pulsar(event)" class="form-control" placeholder="Numero"/>
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="fecha_exp">Fecha Exp.</label>
-                        <input type="text" name="fecha_exp" id="fecha_exp" class="form-control" placeholder="MM/AAAA"/>
+                        <input type="text" name="fecha_exp" id="fecha_exp" onkeypress="return pulsar(event)" class="form-control" placeholder="MM/AAAA"/>
                     </div><br><br>
                     <br><br>
             <div class="col-md-12">
@@ -422,7 +485,7 @@ $name_client = $_GET["name_client"];
         <dir class="modal-header" style="background-color:#EFF0F1">
         <h5 class="modal-title">Observaciones</h5>
                 <div class="col-md-12" class="form-group">
-                        <textarea name="descripcion" id="descripcion" class="form-control"></textarea>
+                        <textarea name="descripcion" id="descripcion" onkeypress="return pulsar(event)" class="form-control"></textarea>
                 </div>
         </dir>
 
@@ -862,30 +925,30 @@ $name_client = $_GET["name_client"];
 
         <div class="modal-header" style="background-color:#EFF0F1">
             <h5 class="modal-title">Detalle del Servicio</h5>
-            <div class="">
+
                 <?php echo form_open('sales/ventas',array('id'=>'employee_form')); ?>
                     <br>
                     <input type="hidden" name="detalle_servicio_json" id="detalle_servicio_json">
                     <div class="col-md-4" class="form-group">
                         <label for="tipo_servicio">Servicio:</label>
-                    <select id="tipo_servicio" name="tipo_servicio" class="form-control">
-                        <option value="">Seleccionar Tipo de Servicio</option>
-                        <option value="Boleto Aereo">Boleto Publicado</option>
-                        <option value="Boleto BT/IT">Boleto BT/IT</option>
-                        <option value="Remision">Remision / Millas</option>
-                        <option value="Paquete">Paquete</option>
-                        <option value="Paquetes Netos">Paquetes Netos</option>
-                        <option value="Tarjetas de Asistencias">Tarjetas de Asistencias</option>
-                        <option value="Hotel">Hotel</option>                        
-                        <option value="Traslado">Traslado</option>
-                        <option value="Auto">Auto</option>
-                        <option value="Excursiones">Excursiones</option>
-                        <option value="Crucero">Crucero</option>
-                        <option value="Trenes">Trenes / Buses</option>
-                        <option value="Entradas">Entradas</option>
-                        <option value="Gastos Administrativos">Gastos Administrativos</option>
-                        <option value="Otros">Otros</option>
-                    </select>
+                            <select id="tipo_servicio" name="tipo_servicio" class="form-control">
+                                <option value="">Seleccionar Tipo de Servicio</option>
+                                <option value="Boleto Aereo">Boleto Publicado</option>
+                                <option value="Boleto BT/IT">Boleto BT/IT</option>
+                                <option value="Remision">Remision / Millas</option>
+                                <option value="Paquete">Paquete</option>
+                                <option value="Paquetes Netos">Paquetes Netos</option>
+                                <option value="Tarjetas de Asistencias">Tarjetas de Asistencias</option>
+                                <option value="Hotel">Hotel</option>                        
+                                <option value="Traslado">Traslado</option>
+                                <option value="Auto">Auto</option>
+                                <option value="Excursiones">Excursiones</option>
+                                <option value="Crucero">Crucero</option>
+                                <option value="Trenes">Trenes / Buses</option>
+                                <option value="Entradas">Entradas</option>
+                                <option value="Gastos Administrativos">Gastos Administrativos</option>
+                                <option value="Otros">Otros</option>
+                            </select>
                     </div>
                     <div class="col-md-4">
                         <label for="codigo">Codigo:</label>
@@ -1032,7 +1095,7 @@ $name_client = $_GET["name_client"];
                             </tbody>
                         </table>
                     </div>
-            </div>
+
         </div>
   <input name="monto_pagar" id="monto_pagar" class="form-control" placeholder="Total" readonly="true" type="hidden">
 
