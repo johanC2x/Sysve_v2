@@ -832,7 +832,9 @@ echo "<pre/>";print_r($result);exit();
 	            'mnt_tot_dct'		  =>$this->input->post('mnt_tot_dct'),
 	            'mnt_tot_otr_cgo'	  =>$this->input->post('mnt_tot_otr_cgo'),
 	            'mnt_tot'			  =>$this->input->post('mnt_tot'),
-	            'mnt_tot_antcp'		  =>$this->input->post('mnt_tot_antcp')
+	            'mnt_tot_antcp'		  =>$this->input->post('mnt_tot_antcp'),
+                            'data'		  =>$this->input->post('data')
+                                
 			);
 
 
