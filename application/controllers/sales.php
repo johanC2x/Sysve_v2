@@ -832,13 +832,24 @@ echo "<pre/>";print_r($result);exit();
 	            'mnt_tot_dct'		  =>$this->input->post('mnt_tot_dct'),
 	            'mnt_tot_otr_cgo'	  =>$this->input->post('mnt_tot_otr_cgo'),
 	            'mnt_tot'			  =>$this->input->post('mnt_tot'),
-	            'mnt_tot_antcp'		  =>$this->input->post('mnt_tot_antcp'),
-                            'data'		  =>$this->input->post('data')
+	            'mnt_tot_antcp'		  =>$this->input->post('mnt_tot_antcp')
                                 
 			);
-
-
+                        $factura["data"]=array(
+                            "detalle_servicio_json"=>$this->input->post("detalle_servicio_json"),
+                            "detalle_condicion_pago_json"=>$this->input->post("detalle_condicion_pago_json"),
+                            "subtotal"=>$this->input->post("subtotal"),
+                            "porcentaje"=>$this->input->post("porcentaje"),
+                            "utilidad1"=>$this->input->post("utilidad1"),
+                            "igv"=>$this->input->post("igv"),
+                            "total1"=>$this->input->post("total1")
+                        );
+                        $factura["data"]= json_encode($factura["data"]);
 			$response = $this->Sale->insertVentas($factura);
+                        var_dump($factura);
+                        echo "#############################################################";
+                        var_dump($_POST);
+                        return;
 			if(!empty($response) && (int)$response === 1){
 
 

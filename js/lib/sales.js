@@ -43,7 +43,7 @@ var sales = function () {
         }
     };
 
-    self.addServiceDoc = function (val = null) {
+    self.addServiceDoc = function () {
         var tipo_servicio = $("#tipo_servicio").val();
         var codigo = $("#codigo").val();
         var cantidad = $("#cantidad").val();
@@ -59,7 +59,7 @@ var sales = function () {
         var impuesto = $("#impuesto").val();
         var incentivo_add = $("#incentivo_add").val();
         var otros = $("#otros").val();
-        var costo = $("#costo").val();
+        var costo = $("#costo").html();
         var incentivo = $("#incentivo").val();
         var observaciones = $("#observaciones").val();
         var subtotal = $("#subtotal").val();
@@ -74,7 +74,7 @@ var sales = function () {
             data.valor_unitario = valor_unitario;
             data.detalle = detalle;
             data.proveedor = proveedor;
-            data.tarifa_neta = tarifa_neta
+            data.tarifa_neta = tarifa_neta;
             data.comi_proveedor_porcentaje = comi_proveedor_porcentaje;
             data.comi_proveedor_fija = comi_proveedor_fija;
             data.fee_proveedor = fee_proveedor;
@@ -97,13 +97,13 @@ var sales = function () {
             } else {
                 self.list_service_doc[self.current_serice_doc] = data;
             }
-
+            console.log(data);
             self.setOcultoDetalleServicio();
             self.makeTableServiceDoc();
             self.resetServiceDocReset();
             self.detalle_servicio = "";
             //self.calcularComisionesChildren();
-    }
+        }
     };
     self.makeTableServiceDoc = function () {
         var html = '';
@@ -170,10 +170,23 @@ var sales = function () {
     };
     self.resetServiceDocReset = function () {
         $("#detalle_servicio").val("");
-        $("#cbo_comision_payment_servicio").val("");
-        $("#tributo_travel").val("");
-        $("#travel_cantidad").val("");
-        $("#cbo_amount_comision_payment_children").val("");
+        $("#codigo").val("");
+        $("#cantidad").val("");
+        $("#valor_unitario").val("");
+        $("#detalle").val("");
+        $("#proveedor").val("");
+        $("#tarifa_neta").val("");
+        $("#comi_proveedor_porcentaje").val("");
+        $("#comi_proveedor_fija").val("");
+        $("#fee_proveedor").val("");
+        $("#fee_proveedor_conf").val("");
+        $("#fee_agencia").val("");
+        $("#incentivo_add").val("");
+        $("#otros").val("");
+        $("#incentivo").val("");
+        $("#impuesto").val("");
+        $("#observaciones").val("");
+        $("#costo").html("0");
         self.current_serice_doc = -1;
     };
     self.getServiceDoc = function (obj) {
@@ -234,7 +247,7 @@ var sales = function () {
     self.setOcultoDetalleServicio = function () {
         var list_service_doc = self.list_service_doc;
         $('#detalle_servicio_json').val(JSON.stringify(list_service_doc));
-    }
+    };
 
     self.setCustomerFilter = function () {
         var val = $('#search_value').val();
@@ -2427,6 +2440,7 @@ var sales = function () {
     };
 
     self.makeTablePay = function () {
+        $("#detalle_condicion_pago_json").val(JSON.stringify(self.customer_pay_list));
         var html = '';
         $("#table_customer_pay tbody").empty();
         if (self.customer_pay_list.length > 0) {
@@ -2560,49 +2574,125 @@ var sales = function () {
         $('#costo_servicios').val(detalle_data.costo);
         $('#incentivo_servicios').val(detalle_data.incentivo);
         $('#obs_observaciones').val(detalle_data.observaciones);
+
+        $('#dfs_tarifa_neta_servicios').val(detalle_data.dfs_tarifa_neta_servicios || "");
+        $('#quue_servicios').val(detalle_data.quue_servicios || "");
+        $('#imp_extranjero_servicios').val(detalle_data.imp_extranjero_servicios || "");
+        $('#dfs_otros_servicios').val(detalle_data.dfs_otros_servicios || "");
+        $('#exento_fee_servicios').prop('checked',detalle_data.exento_fee || "");
+        $('#dfs_inafecto_servicios').prop('checked',detalle_data.dfs_inafecto_servicios || "");
+        $('#porcent18_servicios').val(detalle_data.porcent18_servicios || "");
+        $('#credit_card').val(detalle_data.credit_card || "");
+        $('#serv_esp').val(detalle_data.serv_esp || "");
+        $('#tua').val(detalle_data.tua || "");
+        $('#dfs_otros').val(detalle_data.dfs_otros || "");
+        $('#fee').val(detalle_data.fee || "");
+        $('#dfs_igv').val(detalle_data.dfs_igv || "");
+        $('#dfs_total_fee').val(detalle_data.dfs_total_fee || "");
+        $('#cav_agencia').val(detalle_data.cav_agencia || "");
+        $('#cav_igual_agencia').val(detalle_data.cav_igual_agencia || "");
+        $('#cav_over').val(detalle_data.cav_over || "");
+        $('#cav_igual_cover').val(detalle_data.cav_igual_cover || "");
+        $('#cav_inafecto').prop('checked',detalle_data.cav_inafecto || "");
+        $('#cav_vendedor').val(detalle_data.cav_vendedor || "");
+        $('#cav_incentivo').val(detalle_data.cav_incentivo || "");
+        $('#cav_incentivo_counter').val(detalle_data.cav_incentivo_counter || "");
+        $('#cav_per_vendedor').val(detalle_data.cav_per_vendedor || "");
+        $('#cav_igual_per_vendedor').val(detalle_data.cav_igual_per_vendedor || "");
+        $('#cav_f_salida').val(detalle_data.cav_f_salida || "");
+        $('#cav_horasalida').val(detalle_data.cav_horasalida || "");
+        $('#cav_nro_vuelo').val(detalle_data.cav_nro_vuelo || "");
+        $('#cav_clase').val(detalle_data.cav_clase || "");
+        $('#cav_f_retorno').val(detalle_data.cav_f_retorno || "");
+        $('#cav_hora_retorno').val(detalle_data.cav_hora_retorno || "");
+        $('#obs_f_solicitada').val(detalle_data.obs_f_solicitada || "");
+        $('#obs_monto').val(detalle_data.obs_monto || "");
+        $('#fpa_monto_pago').val(detalle_data.fpa_monto_pago || "");
+        $('#fpa_contacto').val(detalle_data.fpa_contacto || "");
+        $('#fpa_credito').val(detalle_data.fpa_credito || "");
+        $('#fpa_tarjeta').val(detalle_data.fpa_tarjeta || "");
+        $('#fpa_nro_cheque').val(detalle_data.fpa_nro_cheque || "");
+        $('#eb_agencia').val(detalle_data.eb_agencia || "");
+        $('#eb_igual_agencia').val(detalle_data.eb_igual_agencia || "");
+        $('#eb_over').val(detalle_data.eb_over || "");
+        $('#eb_gual_over').val(detalle_data.eb_gual_over || "");
+        $('#eb_inafecto').prop('checked',detalle_data.eb_inafecto || "");
+    };
+
+    self.addServicioDetalle = function () {
+
+        var index = $("#index_servicio").val();
+        var detalle_data = self.list_service_doc[index];
+        detalle_data.tipo_servicio = $('#tipo_servicio_servicios').val();
+        detalle_data.proveedor = $('#proveedor_servicios').val();
+        detalle_data.codigo = $('#codigo_servicios').val();
+        detalle_data.cantidad = $('#cantidad_servicios').val();
+        detalle_data.valor_unitario = $('#valor_unitario_servicios').val();
+        detalle_data.detalle = $('#detalle_servicios').val();
+        detalle_data.tarifa_neta = $('#tarifa_neta_servicios').val();
+        detalle_data.comi_proveedor_porcentaje = $('#comi_proveedor_porcentaje_servicios').val();
+        detalle_data.comi_proveedor_fija = $('#comi_proveedor_fija_servicios').val();
+        detalle_data.fee_proveedor = $('#fee_proveedor_servicios').val();
+        detalle_data.fee_proveedor_conf = $('#fee_proveedor_conf_servicios').val();
+        detalle_data.fee_agencia = $('#fee_agencia_servicios').val();
+        detalle_data.impuesto = $('#impuesto_servicios').val();
+        detalle_data.incentivo_add = $('#incentivo_add_servicios').val();
+        detalle_data.otros = $('#otros_servicios').val();
+        detalle_data.costo = $('#costo_servicios').val();
+        detalle_data.incentivo = $('#incentivo_servicios').val();
+        detalle_data.observaciones = $('#obs_observaciones').val();
+
+        detalle_data.dfs_tarifa_neta_servicios = $('#dfs_tarifa_neta_servicios').val();
+        detalle_data.quue_servicios = $('#quue_servicios').val();
+        detalle_data.imp_extranjero_servicios = $('#imp_extranjero_servicios').val();
+        detalle_data.dfs_otros_servicios = $('#dfs_otros_servicios').val();
+        detalle_data.exento_fee = $('#exento_fee_servicios').prop('checked');
+        detalle_data.dfs_inafecto_servicios = $('#dfs_inafecto_servicios').prop('checked') ;
+        detalle_data.porcent18_servicios = $('#porcent18_servicios').val();
+        detalle_data.credit_card = $('#credit_card').val();
+        detalle_data.serv_esp = $('#serv_esp').val();
+        detalle_data.tua = $('#tua').val();
+        detalle_data.dfs_otros = $('#dfs_otros').val();
+        detalle_data.fee = $('#fee').val();
+        detalle_data.dfs_igv = $('#dfs_igv').val();
+        detalle_data.dfs_total_fee = $('#dfs_total_fee').val();
+        detalle_data.cav_agencia = $('#cav_agencia').val();
+        detalle_data.cav_igual_agencia = $('#cav_igual_agencia').val();
+        detalle_data.cav_over = $('#cav_over').val();
+        detalle_data.cav_igual_cover = $('#cav_igual_cover').val();
+        detalle_data.cav_inafecto = $('#cav_inafecto').prop('checked') ;
+        detalle_data.cav_vendedor = $('#cav_vendedor').val();
+        detalle_data.cav_incentivo = $('#cav_incentivo').val();
+        detalle_data.cav_incentivo_counter = $('#cav_incentivo_counter').val();
+        detalle_data.cav_per_vendedor = $('#cav_per_vendedor').val();
+        detalle_data.cav_igual_per_vendedor = $('#cav_igual_per_vendedor').val();
+        detalle_data.cav_f_salida = $('#cav_f_salida').val();
+        detalle_data.cav_horasalida = $('#cav_horasalida').val();
+        detalle_data.cav_nro_vuelo = $('#cav_nro_vuelo').val();
+        detalle_data.cav_clase = $('#cav_clase').val();
+        detalle_data.cav_f_retorno = $('#cav_f_retorno').val();
+        detalle_data.cav_hora_retorno = $('#cav_hora_retorno').val();
+        detalle_data.obs_f_solicitada = $('#obs_f_solicitada').val();
+        detalle_data.obs_monto = $('#obs_monto').val();
+        detalle_data.fpa_monto_pago = $('#fpa_monto_pago').val();
+        detalle_data.fpa_contacto = $('#fpa_contacto').val();
+        detalle_data.fpa_credito = $('#fpa_credito').val();
+        detalle_data.fpa_tarjeta = $('#fpa_tarjeta').val();
+        detalle_data.fpa_nro_cheque = $('#fpa_nro_cheque').val();
+        detalle_data.eb_agencia = $('#eb_agencia').val();
+        detalle_data.eb_igual_agencia = $('#eb_igual_agencia').val();
+        detalle_data.eb_over = $('#eb_over').val();
+        detalle_data.eb_gual_over = $('#eb_gual_over').val();
+        detalle_data.eb_inafecto = $('#eb_inafecto').prop('checked') ;
+
+        self.list_service_doc[index] = detalle_data;
+        console.log(self.list_service_doc);
+        self.setOcultoDetalleServicio();
+        self.makeTableServiceDoc();
+        self.resetServiceDocReset();
+        self.detalle_servicio = "";
+        $("#modal_servicios").modal("hide");
         
-        $('#dfs_tarifa_neta_servicios').val(detalle_data.dfs_tarifa_neta_servicios);
-        $('#quue_servicios').val(detalle_data.quue_servicios);
-        $('#imp_extranjero_servicios').val(detalle_data.imp_extranjero_servicios);
-        $('#dfs_otros_servicios').val(detalle_data.dfs_otros_servicios);
-        $('#exento_fee').val(detalle_data.exento_fee);
-        $('#dfs_inafecto_servicios').val(detalle_data.dfs_inafecto_servicios);
-        $('#porcent18_servicios').val(detalle_data.porcent18_servicios);
-        $('#credit_card').val(detalle_data.credit_card);
-        $('#serv_esp').val(detalle_data.serv_esp);
-        $('#tua').val(detalle_data.tua);
-        $('#dfs_otros').val(detalle_data.dfs_otros);
-        $('#fee').val(detalle_data.fee);
-        $('#dfs_igv').val(detalle_data.dfs_igv);
-        $('#dfs_total_fee').val(detalle_data.dfs_total_fee);
-        $('#cav_agencia').val(detalle_data.cav_agencia);
-        $('#cav_igual_agencia').val(detalle_data.cav_igual_agencia);
-        $('#cav_over').val(detalle_data.cav_over);
-        $('#cav_igual_cover').val(detalle_data.cav_igual_cover);
-        $('#cav_inafecto').val(detalle_data.cav_inafecto);
-        $('#cav_vendedor').val(detalle_data.cav_vendedor);
-        $('#cav_incentivo').val(detalle_data.cav_incentivo);
-        $('#cav_incentivo_counter').val(detalle_data.cav_incentivo_counter);
-        $('#cav_per_vendedor').val(detalle_data.cav_per_vendedor);
-        $('#cav_igual_per_vendedor').val(detalle_data.cav_igual_per_vendedor);
-        $('#cav_f_salida').val(detalle_data.cav_f_salida);
-        $('#cav_horasalida').val(detalle_data.cav_horasalida);
-        $('#cav_nro_vuelo').val(detalle_data.cav_nro_vuelo);
-        $('#cav_clase').val(detalle_data.cav_clase);
-        $('#cav_f_retorno').val(detalle_data.cav_f_retorno);
-        $('#cav_hora_retorno').val(detalle_data.cav_hora_retorno);
-        $('#obs_f_solicitada').val(detalle_data.obs_f_solicitada);
-        $('#obs_monto').val(detalle_data.obs_monto);
-        $('#fpa_monto_pago').val(detalle_data.fpa_monto_pago);
-        $('#fpa_contacto').val(detalle_data.fpa_contacto);
-        $('#fpa_credito').val(detalle_data.fpa_credito);
-        $('#fpa_tarjeta').val(detalle_data.fpa_tarjeta);
-        $('#fpa_nro_cheque').val(detalle_data.fpa_nro_cheque);
-        $('#eb_agencia').val(detalle_data.eb_agencia);
-        $('#eb_igual_agencia').val(detalle_data.eb_igual_agencia);
-        $('#eb_over').val(detalle_data.eb_over);
-        $('#eb_gual_over').val(detalle_data.eb_gual_over);
-        $('#eb_inafecto').val(detalle_data.eb_inafecto);
     };
 
     self.getClient = function (id) {

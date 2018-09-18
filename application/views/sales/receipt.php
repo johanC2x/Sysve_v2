@@ -19,7 +19,7 @@ $name_client = $_GET["name_client"];
     }
 </script>
 
-<script src="<?php echo base_url(); ?>js/lib/sales.js" type="text/javascript" language="javascript" charset="UTF-8"></script>
+<script src="<?php echo base_url(); ?>js/lib/sales.js?v=0.00003" type="text/javascript" language="javascript" charset="UTF-8"></script>
 
 
 
@@ -87,8 +87,8 @@ $name_client = $_GET["name_client"];
 
             <div class="modal-header">
                 <h5 class="modal-title">Datos del Cliente a facturar</h5>
-                <?php echo form_open('sales/ventas', array('id' => 'employee_form')); ?>
                 <input type="hidden" name="detalle_servicio_json" id="detalle_servicio_json">
+                <input type="hidden" name="detalle_condicion_pago_json" id="detalle_condicion_pago_json">
                 <div class="col-md-3" class="form-group">
                     <label for="tip_doc_rct">Tipo de Documento:</label>
                     <select name="tip_doc_rct" id="tip_doc_rct" class="form-control" required>
@@ -129,9 +129,6 @@ $name_client = $_GET["name_client"];
             <div class="modal-header" style="background-color:#EFF0F1">
                 <h5 class="modal-title">Detalle del Servicio</h5>
                 <div class="">
-                    <?php echo form_open('sales/ventas', array('id' => 'employee_form')); ?>
-                    <br>
-                    <input type="hidden" name="detalle_servicio_json" id="detalle_servicio_json">
                     <div class="col-md-4" class="form-group">
                         <label for="tipo_servicio">Servicio:</label>
                         <select id="tipo_servicio" name="tipo_servicio" class="form-control">
@@ -363,9 +360,7 @@ $name_client = $_GET["name_client"];
             <div class="modal-header" style="background-color:#FFFFFF">
                 <h5 class="modal-title">Condicion de Pago</h5>
                 <div class="">
-                    <?php echo form_open('sales/ventas', array('id' => 'employee_form')); ?>
                     <br>
-                    <input type="hidden" name="detalle_servicio_json" id="detalle_servicio_json">
                     <div class="col-md-2" class="form-group">
                         <label for="condicion">Condicion:</label>
                         <select class="form-control input-sm" id="condicion" name="condicion">
@@ -518,7 +513,7 @@ $name_client = $_GET["name_client"];
                 <h4 class="modal-title">TABLA DE SERVICIOS</h4>
             </div>
             <div class="modal-body" style="background-color:#EFF0F1">
-                <?php echo form_open('sales/saveService'); ?>
+                <?php echo form_open(''); ?>
                 <input type="hidden" id="index_servicio" name="index_servicio" value="">
                 <div class="row">
                     <!-- =========== FORM DATOS DEL SERVICIO ============ -->
@@ -655,7 +650,7 @@ $name_client = $_GET["name_client"];
                     </div>
                     <div class="col-md-1" class="form-group">
                         <label for="dfs_otros">Otros:</label>
-                        <input type="text" name="dfs_otros_servicios" id="dfs_otros" class="form-control"  autocomplete="off" />
+                        <input type="text" name="dfs_otros" id="dfs_otros_servicios" class="form-control"  autocomplete="off" />
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="exento_fee">Extento FEE:</label>
@@ -862,7 +857,7 @@ $name_client = $_GET["name_client"];
             </div> 
             <div class="modal-footer">
                 <div class="form-group"></div>
-                <button type="submit" class="btn btn-primary" onclick="sale.addServicioDetalle()">Guardar</button>
+                <button type="button" class="btn btn-primary" onclick="sales.addServicioDetalle()">Guardar</button>
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>      
             </div>
             <?php echo form_close(); ?>
@@ -878,7 +873,7 @@ $name_client = $_GET["name_client"];
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <?php echo form_open('sales/ventas'); ?>
+                <?php echo form_open('sales/editarventas'); ?>
                 <h4 class="modal-title">Vista Venta: <span id="modal-title-coti"><?php echo $ref_id; ?></span><span id="modal-coti"><?php echo "-V" ?></span></h4><br>
                 <input type="hidden" name="ref_id" value="<?php echo $ref_id; ?>">
 
@@ -928,9 +923,8 @@ $name_client = $_GET["name_client"];
             <div class="modal-header" style="background-color:#EFF0F1">
                 <h5 class="modal-title">Detalle del Servicio</h5>
 
-                <?php echo form_open('sales/ventas', array('id' => 'employee_form')); ?>
                 <br>
-                <input type="hidden" name="detalle_servicio_json" id="detalle_servicio_json">
+                <input type="hidden" name="detalle_servicio_json_editar" id="detalle_servicio_json_editar">
                 <div class="col-md-4" class="form-group">
                     <label for="tipo_servicio">Servicio:</label>
                     <select id="tipo_servicio" name="tipo_servicio" class="form-control">
@@ -1104,9 +1098,7 @@ $name_client = $_GET["name_client"];
             <div class="modal-header" style="background-color:#FFFFFF">
                 <h5 class="modal-title">Condicion de Pago</h5>
                 <div class="">
-                    <?php echo form_open('sales/ventas', array('id' => 'employee_form')); ?>
                     <br>
-                    <input type="hidden" name="detalle_servicio_json" id="detalle_servicio_json">
                     <div class="col-md-2" class="form-group">
                         <label for="condicion">Condicion:</label>
                         <select class="form-control input-sm" id="condicion" name="condicion">
@@ -1259,7 +1251,7 @@ $name_client = $_GET["name_client"];
         }
     }
     function calculaPorcentajes(numero) {
-        document.getElementById("porcent18").value = Math.floor(numero * 18) / 100;
+        document.getElementById("porcent18_servicios").value = Math.floor(numero * 18) / 100;
     }
 
     $(document).ready(function () {
