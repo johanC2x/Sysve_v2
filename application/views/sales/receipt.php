@@ -19,7 +19,7 @@ $name_client = $_GET["name_client"];
     }
 </script>
 
-<script src="<?php echo base_url(); ?>js/lib/sales.js?v=0.00003" type="text/javascript" language="javascript" charset="UTF-8"></script>
+<script src="<?php echo base_url(); ?>js/lib/sales.js?v=0.00022" type="text/javascript" language="javascript" charset="UTF-8"></script>
 
 
 
@@ -75,10 +75,10 @@ $name_client = $_GET["name_client"];
             $asesor = $this->lang->lin . strtoupper("$user_info->first_name");
             $ref_id = $asesor . "-" . $cadena . "-" . $date1;
             ?>
-
+            <?php echo form_open('sales/ventas'); ?>
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <?php echo form_open('sales/ventas'); ?>
+
                 <h4 class="modal-title">Emitir Venta: <span id="modal-title-coti"><?php echo $ref_id; ?></span><span id="modal-coti"><?php echo "-V" ?></span></h4><br>
                 <input type="hidden" name="ref_id" value="<?php echo $ref_id; ?>">
             </div>
@@ -170,9 +170,9 @@ $name_client = $_GET["name_client"];
                     </div>
                     <div class="col-md-2">
                         <label for="code_travel">&nbsp;</label><br>
-                        <button type="button" class="btn btn-primary" onclick="sales.openModalDetail();"><i class='fa fa-angle-double-down'></i></button>
+                        <button type="button" class="btn btn-primary" onclick="sales.openModalDetail('');"><i class='fa fa-angle-double-down'></i></button>
                         <label for="code_travel">&nbsp;</label>
-                        <button type="button" class="btn btn-primary" onclick="sales.guardarDetalles();"><i class='fa fa-angle-double-up'></i></button>  
+                        <button type="button" class="btn btn-primary" onclick="sales.guardarDetalles('');"><i class='fa fa-angle-double-up'></i></button>  
                     </div>                    
                     <div class="col-md-2">
                         <label for="code_travel">&nbsp;</label><br>
@@ -205,19 +205,19 @@ $name_client = $_GET["name_client"];
                                 <div class="col-md-2">
                                     <div class="form-group" >
                                         <label for="comi_proveedor_fija">Com. Fija.</label>
-                                        <input type="text" step="0.01" id="comi_proveedor_fija" name="comi_proveedor_fija" onkeypress="return pulsar(event)" onkeyup="sumar();" class="monto form-control" autocomplete="off">
+                                        <input type="text" step="0.01" id="comi_proveedor_fija" name="comi_proveedor_fija" onkeypress="return pulsar(event)" onkeyup="sumar('');" class="monto form-control" autocomplete="off">
                                     </div>  
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group" >
                                         <label for="fee_proveedor">Fee Proveedor</label>
-                                        <input type="text" step="0.01" id="fee_proveedor" name="fee_proveedor" onkeypress="return pulsar(event)" onkeyup="sumar();" class="monto form-control" autocomplete="off">
+                                        <input type="text" step="0.01" id="fee_proveedor" name="fee_proveedor" onkeypress="return pulsar(event)" onkeyup="sumar('');" class="monto form-control" autocomplete="off">
                                     </div>  
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group" >
                                         <label for="fee_proveedor_conf">Fee x Conf.</label>
-                                        <input type="text" step="0.01" id="fee_proveedor_conf" name="fee_proveedor_conf" onkeypress="return pulsar(event)" onkeyup="sumar();" class="monto form-control" autocomplete="off">
+                                        <input type="text" step="0.01" id="fee_proveedor_conf" name="fee_proveedor_conf" onkeypress="return pulsar(event)" onkeyup="sumar('');" class="monto form-control" autocomplete="off">
                                     </div>  
                                 </div>
                                 <div class="col-md-2">
@@ -234,11 +234,11 @@ $name_client = $_GET["name_client"];
                                 </div>
                                 <div class="col-md-2" class="form-group">
                                     <label for="incentivo_add">Incen. Turifax:</label>
-                                    <input type="text" name="incentivo_add" id="incentivo_add" step="0.1" onkeypress="return pulsar(event)" onkeyup="sumar();" class="monto form-control" autocomplete="off" />
+                                    <input type="text" name="incentivo_add" id="incentivo_add" step="0.1" onkeypress="return pulsar(event)" onkeyup="sumar('');" class="monto form-control" autocomplete="off" />
                                 </div>
                                 <div class="col-md-2" class="form-group">
                                     <label for="otros">Otros</label>
-                                    <input type="text" name="otros" id="otros" step="0.1" onkeypress="return pulsar(event)" onkeyup="sumar();" class="monto form-control" autocomplete="off" />
+                                    <input type="text" name="otros" id="otros" step="0.1" onkeypress="return pulsar(event)" onkeyup="sumar('');" class="monto form-control" autocomplete="off" />
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group" >
@@ -399,9 +399,9 @@ $name_client = $_GET["name_client"];
                     </div>
                     <div class="col-md-2">
                         <label for="code_travel">&nbsp;</label><br>
-                        <button type="button" class="btn btn-primary" onclick="sales.openModalPago();"><i class='fa fa-angle-double-down'></i></button>
+                        <button type="button" class="btn btn-primary" onclick="sales.openModalPago('');"><i class='fa fa-angle-double-down'></i></button>
                         <label for="code_travel">&nbsp;</label>
-                        <button type="button" class="btn btn-primary" onclick="sales.guardarPago();"><i class='fa fa-angle-double-up'></i></button>  
+                        <button type="button" class="btn btn-primary" onclick="sales.guardarPago('');"><i class='fa fa-angle-double-up'></i></button>  
                     </div> 
                     <div class="col-md-2">
                         <label for="code_travel">&nbsp;</label><br>
@@ -481,7 +481,7 @@ $name_client = $_GET["name_client"];
             <dir class="modal-header" style="background-color:#EFF0F1">
                 <h5 class="modal-title">Observaciones</h5>
                 <div class="col-md-12" class="form-group">
-                    <textarea name="descripcion" id="descripcion" onkeypress="return pulsar(event)" class="form-control"></textarea>
+                    <textarea  id="sale_observaciones" name="descripcion" onkeypress="return pulsar(event)" class="form-control"></textarea>
                 </div>
             </dir>
 
@@ -502,19 +502,392 @@ $name_client = $_GET["name_client"];
 
 
 
+<!-- INICIO GENERAR EDITAR -->
+
+<div id="edit_modal_views" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <?php echo form_open('sales/editarventas'); ?>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Vista Venta: <span id="edit_modal-title-coti"></span><span id="edit_modal-coti"><?php echo "-V" ?></span></h4><br>
+
+            </div>
+            <input type="hidden" name="detalle_servicio_json" id="edit_detalle_servicio_json">
+            <input type="hidden" name="detalle_condicion_pago_json" id="edit_detalle_condicion_pago_json">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Datos del Cliente a facturar</h5>
+                <input type="hidden" name="data" id="edit_data">
+                <input type="hidden" name="id" id="edit_id">
+                <div class="col-md-3" class="form-group">
+                    <label for="tip_doc_rct">Tipo de Documento:</label>
+                    <select name="tip_doc_rct" id="edit_tip_doc_rct" class="form-control" required>
+                        <option>Seleccione...</option>
+                        <option name="1" value="1">D.N.I.</option>
+                        <option name="4" value="4">CARNET DE EXTRANJERIA</option>    
+                        <option name="7" value="7">PASAPORTE</option>
+                        <option name="6" value="6">R.U.C.</option>
+                        <option name="0" value="0">DOC.TRIB.NO.DOM.SIN.RUC</option>
+                        <option name="A" value="A">CED. DIPLOMATICA DE IDENTIDAD</option>
+                        <option name="B" value="B">DOC.IDENT.PAIS.RESIDENCIA-NO.D</option>
+                        <option name="C" value="C">TAX TIDENTIFICATION NUMBER - TIN - DOC TRIB PP.NN</option>
+                        <option name="D" value="D">IDENTIFICATION NUMBER - IN – DOC TRIB PP. JJ</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="nro_doc_rct">Nro. Identidad:</label>
+                    <input type="number" name="nro_doc_rct" id="edit_nro_doc_rct" class="form-control"/>
+                </div>
+                <div class="col-md-6">
+                    <label for="name">Apellido / Nombre:</label>
+                    <input type="text" id="edit_name" name="name" placeholder="Nombre del Cliente" class="form-control" autocomplete="off" />
+                </div><br><br><br><br>
+                <div class="col-md-6">
+                    <label for="dir_des_rct">Direccion:</label>
+                    <input type="text" name="dir_des_rct" id="edit_dir_des_rct" class="form-control" autocomplete="off"/>
+                </div>
+                <div class="col-md-3">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="edit_email" placeholder="Ej.: usuario@servidor.com" autocomplete="off" class="form-control">
+                </div>
+                <div class="col-md-3">
+                    <label for="telefono">Telefono:</label>
+                    <input type="text" name="telefono" id="edit_telefono" class="form-control" autocomplete="off"/>
+                </div>
+            </div>
+
+            <div class="modal-header" style="background-color:#EFF0F1">
+                <h5 class="modal-title">Detalle del Servicio</h5>
+
+                <br>
+                <div class="col-md-4" class="form-group">
+                    <label for="tipo_servicio">Servicio:</label>
+                    <select id="edit_tipo_servicio" name="tipo_servicio" class="form-control">
+                        <option value="">Seleccionar Tipo de Servicio</option>
+                        <option value="Boleto Aereo">Boleto Publicado</option>
+                        <option value="Boleto BT/IT">Boleto BT/IT</option>
+                        <option value="Remision">Remision / Millas</option>
+                        <option value="Paquete">Paquete</option>
+                        <option value="Paquetes Netos">Paquetes Netos</option>
+                        <option value="Tarjetas de Asistencias">Tarjetas de Asistencias</option>
+                        <option value="Hotel">Hotel</option>                        
+                        <option value="Traslado">Traslado</option>
+                        <option value="Auto">Auto</option>
+                        <option value="Excursiones">Excursiones</option>
+                        <option value="Crucero">Crucero</option>
+                        <option value="Trenes">Trenes / Buses</option>
+                        <option value="Entradas">Entradas</option>
+                        <option value="Gastos Administrativos">Gastos Administrativos</option>
+                        <option value="Otros">Otros</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="codigo">Codigo:</label>
+                    <input type="text" id="edit_codigo" name="codigo" placeholder="Codigo" class="form-control" autocomplete="off">
+                </div>
+                <div class="col-md-2" class="form-group">
+                    <label for="cantidad">Cant.:</label>
+                    <input type="number" name="cantidad" id="edit_cantidad" class="form-control" autocomplete="off" />
+                </div>
+                <div class="col-md-2">
+                    <label for="valor_unitario">Valor Vta.:</label>
+                    <input type="number" name="valor_unitario" id="edit_valor_unitario" class="form-control"
+                           step="0.01" placeholder="0,00" autocomplete="off" />
+                </div>
+                <br><br><br><br>
+                <div class="col-md-8" class="form-group">
+                    <label for="detalle">Detalle:</label>
+                    <input type="text" name="detalle" id="edit_detalle" class="form-control" placeholder="Descripcion" autocomplete="off" />
+                </div>
+                <div class="col-md-2">
+                    <label for="code_travel">&nbsp;</label><br>
+                    <button type="button" class="btn btn-primary" onclick="sales.openModalDetail('edit');"><i class='fa fa-angle-double-down'></i></button>
+                    <label for="code_travel">&nbsp;</label>
+                    <button type="button" class="btn btn-primary" onclick="sales.guardarDetalles('edit');"><i class='fa fa-angle-double-up'></i></button>  
+                </div>                    
+                <div class="col-md-2">
+                    <label for="code_travel">&nbsp;</label><br>
+                    <input type="button" id="edit_btn_save_factura_edit" class="btn btn-primary" value="Agregar"/>
+                </div>
+                <div class="col-md-12 content_service_detail" class="form-group" style="display:none;">
+                    <br>
+                    <!-- =========== FORM DATOS CARGA DE TABLA ============ -->
+                    <div class="col-md-12">
+                        <fieldset>
+                            <h5>Tabla</h5>
+                            <div class="col-md-2">
+                                <div class="form-group" >
+                                    <label for="proveedor">Proveedor</label>
+                                    <input type="text" id="edit_proveedor" name="proveedor" placeholder="Proveedor" class="form-control" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group" >
+                                    <label for="tarifa_neta">Tarifa Neta</label>
+                                    <input type="text" step="0.01" id="edit_tarifa_neta" name="tarifa_neta" onkeyup="calcular();" class="monto_edit form-control" autocomplete="off">
+                                </div>  
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group" >
+                                    <label for="comi_proveedor_porcentaje">Com. %</label>
+                                    <input type="text" step="0.01" id="edit_comi_proveedor_porcentaje" name="comi_proveedor_porcentaje" class="form-control" autocomplete="off">
+                                </div>  
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group" >
+                                    <label for="comi_proveedor_fija">Com. Fija.</label>
+                                    <input type="text" step="0.01" id="edit_comi_proveedor_fija" name="comi_proveedor_fija" onkeyup="calcular('edit');" class="monto_edit form-control" autocomplete="off">
+                                </div>  
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group" >
+                                    <label for="fee_proveedor">Fee Proveedor</label>
+                                    <input type="text" step="0.01" id="edit_fee_proveedor" name="fee_proveedor" onkeyup="calcular('edit');" class="monto_edit form-control" autocomplete="off">
+                                </div>  
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group" >
+                                    <label for="fee_proveedor_conf">Fee x Conf.</label>
+                                    <input type="text" step="0.01" id="edit_fee_proveedor_conf" name="fee_proveedor_conf" onkeyup="calcular('edit');" class="monto_edit form-control" autocomplete="off">
+                                </div>  
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group" >
+                                    <label for="fee_agencia">Fee Agencia</label>
+                                    <input type="text" step="0.01" id="edit_fee_agencia" name="fee_agencia" onkeyup="calcular('edit');" class="monto_edit form-control" autocomplete="off">
+                                </div>  
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group" >
+                                    <label for="impuesto">Impuestos</label>
+                                    <input type="text" step="0.01" id="edit_impuesto" name="impuesto" onkeyup="calcular('edit');" class="monto_edit form-control" autocomplete="off" >
+                                </div>  
+                            </div>
+                            <div class="col-md-2" class="form-group">
+                                <label for="incentivo_add">Incen. Turifax:</label>
+                                <input type="text" name="incentivo_add" id="edit_incentivo_add" step="0.1" onkeyup="calcular('edit');" class="monto_edit form-control" autocomplete="off" />
+                            </div>
+                            <div class="col-md-2" class="form-group">
+                                <label for="otros">Otros</label>
+                                <input type="text" name="otros" id="edit_otros" step="0.1" onkeyup="calcular('edit');" class="monto_edit form-control" autocomplete="off" />
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group" >
+                                    <label for="costo_edit">Costo Total</label><br>
+                                    <span class="form-control" name="costo_edit" id="edit_costo_edit" readonly="true"></span>
+                                </div>  
+                            </div>
+                            <div class="col-md-2" class="form-group">
+                                <label for="incentivo">Incentivo:</label>
+                                <input type="text" name="incentivo" id="edit_incentivo" onkeyup="calcular('edit');" class="monto_edit form-control" autocomplete="off" />
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="col-md-12">
+                        <fieldset>
+                            <h5>Observaciones</h5>
+                            <div class="form-group">
+                                <textarea id="edit_observaciones" class="form-control" style="height: 50px;"></textarea>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <!-- ===================================== -->
+
+
+
+                </div>
+
+                <br><br>
+                <br><br>
+                <div class="col-md-12">
+                    <table id="edit_table_customer_travel_children" class="table table-hover table-bordered" >
+                        <thead>
+                            <tr class="well">
+                                <th><center>#</center></th>
+                        <th><center>Servicios</center></th>
+                        <th><center>Detalle</center></th>
+                        <th><center>Codigo</center></th>
+                        <th><center>Cant.</center></th>
+                        <th><center>Val. Total.</center></th>
+                        <th><center>Proveedor</center></th>
+                        <th><center>Utilidad</center></th>
+                        <th colspan="2"><center>Accion</center></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="10">
+                        <center>
+                            No se registraron datos.
+                        </center>
+                        </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+            <input name="monto_pagar" id="edit_monto_pagar" class="form-control" placeholder="Total" readonly="true" type="hidden">
+
+            <div class="modal-header" style="background-color:#FFFFFF">
+                <h5 class="modal-title">Condicion de Pago</h5>
+                <div class="">
+                    <br>
+                    <div class="col-md-2" class="form-group">
+                        <label for="condicion">Condicion:</label>
+                        <select class="form-control input-sm" id="edit_condicion" name="condicion">
+                            <option value="">---SELECCIONE---</option>
+                            <option value="001">CONTADO</option>
+                            <option value="000">NO ASIGNADO</option>
+                            <option value="002">CRÉDITO A 7 DÍAS</option>
+                            <option value="003">CRÉDITO A 15 DÍAS</option>
+                            <option value="008">CRÉDITO A 20 DÍAS</option>
+                            <option value="010">CRÉDITO A 21 DÍAS</option>
+                            <option value="011">CRÉDITO A 25 DÍAS</option>
+                            <option value="004">CRÉDITO A 30 DÍAS</option>
+                            <option value="005">CRÉDITO A 60 DÍAS</option>
+                            <option value="006">CRÉDITO A 90 DÍAS</option>
+                            <option value="007">CRÉDITO A 120 DÍAS</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="forma_pago">Forma de Pago:</label>
+                        <select class="form-control input-sm" id="edit_forma_pago" name="forma_pago">
+                            <option value="">---SELECCIONE---</option>
+                            <option value="ASIGNADO">NO ASIGNADO</option>
+                            <option value="EFECTIVO">EFECTIVO</option>
+                            <option value="CHEQUE">CHEQUE</option>
+                            <option value="LETRA">LETRA</option>
+                            <option value="TARJETA DE CRÉDITO">TARJETA DE CRÉDITO</option>
+                            <option value="TARJETA DE DÉBITO">TARJETA DE DÉBITO</option>
+                            <option value="DEPOSITO BANCARIO">DEPOSITO BANCARIO</option>
+                            <option value="TRANSFERENCIA INTERBANCARIA">TRANSFERENCIA INTERBANCARIA</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="total">Monto</label>
+                        <input type="number" name="total" id="edit_total" class="form-control"
+                               step="0.01" placeholder="0,00"/>
+                    </div>
+                    <div class="col-md-2">
+                        <label for="code_travel">&nbsp;</label><br>
+                        <button type="button" class="btn btn-primary" onclick="sales.openModalPago('edit');"><i class='fa fa-angle-double-down'></i></button>
+                        <label for="code_travel">&nbsp;</label>
+                        <button type="button" class="btn btn-primary" onclick="sales.guardarPago('edit');"><i class='fa fa-angle-double-up'></i></button>  
+                    </div> 
+                    <div class="col-md-2">
+                        <label for="code_travel">&nbsp;</label><br>
+                        <input type="button" id="edit_btn_save_pay_edit" class="btn btn-primary" value="Agregar"/>
+                    </div>
+                    <div class="col-md-12 content_service_pago" class="form-group" style="display:none;">
+
+                        <br>
+                        <div class="col-md-3" class="form-group">
+                            <label for="banco">Banco</label>
+                            <input type="text" name="banco" id="edit_banco" class="form-control">
+                        </div>
+                        <div class="col-md-3" class="form-group">
+                            <label for="tipo">Tipo</label>
+                            <select class="form-control input-sm" id="edit_tipo" name="tipo">
+                                <option value="">---SELECCIONE---</option>
+                                <option value="000">PLANILLA</option>
+                                <option value="001">REFERENCIA</option>
+                                <option value="002">VISA</option>
+                                <option value="003">MASTERCARD</option>
+                                <option value="004">AMERICA EXPRESS</option>
+                                <option value="005">MILLAS</option>
+                                <option value="007">NO ASIGNADO</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4" class="form-group">
+                            <label for="referencia">Numero</label>
+                            <input type="text" name="referencia" id="edit_referencia" class="form-control" placeholder="Numero"/>
+                        </div>
+                        <div class="col-md-2" class="form-group">
+                            <label for="fecha_exp">Fecha Exp.</label>
+                            <input type="text" name="fecha_exp" id="edit_fecha_exp" class="form-control" placeholder="MM/AAAA"/>
+                        </div><br><br>
+                        <br><br>
+                        <div class="col-md-12">
+                            <fieldset>
+                                <h5>Observaciones</h5>
+                                <div class="form-group">
+                                    <textarea id="edit_descripcion" class="form-control" style="height: 50px;"></textarea>
+                                </div>
+                            </fieldset>
+                        </div>                   
+
+                    </div>
+
+                    <br><br>
+                    <br><br></div>
+                <div class="col-md-12">
+                    <table id="edit_table_customer_pay" class="table table-hover table-bordered" >
+                        <thead>
+                            <tr class="well">
+                                <th><center>#</center></th>
+                        <th><center>Condicion</center></th>
+                        <th><center>Forma</center></th>
+                        <th><center>Banco</center></th>
+                        <th><center>Tipo</center></th>
+                        <th><center>Numero</center></th>
+                        <th><center>Estatus</center></th>
+                        <th><center>Monto</center></th>
+                        <th colspan="2"><center>Accion</center></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td colspan="10">
+                        <center>
+                            No se registraron datos.
+                        </center>
+                        </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+            <dir class="modal-header" style="background-color:#EFF0F1">
+                <h5 class="modal-title">Observaciones</h5>
+                <div class="col-md-12" class="form-group">
+                    <textarea name="descripcion" id="edit_sale_observaciones" class="form-control"></textarea>
+                </div>
+            </dir>
+
+            <div class="modal-footer">
+                <button id="edit_add_info_service" type="submit" class="btn btn-primary">Guardar</button> 
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>      
+            </div>
+            <?php echo form_close(); ?>
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- ====================== -->
+
+
 
 <!-------------MODAL SERVICIOS----------->
 
-<div id="modal_servicios" class="modal fade" role="dialog" aria-hidden="true" tabindex="-1">
+<div id="modal_servicios" class="modal fade" role="dialog" aria-hidden="true" style="z-index: 1200;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">TABLA DE SERVICIOS</h4>
             </div>
+            <?php echo form_open(''); ?>
             <div class="modal-body" style="background-color:#EFF0F1">
-                <?php echo form_open(''); ?>
                 <input type="hidden" id="index_servicio" name="index_servicio" value="">
+                <input type="hidden" id="method_prefix" name="method_prefix" value="">
                 <div class="row">
                     <!-- =========== FORM DATOS DEL SERVICIO ============ -->
                     <div class="col-md-12">
@@ -673,7 +1046,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="credit_card">CreditCard:</label>
                         <input type="text" name="credit_card" id="credit_card" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid   ?>" -->
+                        <!-- value="<?php //echo $travelid       ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="serv_esp">Serv.Esp:</label>
@@ -709,7 +1082,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="cav_agencia">% Agencia:</label>
                         <input type="text" name="cav_agencia" id="cav_agencia" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid   ?>" -->
+                        <!-- value="<?php //echo $travelid       ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="cav_igual_agencia">Igual a:</label>
@@ -722,7 +1095,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="cav_igual_cover">Igual a:</label>
                         <input type="text" name="cav_igual_cover" id="cav_igual_cover" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid   ?>" -->
+                        <!-- value="<?php //echo $travelid       ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="cav_inafecto">Inafecto:</label>
@@ -751,7 +1124,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="cav_per_vendedor">% Vendedor:</label>
                         <input type="text" name="cav_per_vendedor" id="cav_per_vendedor" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid   ?>" -->
+                        <!-- value="<?php //echo $travelid       ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="cav_igual_per_vendedor">Igual a:</label>
@@ -764,14 +1137,14 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="cav_horasalida">Hora:</label>
                         <input type="time" name="cav_horasalida" id="cav_horasalida" class="form-control"/>
-                        <!-- value="<?php //echo $travelid   ?>" -->
+                        <!-- value="<?php //echo $travelid       ?>" -->
                     </div>
                 </dir>
                 <dir class="modal-header" >
                     <div class="col-md-3" class="form-group">
                         <label for="cav_nro_vuelo">Nro. Vuelo:</label>
                         <input type="text" name="cav_nro_vuelo" id="cav_nro_vuelo" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid   ?>" -->
+                        <!-- value="<?php //echo $travelid       ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="cav_clase">Clase:</label>
@@ -784,7 +1157,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="cav_hora_retorno">Hora:</label>
                         <input type="time" name="cav_hora_retorno" id="cav_hora_retorno" class="form-control"/>
-                        <!-- value="<?php //echo $travelid   ?>" -->
+                        <!-- value="<?php //echo $travelid       ?>" -->
                     </div>
                 </dir>
                 <dir class="modal-header" >
@@ -807,7 +1180,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-3" class="form-group">
                         <label for="fpa_monto_pago">Modo de Pago:</label>
                         <input type="text" name="fpa_monto_pago" id="fpa_monto_pago" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid   ?>" -->
+                        <!-- value="<?php //echo $travelid       ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="fpa_contacto">Contado:</label>
@@ -822,7 +1195,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="fpa_tarjeta">Tarjeta:</label>
                         <input type="text" name="fpa_tarjeta" id="fpa_tarjeta" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid   ?>" -->
+                        <!-- value="<?php //echo $travelid       ?>" -->
                     </div>
                     <div class="col-md-3" class="form-group">
                         <label for="fpa_nro_cheque">Nro. Cheque:</label>
@@ -834,7 +1207,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="eb_agencia">% Agencia:</label>
                         <input type="text" name="eb_agencia" id="eb_agencia" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid   ?>" -->
+                        <!-- value="<?php //echo $travelid       ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="eb_igual_agencia">Igual a:</label>
@@ -847,7 +1220,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="eb_gual_over">Igual a:</label>
                         <input type="text" name="eb_gual_over" id="eb_gual_over" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid   ?>" -->
+                        <!-- value="<?php //echo $travelid       ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="eb_inafecto">Inafecto:</label>
@@ -864,378 +1237,6 @@ $name_client = $_GET["name_client"];
         </div>
     </div>
 </div>
-
-
-<!-- INICIO GENERAR EDITAR -->
-
-<div id="modal_views" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <?php echo form_open('sales/editarventas'); ?>
-                <h4 class="modal-title">Vista Venta: <span id="modal-title-coti"><?php echo $ref_id; ?></span><span id="modal-coti"><?php echo "-V" ?></span></h4><br>
-                <input type="hidden" name="ref_id" value="<?php echo $ref_id; ?>">
-
-            </div>
-
-            <div class="modal-header">
-                <h5 class="modal-title">Datos del Cliente a facturar</h5>
-                <?php echo form_open('sales/ventas', array('id' => 'employee_form')); ?>
-                <input type="hidden" name="data" id="data">
-                <div class="col-md-3" class="form-group">
-                    <label for="tip_doc_rct">Tipo de Documento:</label>
-                    <select name="tip_doc_rct" id="tip_doc_rct" class="form-control" required>
-                        <option>Seleccione...</option>
-                        <option name="1" value="1">D.N.I.</option>
-                        <option name="4" value="4">CARNET DE EXTRANJERIA</option>    
-                        <option name="7" value="7">PASAPORTE</option>
-                        <option name="6" value="6">R.U.C.</option>
-                        <option name="0" value="0">DOC.TRIB.NO.DOM.SIN.RUC</option>
-                        <option name="A" value="A">CED. DIPLOMATICA DE IDENTIDAD</option>
-                        <option name="B" value="B">DOC.IDENT.PAIS.RESIDENCIA-NO.D</option>
-                        <option name="C" value="C">TAX TIDENTIFICATION NUMBER - TIN - DOC TRIB PP.NN</option>
-                        <option name="D" value="D">IDENTIFICATION NUMBER - IN – DOC TRIB PP. JJ</option>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="nro_doc_rct">Nro. Identidad:</label>
-                    <input type="number" name="nro_doc_rct" id="nro_doc_rct" class="form-control"/>
-                </div>
-                <div class="col-md-6">
-                    <label for="name">Apellido / Nombre:</label>
-                    <input type="text" id="name" name="name" placeholder="Nombre del Cliente" class="form-control" autocomplete="off" />
-                </div><br><br><br><br>
-                <div class="col-md-6">
-                    <label for="dir_des_rct">Direccion:</label>
-                    <input type="text" name="dir_des_rct" id="dir_des_rct" class="form-control" autocomplete="off"/>
-                </div>
-                <div class="col-md-3">
-                    <label for="email">Email:</label>
-                    <input type="email" name="email" id="email" placeholder="Ej.: usuario@servidor.com" autocomplete="off" class="form-control">
-                </div>
-                <div class="col-md-3">
-                    <label for="telefono">Telefono:</label>
-                    <input type="text" name="telefono" id="telefono" class="form-control" autocomplete="off"/>
-                </div>
-            </div>
-
-            <div class="modal-header" style="background-color:#EFF0F1">
-                <h5 class="modal-title">Detalle del Servicio</h5>
-
-                <br>
-                <input type="hidden" name="detalle_servicio_json_editar" id="detalle_servicio_json_editar">
-                <div class="col-md-4" class="form-group">
-                    <label for="tipo_servicio">Servicio:</label>
-                    <select id="tipo_servicio" name="tipo_servicio" class="form-control">
-                        <option value="">Seleccionar Tipo de Servicio</option>
-                        <option value="Boleto Aereo">Boleto Publicado</option>
-                        <option value="Boleto BT/IT">Boleto BT/IT</option>
-                        <option value="Remision">Remision / Millas</option>
-                        <option value="Paquete">Paquete</option>
-                        <option value="Paquetes Netos">Paquetes Netos</option>
-                        <option value="Tarjetas de Asistencias">Tarjetas de Asistencias</option>
-                        <option value="Hotel">Hotel</option>                        
-                        <option value="Traslado">Traslado</option>
-                        <option value="Auto">Auto</option>
-                        <option value="Excursiones">Excursiones</option>
-                        <option value="Crucero">Crucero</option>
-                        <option value="Trenes">Trenes / Buses</option>
-                        <option value="Entradas">Entradas</option>
-                        <option value="Gastos Administrativos">Gastos Administrativos</option>
-                        <option value="Otros">Otros</option>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    <label for="codigo">Codigo:</label>
-                    <input type="text" id="codigo" name="codigo" placeholder="Codigo" class="form-control" autocomplete="off">
-                </div>
-                <div class="col-md-2" class="form-group">
-                    <label for="cantidad">Cant.:</label>
-                    <input type="number" name="cantidad" id="cantidad" class="form-control" autocomplete="off" />
-                </div>
-                <div class="col-md-2">
-                    <label for="valor_unitario">Valor Vta.:</label>
-                    <input type="number" name="valor_unitario" id="valor_unitario" class="form-control"
-                           step="0.01" placeholder="0,00" autocomplete="off" />
-                </div>
-                <br><br><br><br>
-                <div class="col-md-8" class="form-group">
-                    <label for="detalle">Detalle:</label>
-                    <input type="text" name="detalle" id="detalle" class="form-control" placeholder="Descripcion" autocomplete="off" />
-                </div>
-                <div class="col-md-2">
-                    <label for="code_travel">&nbsp;</label><br>
-                    <button type="button" class="btn btn-primary" onclick="sales.openModalDetail();"><i class='fa fa-angle-double-down'></i></button>
-                    <label for="code_travel">&nbsp;</label>
-                    <button type="button" class="btn btn-primary" onclick="sales.guardarDetalles();"><i class='fa fa-angle-double-up'></i></button>  
-                </div>                    
-                <div class="col-md-2">
-                    <label for="code_travel">&nbsp;</label><br>
-                    <input type="button" id="btn_save_factura_edit" class="btn btn-primary" value="Agregar"/>
-                </div>
-                <div class="col-md-12 content_service_detail" class="form-group" style="display:none;">
-                    <br>
-                    <!-- =========== FORM DATOS CARGA DE TABLA ============ -->
-                    <div class="col-md-12">
-                        <fieldset>
-                            <h5>Tabla</h5>
-                            <div class="col-md-2">
-                                <div class="form-group" >
-                                    <label for="proveedor">Proveedor</label>
-                                    <input type="text" id="proveedor" name="proveedor" placeholder="Proveedor" class="form-control" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group" >
-                                    <label for="tarifa_neta">Tarifa Neta</label>
-                                    <input type="text" step="0.01" id="tarifa_neta" name="tarifa_neta" onkeyup="calcular();" class="monto_edit form-control" autocomplete="off">
-                                </div>  
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group" >
-                                    <label for="comi_proveedor_porcentaje">Com. %</label>
-                                    <input type="text" step="0.01" id="comi_proveedor_porcentaje" name="comi_proveedor_porcentaje" class="form-control" autocomplete="off">
-                                </div>  
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group" >
-                                    <label for="comi_proveedor_fija">Com. Fija.</label>
-                                    <input type="text" step="0.01" id="comi_proveedor_fija" name="comi_proveedor_fija" onkeyup="calcular();" class="monto_edit form-control" autocomplete="off">
-                                </div>  
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group" >
-                                    <label for="fee_proveedor">Fee Proveedor</label>
-                                    <input type="text" step="0.01" id="fee_proveedor" name="fee_proveedor" onkeyup="calcular();" class="monto_edit form-control" autocomplete="off">
-                                </div>  
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group" >
-                                    <label for="fee_proveedor_conf">Fee x Conf.</label>
-                                    <input type="text" step="0.01" id="fee_proveedor_conf" name="fee_proveedor_conf" onkeyup="calcular();" class="monto_edit form-control" autocomplete="off">
-                                </div>  
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group" >
-                                    <label for="fee_agencia">Fee Agencia</label>
-                                    <input type="text" step="0.01" id="fee_agencia" name="fee_agencia" onkeyup="calcular();" class="monto_edit form-control" autocomplete="off">
-                                </div>  
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group" >
-                                    <label for="impuesto">Impuestos</label>
-                                    <input type="text" step="0.01" id="impuesto" name="impuesto" onkeyup="calcular();" class="monto_edit form-control" autocomplete="off" >
-                                </div>  
-                            </div>
-                            <div class="col-md-2" class="form-group">
-                                <label for="incentivo_add">Incen. Turifax:</label>
-                                <input type="text" name="incentivo_add" id="incentivo_add" step="0.1" onkeyup="calcular();" class="monto_edit form-control" autocomplete="off" />
-                            </div>
-                            <div class="col-md-2" class="form-group">
-                                <label for="otros">Otros</label>
-                                <input type="text" name="otros" id="otros" step="0.1" onkeyup="calcular();" class="monto_edit form-control" autocomplete="off" />
-                            </div>
-                            <div class="col-md-2">
-                                <div class="form-group" >
-                                    <label for="costo_edit">Costo Total</label><br>
-                                    <span class="form-control" name="costo_edit" id="costo_edit" readonly="true"></span>
-                                </div>  
-                            </div>
-                            <div class="col-md-2" class="form-group">
-                                <label for="incentivo">Incentivo:</label>
-                                <input type="text" name="incentivo" id="incentivo" onkeyup="calcular();" class="monto_edit form-control" autocomplete="off" />
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <div class="col-md-12">
-                        <fieldset>
-                            <h5>Observaciones</h5>
-                            <div class="form-group">
-                                <textarea id="descripcion" class="form-control" style="height: 50px;"></textarea>
-                            </div>
-                        </fieldset>
-                    </div>
-                    <!-- ===================================== -->
-
-
-
-                </div>
-
-                <br><br>
-                <br><br>
-                <div class="col-md-12">
-                    <table id="table_customer_travel_children" class="table table-hover table-bordered" >
-                        <thead>
-                            <tr class="well">
-                                <th><center>#</center></th>
-                        <th><center>Servicios</center></th>
-                        <th><center>Detalle</center></th>
-                        <th><center>Codigo</center></th>
-                        <th><center>Cant.</center></th>
-                        <th><center>Val. Total.</center></th>
-                        <th><center>Proveedor</center></th>
-                        <th><center>Utilidad</center></th>
-                        <th colspan="2"><center>Accion</center></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="10">
-                        <center>
-                            No se registraron datos.
-                        </center>
-                        </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
-            <input name="monto_pagar" id="monto_pagar" class="form-control" placeholder="Total" readonly="true" type="hidden">
-
-            <div class="modal-header" style="background-color:#FFFFFF">
-                <h5 class="modal-title">Condicion de Pago</h5>
-                <div class="">
-                    <br>
-                    <div class="col-md-2" class="form-group">
-                        <label for="condicion">Condicion:</label>
-                        <select class="form-control input-sm" id="condicion" name="condicion">
-                            <option value="">---SELECCIONE---</option>
-                            <option value="001">CONTADO</option>
-                            <option value="000">NO ASIGNADO</option>
-                            <option value="002">CRÉDITO A 7 DÍAS</option>
-                            <option value="003">CRÉDITO A 15 DÍAS</option>
-                            <option value="008">CRÉDITO A 20 DÍAS</option>
-                            <option value="010">CRÉDITO A 21 DÍAS</option>
-                            <option value="011">CRÉDITO A 25 DÍAS</option>
-                            <option value="004">CRÉDITO A 30 DÍAS</option>
-                            <option value="005">CRÉDITO A 60 DÍAS</option>
-                            <option value="006">CRÉDITO A 90 DÍAS</option>
-                            <option value="007">CRÉDITO A 120 DÍAS</option>
-                        </select>
-                    </div>
-                    <div class="col-md-4">
-                        <label for="forma_pago">Forma de Pago:</label>
-                        <select class="form-control input-sm" id="forma_pago" name="forma_pago">
-                            <option value="">---SELECCIONE---</option>
-                            <option value="ASIGNADO">NO ASIGNADO</option>
-                            <option value="EFECTIVO">EFECTIVO</option>
-                            <option value="CHEQUE">CHEQUE</option>
-                            <option value="LETRA">LETRA</option>
-                            <option value="TARJETA DE CRÉDITO">TARJETA DE CRÉDITO</option>
-                            <option value="TARJETA DE DÉBITO">TARJETA DE DÉBITO</option>
-                            <option value="DEPOSITO BANCARIO">DEPOSITO BANCARIO</option>
-                            <option value="TRANSFERENCIA INTERBANCARIA">TRANSFERENCIA INTERBANCARIA</option>
-                        </select>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="total">Monto</label>
-                        <input type="number" name="total" id="total" class="form-control"
-                               step="0.01" placeholder="0,00"/>
-                    </div>
-                    <div class="col-md-2">
-                        <label for="code_travel">&nbsp;</label><br>
-                        <button type="button" class="btn btn-primary" onclick="sales.openModalPago();"><i class='fa fa-angle-double-down'></i></button>
-                        <label for="code_travel">&nbsp;</label>
-                        <button type="button" class="btn btn-primary" onclick="sales.guardarPago();"><i class='fa fa-angle-double-up'></i></button>  
-                    </div> 
-                    <div class="col-md-2">
-                        <label for="code_travel">&nbsp;</label><br>
-                        <input type="button" id="btn_save_pay_edit" class="btn btn-primary" value="Agregar"/>
-                    </div>
-                    <div class="col-md-12 content_service_pago" class="form-group" style="display:none;">
-
-                        <br>
-                        <div class="col-md-3" class="form-group">
-                            <label for="banco">Banco</label>
-                            <input type="text" name="banco" id="banco" class="form-control">
-                        </div>
-                        <div class="col-md-3" class="form-group">
-                            <label for="tipo">Tipo</label>
-                            <select class="form-control input-sm" id="tipo" name="tipo">
-                                <option value="">---SELECCIONE---</option>
-                                <option value="000">PLANILLA</option>
-                                <option value="001">REFERENCIA</option>
-                                <option value="002">VISA</option>
-                                <option value="003">MASTERCARD</option>
-                                <option value="004">AMERICA EXPRESS</option>
-                                <option value="005">MILLAS</option>
-                                <option value="007">NO ASIGNADO</option>
-                            </select>
-                        </div>
-                        <div class="col-md-4" class="form-group">
-                            <label for="referencia">Numero</label>
-                            <input type="text" name="referencia" id="referencia" class="form-control" placeholder="Numero"/>
-                        </div>
-                        <div class="col-md-2" class="form-group">
-                            <label for="fecha_exp">Fecha Exp.</label>
-                            <input type="text" name="fecha_exp" id="fecha_exp" class="form-control" placeholder="MM/AAAA"/>
-                        </div><br><br>
-                        <br><br>
-                        <div class="col-md-12">
-                            <fieldset>
-                                <h5>Observaciones</h5>
-                                <div class="form-group">
-                                    <textarea id="descripcion" class="form-control" style="height: 50px;"></textarea>
-                                </div>
-                            </fieldset>
-                        </div>                   
-
-                    </div>
-
-                    <br><br>
-                    <br><br></div>
-                <div class="col-md-12">
-                    <table id="table_customer_pay" class="table table-hover table-bordered" >
-                        <thead>
-                            <tr class="well">
-                                <th><center>#</center></th>
-                        <th><center>Condicion</center></th>
-                        <th><center>Forma</center></th>
-                        <th><center>Banco</center></th>
-                        <th><center>Tipo</center></th>
-                        <th><center>Numero</center></th>
-                        <th><center>Estatus</center></th>
-                        <th><center>Monto</center></th>
-                        <th colspan="2"><center>Accion</center></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td colspan="10">
-                        <center>
-                            No se registraron datos.
-                        </center>
-                        </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-
-            <dir class="modal-header" style="background-color:#EFF0F1">
-                <h5 class="modal-title">Observaciones</h5>
-                <div class="col-md-12" class="form-group">
-                    <textarea name="descripcion" id="descripcion" class="form-control"></textarea>
-                </div>
-            </dir>
-
-            <div class="modal-footer">
-                <button id="add_info_service" type="submit" class="btn btn-primary">Guardar</button> 
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>      
-            </div>
-            <?php echo form_close(); ?>
-        </div>
-    </div>
-</div>
-
-
-
-
-<!-- ====================== -->
 
 
 
@@ -1271,7 +1272,7 @@ $name_client = $_GET["name_client"];
         $(".error_comision").hide();
         sales.setTravelCode();
         //dibujar buscador
-        $('#buscador').html('<div class="col-md-6" ></div><div class="col-md-6" class="form-group"><form id="form_travel_search" action="index.php/travel/suggest" class="form-inline"><label for="search_value"><i style="color:#337ab7" class="fa fa-search"></i>&nbsp;</label><input placeholder="Buscar Cliente..." type="text" class="form-control" id="search_value" onkeyup="travel.suggest(this);" style="width: 380px;" list="list_travel_search" autocomplete="off"/><datalist id="list_travel_search"></datalist></form></div>');
+        $('#buscador').html('<div class="col-md-6" ></div><div class="col-md-6" class="inline-form-group"><form id="form_travel_search" action="index.php/travel/suggest" class="form-inline"><label for="search_value"><i style="color:#337ab7" class="fa fa-search"></i>&nbsp;</label><input placeholder="Buscar Cliente..." type="text" class="inline-form-control" id="search_value" onkeyup="travel.suggest(this);" style="width: 380px;" list="list_travel_search" autocomplete="off"/><datalist id="list_travel_search"></datalist></form></div>');
         //fin dibujar buscador
         $("#search_value").on('input', function () {
             sales.setCustomerFilter();
@@ -1361,19 +1362,19 @@ $name_client = $_GET["name_client"];
         $("#btn_save_factura").click(function () {
             //travel.addServicio();
             console.log("btn_save_factura");
-            sales.addServiceDoc();
+            sales.addServiceDoc("");
         });
-        $("#btn_save_factura_edit").click(function () {
+        $("#edit_btn_save_factura_edit").click(function () {
             //travel.addServicio();
-            sales.addServiceDoc();
+            sales.addServiceDoc("edit_");
         });
         $("#btn_save_pay").click(function () {
             //travel.addServicio();
-            sales.saveCustomerPay();
+            sales.saveCustomerPay("");
         });
-        $("#btn_save_pay_edit").click(function () {
+        $("#edit_btn_save_pay_edit").click(function () {
             //travel.addServicio();
-            sales.saveCustomerPay();
+            sales.saveCustomerPay("edit_");
         });
         $("#btn_save_description_detail").click(function () {
             sales.guardarDetalles();
