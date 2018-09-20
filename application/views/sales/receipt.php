@@ -75,16 +75,17 @@ $name_client = $_GET["name_client"];
             $asesor = $this->lang->lin . strtoupper("$user_info->first_name");
             $ref_id = $asesor . "-" . $cadena . "-" . $date1;
             ?>
-            <?php echo form_open('sales/ventas'); ?>
+
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
 
                 <h4 class="modal-title">Emitir Venta: <span id="modal-title-coti"><?php echo $ref_id; ?></span><span id="modal-coti"><?php echo "-V" ?></span></h4><br>
-                <input type="hidden" name="ref_id" value="<?php echo $ref_id; ?>">
+
             </div>
 
-            <div style="background-color:#EFF0F1" class="modal-header" id="buscador"></div>   
-
+            <div style="background-color:#EFF0F1" class="modal-header" id="buscador"></div>  
+            <?php echo form_open('sales/ventas'); ?>
+            <input type="hidden" name="ref_id" value="<?php echo $ref_id; ?>">
             <div class="modal-header">
                 <h5 class="modal-title">Datos del Cliente a facturar</h5>
                 <input type="hidden" name="detalle_servicio_json" id="detalle_servicio_json">
@@ -1046,7 +1047,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="credit_card">CreditCard:</label>
                         <input type="text" name="credit_card" id="credit_card" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid       ?>" -->
+                        <!-- value="<?php //echo $travelid        ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="serv_esp">Serv.Esp:</label>
@@ -1082,7 +1083,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="cav_agencia">% Agencia:</label>
                         <input type="text" name="cav_agencia" id="cav_agencia" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid       ?>" -->
+                        <!-- value="<?php //echo $travelid        ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="cav_igual_agencia">Igual a:</label>
@@ -1095,7 +1096,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="cav_igual_cover">Igual a:</label>
                         <input type="text" name="cav_igual_cover" id="cav_igual_cover" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid       ?>" -->
+                        <!-- value="<?php //echo $travelid        ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="cav_inafecto">Inafecto:</label>
@@ -1124,7 +1125,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="cav_per_vendedor">% Vendedor:</label>
                         <input type="text" name="cav_per_vendedor" id="cav_per_vendedor" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid       ?>" -->
+                        <!-- value="<?php //echo $travelid        ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="cav_igual_per_vendedor">Igual a:</label>
@@ -1137,14 +1138,14 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="cav_horasalida">Hora:</label>
                         <input type="time" name="cav_horasalida" id="cav_horasalida" class="form-control"/>
-                        <!-- value="<?php //echo $travelid       ?>" -->
+                        <!-- value="<?php //echo $travelid        ?>" -->
                     </div>
                 </dir>
                 <dir class="modal-header" >
                     <div class="col-md-3" class="form-group">
                         <label for="cav_nro_vuelo">Nro. Vuelo:</label>
                         <input type="text" name="cav_nro_vuelo" id="cav_nro_vuelo" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid       ?>" -->
+                        <!-- value="<?php //echo $travelid        ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="cav_clase">Clase:</label>
@@ -1157,7 +1158,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="cav_hora_retorno">Hora:</label>
                         <input type="time" name="cav_hora_retorno" id="cav_hora_retorno" class="form-control"/>
-                        <!-- value="<?php //echo $travelid       ?>" -->
+                        <!-- value="<?php //echo $travelid        ?>" -->
                     </div>
                 </dir>
                 <dir class="modal-header" >
@@ -1180,7 +1181,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-3" class="form-group">
                         <label for="fpa_monto_pago">Modo de Pago:</label>
                         <input type="text" name="fpa_monto_pago" id="fpa_monto_pago" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid       ?>" -->
+                        <!-- value="<?php //echo $travelid        ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="fpa_contacto">Contado:</label>
@@ -1195,7 +1196,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="fpa_tarjeta">Tarjeta:</label>
                         <input type="text" name="fpa_tarjeta" id="fpa_tarjeta" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid       ?>" -->
+                        <!-- value="<?php //echo $travelid        ?>" -->
                     </div>
                     <div class="col-md-3" class="form-group">
                         <label for="fpa_nro_cheque">Nro. Cheque:</label>
@@ -1207,7 +1208,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="eb_agencia">% Agencia:</label>
                         <input type="text" name="eb_agencia" id="eb_agencia" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid       ?>" -->
+                        <!-- value="<?php //echo $travelid        ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="eb_igual_agencia">Igual a:</label>
@@ -1220,7 +1221,7 @@ $name_client = $_GET["name_client"];
                     <div class="col-md-2" class="form-group">
                         <label for="eb_gual_over">Igual a:</label>
                         <input type="text" name="eb_gual_over" id="eb_gual_over" class="form-control" disabled/>
-                        <!-- value="<?php //echo $travelid       ?>" -->
+                        <!-- value="<?php //echo $travelid        ?>" -->
                     </div>
                     <div class="col-md-2" class="form-group">
                         <label for="eb_inafecto">Inafecto:</label>
@@ -1271,7 +1272,7 @@ $name_client = $_GET["name_client"];
     $(document).ready(function () {
         $(".error_comision").hide();
         sales.setTravelCode();
-        //dibujar buscador
+        //dibujar buscador        
         $('#buscador').html('<div class="col-md-6" ></div><div class="col-md-6" class="inline-form-group"><form id="form_travel_search" action="index.php/travel/suggest" class="form-inline"><label for="search_value"><i style="color:#337ab7" class="fa fa-search"></i>&nbsp;</label><input placeholder="Buscar Cliente..." type="text" class="inline-form-control" id="search_value" onkeyup="travel.suggest(this);" style="width: 380px;" list="list_travel_search" autocomplete="off"/><datalist id="list_travel_search"></datalist></form></div>');
         //fin dibujar buscador
         $("#search_value").on('input', function () {
