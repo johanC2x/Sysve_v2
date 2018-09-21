@@ -44,28 +44,37 @@ var sales = function () {
     };
 
     self.addServiceDoc = function (mPrefix) {
-        var tipo_servicio = $("#"+mPrefix+"tipo_servicio").val();
-        var codigo = $("#"+mPrefix+"codigo").val();
-        var cantidad = $("#"+mPrefix+"cantidad").val();
-        var valor_unitario = $("#"+mPrefix+"valor_unitario").val();
-        var detalle = $("#"+mPrefix+"detalle").val();
-        var proveedor = $("#"+mPrefix+"proveedor").val();
-        var tarifa_neta = $("#"+mPrefix+"tarifa_neta").val();
-        var comi_proveedor_porcentaje = $("#"+mPrefix+"comi_proveedor_porcentaje").val();
-        var comi_proveedor_fija = $("#"+mPrefix+"comi_proveedor_fija").val();
-        var fee_proveedor = $("#"+mPrefix+"fee_proveedor").val();
-        var fee_proveedor_conf = $("#"+mPrefix+"fee_proveedor_conf").val();
-        var fee_agencia = $("#"+mPrefix+"fee_agencia").val();
-        var impuesto = $("#"+mPrefix+"impuesto").val();
-        var incentivo_add = $("#"+mPrefix+"incentivo_add").val();
-        var otros = $("#"+mPrefix+"otros").val();
-        var costo = $("#"+mPrefix+"costo").html();
-        var incentivo = $("#"+mPrefix+"incentivo").val();
-        var observaciones = $("#"+mPrefix+"observaciones").val();
-        var subtotal = $("#"+mPrefix+"subtotal").val();
-        var utilidad1 = $("#"+mPrefix+"utilidad1").val();
-        var igv = $("#"+mPrefix+""+mPrefix+"igv").val();
-        var total = $("#"+mPrefix+"total").val();
+        console.log(mPrefix);
+        var tipo_servicio = $("#" + mPrefix + "tipo_servicio").val();
+        var codigo = $("#" + mPrefix + "codigo").val();
+        var cantidad = $("#" + mPrefix + "cantidad").val();
+        var valor_unitario = $("#" + mPrefix + "valor_unitario").val();
+        var detalle = $("#" + mPrefix + "detalle").val();
+        var proveedor = $("#" + mPrefix + "proveedor").val();
+        var tarifa_neta = $("#" + mPrefix + "tarifa_neta").val();
+        var comi_proveedor_porcentaje = $("#" + mPrefix + "comi_proveedor_porcentaje").val();
+        var comi_proveedor_fija = $("#" + mPrefix + "comi_proveedor_fija").val();
+        var fee_proveedor = $("#" + mPrefix + "fee_proveedor").val();
+        var fee_proveedor_conf = $("#" + mPrefix + "fee_proveedor_conf").val();
+        var fee_agencia = $("#" + mPrefix + "fee_agencia").val();
+        var impuesto = $("#" + mPrefix + "impuesto").val();
+        var incentivo_add = $("#" + mPrefix + "incentivo_add").val();
+        var otros = $("#" + mPrefix + "otros").val();
+        var costo = $("#" + mPrefix + "costo").html();
+        var incentivo = $("#" + mPrefix + "incentivo").val();
+        var observaciones = $("#" + mPrefix + "observaciones").val();
+        var subtotal = $("#" + mPrefix + "subtotal").val();
+        var utilidad1 = $("#" + mPrefix + "utilidad1").val();
+        var igv = $("#" + mPrefix + "igv").val();
+        var total = $("#" + mPrefix + "total").val();
+        console.log("tipo_servicio");
+        console.log(tipo_servicio);
+        console.log("codigo");
+        console.log(codigo);
+        console.log("cantidad");
+        console.log(cantidad);
+        console.log("valor_unitario");
+        console.log(valor_unitario);
         if (tipo_servicio !== '' && codigo !== '' && cantidad !== '' && valor_unitario !== '') {
             var data = {};
             data.tipo_servicio = tipo_servicio;
@@ -97,7 +106,6 @@ var sales = function () {
             } else {
                 self.list_service_doc[self.current_serice_doc] = data;
             }
-            console.log(data);
             self.setOcultoDetalleServicio(mPrefix);
             self.makeTableServiceDoc(mPrefix);
             self.resetServiceDocReset(mPrefix);
@@ -201,10 +209,14 @@ var sales = function () {
 
 
 
-    self.removeServiceDoc = function (obj) {
+    self.removeServiceDoc = function (obj, mPrefix) {
+        console.log("removeServiceDoc");
+        console.log(obj);
+        console.log(mPrefix);
         self.list_service_doc.splice(obj, 1);
         //   self.addServiceDoc();
-        self.makeTableServiceDoc();
+        self.setOcultoDetalleServicio(mPrefix);
+        self.makeTableServiceDoc(mPrefix);
     };
 
     self.modal_views = function (id, mPrefix) {
@@ -2462,7 +2474,7 @@ var sales = function () {
     };
 
     self.makeTablePay = function (mPrefix) {
-        $("#"+mPrefix+"detalle_condicion_pago_json").val(JSON.stringify(self.customer_pay_list));
+        $("#" + mPrefix + "detalle_condicion_pago_json").val(JSON.stringify(self.customer_pay_list));
         var html = '';
         $("#table_customer_pay tbody").empty();
         if (self.customer_pay_list.length > 0) {

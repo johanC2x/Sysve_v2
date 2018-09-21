@@ -1412,7 +1412,7 @@ $name_client = $_GET["name_client"];
             }
         });
         //alert(total);
-        document.getElementById('costo_edit').innerHTML = total;
+        document.getElementById('edit_costo_edit').innerHTML = total;
     }
 </script>
 
