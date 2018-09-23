@@ -1029,7 +1029,7 @@ function tab(tab_id) {//funcion tab que recibe el parametro del id
                                     <span class="auto-style4">No</span>
                                 <input checked="checked" name="pago1" type="radio" value="Deposito"/>
                                     <span class="auto-style4">Si</span>
-                                <div id="div1" style="display">
+                                <div id="div1" style="display:;">
                                         <select name="segundo" id="segundo" class="form-control" >
                                             <option value=''>Seleccione...</option>
                                             <option value='10.00'>10.00 %</option>
