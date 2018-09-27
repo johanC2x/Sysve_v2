@@ -136,7 +136,7 @@ var sales = function () {
         } else {
             self.list_service_doc.forEach(function (element) {
                 var utilidad = ((parseInt(element.tarifa_neta) * parseFloat(element.comi_proveedor_porcentaje)) / 100) + parseInt(element.comi_proveedor_fija) + parseInt(element.fee_agencia);
-                var valor = (element.cantidad) * parseFloat(element.valor_unitario).toFixed(2);
+                var valor = (element.cantidad) * parseFloat(element.valor_unitario).toFixed(3);
 
                 //getServicios estaba con un ID estatico de 8 y hacia un ajax
                 html += `<tr  style="background-color:#FFFFFF">
@@ -145,9 +145,9 @@ var sales = function () {
                             <td><center>` + element.detalle + `</center></td>
                             <td><center>` + element.codigo + `</center></td>
                             <td><center>` + element.cantidad + `</center></td>
-                            <td><center>` + valor.toFixed(2) + `</center></td>
+                            <td><center>` + valor.toFixed(3) + `</center></td>
                             <td><center>` + element.proveedor + `</td>
-                            <td><center>` + utilidad.toFixed(2) + `</td>
+                            <td><center>` + utilidad.toFixed(3) + `</td>
                             <td>
                                 <center>
                                     <a href="javascript:void(` + count + `);" onclick="sales.setServicios(` + count + `,'` + mPrefix + `');"><i class="fa fa-edit"></i></a>
@@ -162,15 +162,15 @@ var sales = function () {
                             </td>
                         </tr>`;
 
-                subtotal = subtotal + (element.cantidad) * parseFloat(element.valor_unitario).toFixed(2);
+                subtotal = subtotal + (element.cantidad) * parseFloat(element.valor_unitario).toFixed(3);
                 total1 = subtotal;
                 iva = (subtotal * tasa) / 100;
                 count++;
             });
         }
         $("#" + mPrefix + "table_customer_travel_children tbody").empty().append(html);
-        $('#' + mPrefix + 'subtotal').val(subtotal.toFixed(2));
-        $('#' + mPrefix + 'total1').val(total1.toFixed(2));
+        $('#' + mPrefix + 'subtotal').val(subtotal.toFixed(3));
+        $('#' + mPrefix + 'total1').val(total1.toFixed(3));
 
 
     };
@@ -720,7 +720,7 @@ var sales = function () {
             valor = (self.list_comision[i].monto !== undefined) ? self.list_comision[i].monto : 0;
             suma = suma + parseFloat(valor);
         }
-        $('#total_pago').text(parseFloat(suma).toFixed(2));
+        $('#total_pago').text(parseFloat(suma).toFixed(3));
     };
 
     self.calcularComisionesChildren = function () {
@@ -729,7 +729,7 @@ var sales = function () {
             valor = (self.list_comision_children[i].monto !== undefined) ? self.list_comision_children[i].monto * self.list_comision_children[i].travel_cantidad : 0;
             suma = suma + parseFloat(valor);
         }
-        $('#total_pago_children').text(parseFloat(suma).toFixed(2));
+        $('#total_pago_children').text(parseFloat(suma).toFixed(3));
     };
 
     self.makeTableComision = function () {
@@ -2399,7 +2399,6 @@ var sales = function () {
                                         <td>` + name + `</td>
                                         <td><center><small class="label bg-green">` + estatus + `</small></center></td>
                                         <td><center>` + fecha + `</center></td>
-                                        <td align="right">` + monto + `</td>
                                         <td>
                                             <center>
                                                 <a href="javascript:void(0);" onclick="sales.modal_views(` + id + `,\'edit_\');"><i class="fa fa-eye"></i>
@@ -2896,11 +2895,11 @@ var sales = function () {
             self.current_pay = parseFloat(self.current_pay) + parseFloat(total_servicios);
             var comision = self.list_comision[self.current_service];
             comision.ammount = string_childrens;
-            comision.monto = parseFloat(total_servicios).toFixed(2);
+            comision.monto = parseFloat(total_servicios).toFixed(3);
             comision.descripcion = descripcion;
             self.list_comision[self.current_service] = comision;
             self.makeTableComision();
-            $("#total_pago").text(self.current_pay.toFixed(2));
+            $("#total_pago").text(self.current_pay.toFixed(3));
         }
         $("#modal_detail_comision").modal("hide");
     };
