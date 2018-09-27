@@ -1,10 +1,9 @@
 <?php $this->load->view("partial/header"); ?>
 <script src="<?php echo base_url();?>js/lib/travel.js"></script>
 <div id="title_bar">
-	<div id="title" class="float_left">
-        Lista de Clientes
-    </div>
+	<div id="title" class="float_left">Lista de Clientes</div>    
     <div id="new_button">
+        <button type="button" class="btn btn-primary" onclick="printDiv('areaPrint')">Imprimir</button>
         <button type="button" class="btn btn-primary" onclick="travel.openModal();">
             Nuevo Cliente
         </button>
@@ -16,7 +15,6 @@
 
     <input id="filter" type="text" class="form-control" placeholder="Escriba aquí...">
 </div>
-<div id="table_holder">
     <table class="table table-bordered" id="table_clients">
         <thead>
             <tr class="well">
@@ -26,12 +24,12 @@
                 <th><center>Genero</center></th>
                 <th><center>Email</center></th>
                 <th><center>Teléfono</center></th>
-                <th colspan="2"><center>Acciones</center></th>
+                <th colspan="3"><center>Acciones</center></th>
             </tr>
         </thead>
         <tbody class="searchable">
             <tr>
-                <td colspan="7">
+                <td colspan="8">
                     <center>
                         NO SE ENCONTRARON RESULTADOS
                     </center>
@@ -39,7 +37,6 @@
             </tr>
         </tbody>
     </table>
-</div>
 <div id="feedback_bar"></div>
 <!-- MODAL DELETE CLIENT -->
 <div class="modal fade" id="modal_delete_client" role="dialog">
@@ -62,13 +59,8 @@
 		</div>
 	</div>
 </div>
-</div>
 
-<script type="text/javascript">
-        $("#table_holder").dataTable({
-        order: [[0, "asc"], [1, "desc"]]
-    });
-</script>
+
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -260,12 +252,7 @@
                         notEmpty: { message: "El campo documento de identidad es requerido"}
                     }
                 },
-/*                fecha_vcto:{
-                    validators: {
-                        notEmpty: { message: "El campo fecha de vencimiento es requerido"}
-                    }
-                },
-*/                date_expire:{
+                date_expire:{
                     validators: {
                         notEmpty: { message: "El campo fecha de nacimiento es requerido"}
                     }
@@ -326,3 +313,36 @@
 
 <?php $this->load->view("travel/modal"); ?>
 <?php $this->load->view("partial/footer"); ?>
+
+<div id="areaPrint" style="font-size:10px;" class="modal fade" role="dialog" data-keyboard="false">
+
+        <h6 class="modal-title">Lista de CLientes Turifax</h6>
+   <div class="modal-body">
+          <div style="font-size:10px;" class="row">
+            <div class="col-md-12">
+
+                <table style="font-size:10px;" id="table_clients" class="table table-bordered" >
+                  <thead>
+                    <tr>
+                      <th class="col-md-3"><center>Nombres</center></th>
+                      <th class="col-md-2"><center>Apellidos</center></th>
+                      <th class="col-md-3"><center>Doc. Identidad</center></th>                      
+                      <th class="col-md-2"><center></center></th>  
+                      <th class="col-md-2"><center>Correo</center></th>                      
+                      <th class="col-md-2"><center>Telefono</center></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td colspan="6">
+                        <center>
+                          No se registraron datos.
+                        </center>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+          </div>
+   </div>
+</div>
+</div>
