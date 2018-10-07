@@ -744,11 +744,6 @@ class Sales extends Secure_area {
             'form_pago' => $this->input->post('form_pago'),
             'list_service_doc' => $this->input->post('detalle_servicio_json'),
         );
-
-
-// echo "<pre/>";print_r(json_encode($factura));exit();
-// echo "<pre/>";print_r($factura);exit();
-
         if ($this->input->post()) {
             $factura = array(
                 'cotizacion_id' => $this->input->post('ref_id'),
@@ -787,7 +782,10 @@ class Sales extends Secure_area {
                 "porcentaje" => $this->input->post("porcentaje"),
                 "utilidad1" => $this->input->post("utilidad1"),
                 "igv" => $this->input->post("igv"),
-                "total1" => $this->input->post("total1")
+                "total1" => $this->input->post("total1"),
+                "subtotal1" => $this->input->post("subtotal1"),
+                "porcentaje1" => $this->input->post("porcentaje1"),
+                "utilidad11" => $this->input->post("utilidad11"),
             );
             $factura["data"] = json_encode($factura["data"]);
             $response = $this->Sale->insertVentas($factura);
@@ -832,16 +830,18 @@ class Sales extends Secure_area {
                 'mnt_tot' => $this->input->post('mnt_tot'),
                 'mnt_tot_antcp' => $this->input->post('mnt_tot_antcp')
             );
-            $data = json_decode($this->input->post('data'));
             $id = json_decode($this->input->post('id'));
             $factura["data"] = array(
                 "detalle_servicio_json" => $this->input->post("detalle_servicio_json"),
                 "detalle_condicion_pago_json" => $this->input->post("detalle_condicion_pago_json"),
-                "subtotal" => $data->subtotal,
-                "porcentaje" => $data->porcentaje,
-                "utilidad1" => $data->utilidad1,
-                "igv" => $data->igv,
-                "total1" => $data->total1
+                "subtotal" => $this->input->post("subtotal"),
+                "porcentaje" => $this->input->post("porcentaje"),
+                "utilidad1" => $this->input->post("utilidad1"),
+                "igv" => $this->input->post("igv"),
+                "total1" => $this->input->post("total1"),
+                "subtotal1" => $this->input->post("subtotal1"),
+                "porcentaje1" => $this->input->post("porcentaje1"),
+                "utilidad11" => $this->input->post("utilidad11"),
             );
             $factura["data"] = json_encode($factura["data"]);
             $response = $this->Sale->editarVentas($factura,$id);

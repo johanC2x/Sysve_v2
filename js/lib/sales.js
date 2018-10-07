@@ -44,62 +44,26 @@ var sales = function () {
     };
 
     self.addServiceDoc = function (mPrefix) {
-        console.log(mPrefix);
-        var tipo_servicio = $("#" + mPrefix + "tipo_servicio").val();
-        var codigo = $("#" + mPrefix + "codigo").val();
-        var cantidad = $("#" + mPrefix + "cantidad").val();
-        var valor_unitario = $("#" + mPrefix + "valor_unitario").val();
-        var detalle = $("#" + mPrefix + "detalle").val();
-        var proveedor = $("#" + mPrefix + "proveedor").val();
-        var tarifa_neta = $("#" + mPrefix + "tarifa_neta").val();
-        var comi_proveedor_porcentaje = $("#" + mPrefix + "comi_proveedor_porcentaje").val();
-        var comi_proveedor_fija = $("#" + mPrefix + "comi_proveedor_fija").val();
-        var fee_proveedor = $("#" + mPrefix + "fee_proveedor").val();
-        var fee_proveedor_conf = $("#" + mPrefix + "fee_proveedor_conf").val();
-        var fee_agencia = $("#" + mPrefix + "fee_agencia").val();
-        var impuesto = $("#" + mPrefix + "impuesto").val();
-        var incentivo_add = $("#" + mPrefix + "incentivo_add").val();
-        var otros = $("#" + mPrefix + "otros").val();
-        var costo = $("#" + mPrefix + "costo").html();
-        var incentivo = $("#" + mPrefix + "incentivo").val();
-        var observaciones = $("#" + mPrefix + "observaciones").val();
-        var subtotal = $("#" + mPrefix + "subtotal").val();
-        var utilidad1 = $("#" + mPrefix + "utilidad1").val();
-        var igv = $("#" + mPrefix + "igv").val();
-        var total = $("#" + mPrefix + "total").val();
-        console.log("tipo_servicio");
-        console.log(tipo_servicio);
-        console.log("codigo");
-        console.log(codigo);
-        console.log("cantidad");
-        console.log(cantidad);
-        console.log("valor_unitario");
-        console.log(valor_unitario);
-        if (tipo_servicio !== '' && codigo !== '' && cantidad !== '' && valor_unitario !== '') {
-            var data = {};
-            data.tipo_servicio = tipo_servicio;
-            data.codigo = codigo;
-            data.cantidad = cantidad;
-            data.valor_unitario = valor_unitario;
-            data.detalle = detalle;
-            data.proveedor = proveedor;
-            data.tarifa_neta = tarifa_neta;
-            data.comi_proveedor_porcentaje = comi_proveedor_porcentaje;
-            data.comi_proveedor_fija = comi_proveedor_fija;
-            data.fee_proveedor = fee_proveedor;
-            data.fee_proveedor_conf = fee_proveedor_conf;
-            data.fee_agencia = fee_agencia;
-            data.impuesto = impuesto;
-            data.incentivo_add = incentivo_add;
-            data.otros = otros;
-            data.costo = costo;
-            data.incentivo = incentivo;
-            data.observaciones = observaciones;
-            data.subtotal = subtotal;
-            data.utilidad1 = utilidad1;
-            data.igv = igv;
-            data.total = total;
-
+        var data = {};
+        data.tipo_servicio = $("#" + mPrefix + "tipo_servicio").val();
+        data.codigo = $("#" + mPrefix + "codigo").val();
+        data.cantidad = $("#" + mPrefix + "cantidad").val();
+        data.valor_unitario = $("#" + mPrefix + "valor_unitario").val();
+        data.detalle = $("#" + mPrefix + "detalle").val();
+        data.proveedor = $("#" + mPrefix + "proveedor").val();
+        data.tarifa_neta = $("#" + mPrefix + "tarifa_neta").val();
+        data.comi_proveedor_porcentaje = $("#" + mPrefix + "comi_proveedor_porcentaje").val();
+        data.comi_proveedor_fija = $("#" + mPrefix + "comi_proveedor_fija").val();
+        data.fee_proveedor = $("#" + mPrefix + "fee_proveedor").val();
+        data.fee_proveedor_conf = $("#" + mPrefix + "fee_proveedor_conf").val();
+        data.fee_agencia = $("#" + mPrefix + "fee_agencia").val();
+        data.impuesto = $("#" + mPrefix + "impuesto").val();
+        data.incentivo_add = $("#" + mPrefix + "incentivo_add").val();
+        data.otros = $("#" + mPrefix + "otros").val();
+        data.costo = $("#" + mPrefix + "costo").html();
+        data.incentivo = $("#" + mPrefix + "incentivo").val();
+        data.observaciones = $("#" + mPrefix + "observaciones").val();
+        if (data.tipo_servicio !== '' && data.codigo !== '' && data.cantidad !== '' && data.valor_unitario !== '') {
 
             if (self.current_serice_doc === -1) {
                 self.list_service_doc.push(data);
@@ -116,13 +80,8 @@ var sales = function () {
     self.makeTableServiceDoc = function (mPrefix) {
         var html = '';
         var count = 0;
-        var tarifa_neta = 0;
-        var utilidad = 0;
-        var utilidad1 = 0;
         var subtotal = 0;
-        var valor = 0;
         var tasa = 18;
-        var iva = 0;
         var total1 = 0;
 
         if (self.list_service_doc.length === 0) {
@@ -175,7 +134,7 @@ var sales = function () {
 
     };
     self.resetServiceDocReset = function (mPrefix) {
-        $("#" + mPrefix + "detalle_servicio").val("");
+        $("#" + mPrefix + "tipo_servicio").val("");
         $("#" + mPrefix + "codigo").val("");
         $("#" + mPrefix + "cantidad").val("");
         $("#" + mPrefix + "valor_unitario").val("");
@@ -210,9 +169,6 @@ var sales = function () {
 
 
     self.removeServiceDoc = function (obj, mPrefix) {
-        console.log("removeServiceDoc");
-        console.log(obj);
-        console.log(mPrefix);
         self.list_service_doc.splice(obj, 1);
         //   self.addServiceDoc();
         self.setOcultoDetalleServicio(mPrefix);
@@ -220,7 +176,6 @@ var sales = function () {
     };
 
     self.modal_views = function (id, mPrefix) {
-        console.log('editmodal_views');
         $.ajax({
             type: 'POST',
             data: {
@@ -253,6 +208,14 @@ var sales = function () {
                                     self.makeTablePay(mPrefix);
                                 }
                             }
+                            $("#" + mPrefix + "subtotal").val(data_sales.subtotal|| "");
+                            $("#" + mPrefix + "porcentaje").val(data_sales.porcentaje|| "");
+                            $("#" + mPrefix + "utilidad1").val(data_sales.utilidad1|| "");
+                            $("#" + mPrefix + "igv").val(data_sales.igv|| "");
+                            $("#" + mPrefix + "total1").val(data_sales.total1|| "");
+                            $("#" + mPrefix + "subtotal1").val(data_sales.subtotal1|| "");
+                            $("#" + mPrefix + "porcentaje1").val(data_sales.porcentaje1|| "");
+                            $("#" + mPrefix + "utilidad11").val(data_sales.utilidad11|| "");
                         }
                     }
                     $("#" + mPrefix + "id").val(id);
@@ -260,9 +223,7 @@ var sales = function () {
                     $("#" + mPrefix + "email").val(data.email);
                     $("#" + mPrefix + "modal-title-coti").html(data.cotizacion_id);
                     $("#" + mPrefix + "modal_views").modal("show");
-                    $('#' + mPrefix + 'modal_views input[name="name"]').val(data.name);
                     $('#' + mPrefix + 'modal_views input[name="nro_doc_rct"]').val(data.num_doc_rct);
-                    $('#' + mPrefix + 'modal_views input[name="email"]').val(data.email);
                     $('#' + mPrefix + 'modal_views input[name="telefono"]').val(data.telefono);
                     $('#' + mPrefix + 'modal_views input[name="dir_des_rct"]').val(data.dir_des_rct);
                     $('#' + mPrefix + 'modal_views select[name="tip_doc_rct"]').val(data.tip_doc_rct);
@@ -292,7 +253,6 @@ var sales = function () {
                 url: travel.current_url + "index.php/travel/info",
                 success: function (response) {
                     var data = JSON.parse(response);
-                    console.log(data);
                     if (data.success) {
                         data = data.data;
                         //armamos apellidos y nombres
@@ -351,7 +311,6 @@ var sales = function () {
                 success: function (response) {
                     // var data = JSON.parse(response);
                     var data = JSON.parse(response)[0];
-                    console.log(data);
                     $('#destiny_origin_travel').val(data.destiny_origin);
                     $('#destiny_end_travel').val(data.destiny_end);
                     $('#name_travel').val(data.name);
@@ -504,7 +463,6 @@ var sales = function () {
                     'travel_id': self.last_travel
                 },
                 success: function (response) {
-                    console.log(response);
                     ///////////////////
                     var data = JSON.parse(response);
                     ////info cliente
@@ -571,12 +529,10 @@ var sales = function () {
                     'key': value
                 },
                 success: function (data) {
-                    console.log(data);
                     data = JSON.parse(data);
                     names = [];
                     dnis = [];
                     items = '';
-                    console.log(data.length);
 
                     for (var i = 0; i < data.length; i++) {
                         names[i] = data[i].first_name + ' ' + data[i].last_name;
@@ -1210,20 +1166,17 @@ var sales = function () {
             return false;
         }
         calculo = porcentaje_cobro * monto_detalle / 100;
-        console.log(calculo);
         $('#cobro_total').val(calculo);
     };
 
     self.getConfiguration = function () {
         $('#pagado').toggle(function () {
-            console.log($('#pagado').is(':checked'));
             if ($('#pagado').is(':checked')) {
                 $.ajax({
                     url: travel.current_url + "index.php/travel/getConfig",
                     type: "POST",
                     dataType: 'JSON',
                     success: function (response) {
-                        console.log(response);
                         $('#customer_document').val(response[0].value);
                         $('#customer_name').val(response[1].value);
                         $('#customer_address').text(response[2].value);
@@ -1319,7 +1272,6 @@ var sales = function () {
 
     self.showInfo = function () {
         value = $('#type_travel').val();
-        console.log(value);
         if (value == 'Re-emisión') {
             $('#div_feepenalidad').show(500);
             $('#div_penalidad').show(500);
@@ -1384,7 +1336,6 @@ var sales = function () {
         }
         tabla += '<td><button class="borrar fa fa-trash"></button></td></tr>';
         tabla += '<table>';
-        console.log(arr);
         $('#' + contenedor).append(tabla);
         $('.borrar').click(function () {
             fila = $(this).parent().parent();
@@ -1417,8 +1368,6 @@ var sales = function () {
             // info.push("["+id+":"+JSON.stringify(arr)+"]");
             info.push("{" + id + ":" + arr + "}");
             // info[id]= arr;
-            // console.log(arr);
-            // console.log(info[id]);
         });
         info.push("[fecha_nacimiento: " + $('#fecha_nac').val() + "]");
         info.push("[nacionalidad: " + $('#nacionalidad').val() + "]");
@@ -2119,7 +2068,6 @@ var sales = function () {
 
     self.saveDescripcion = function () {
         var descripcion = $('#descripcion').val() || '';
-        console.log(descripcion);
         self.customer_description = descripcion;
     };
 
@@ -2588,7 +2536,6 @@ var sales = function () {
         $("#modal_servicios").modal("show");
         var detalle_data = self.list_service_doc[id];
         $("#method_prefix").val(mprefix);
-        console.log(detalle_data);
         $("#index_servicio").val(id);
         $('#tipo_servicio_servicios').val(detalle_data.tipo_servicio);
         $('#proveedor_servicios').val(detalle_data.proveedor);
@@ -2605,9 +2552,9 @@ var sales = function () {
         $('#impuesto_servicios').val(detalle_data.impuesto);
         $('#incentivo_add_servicios').val(detalle_data.incentivo_add);
         $('#otros_servicios').val(detalle_data.otros);
-        $('#costo_servicios').val(detalle_data.costo);
+        $('#servicios_costo').html(detalle_data.costo);
         $('#incentivo_servicios').val(detalle_data.incentivo);
-        $('#obs_observaciones').val(detalle_data.observaciones);
+        $('#obs_observaciones').val(detalle_data.observaciones|| "");
 
         $('#dfs_tarifa_neta_servicios').val(detalle_data.dfs_tarifa_neta_servicios || "");
         $('#quue_servicios').val(detalle_data.quue_servicios || "");
@@ -2672,7 +2619,7 @@ var sales = function () {
         detalle_data.impuesto = $('#impuesto_servicios').val();
         detalle_data.incentivo_add = $('#incentivo_add_servicios').val();
         detalle_data.otros = $('#otros_servicios').val();
-        detalle_data.costo = $('#costo_servicios').val();
+        detalle_data.costo = $('#servicios_costo').html();
         detalle_data.incentivo = $('#incentivo_servicios').val();
         detalle_data.observaciones = $('#obs_observaciones').val();
 
@@ -2720,7 +2667,6 @@ var sales = function () {
         detalle_data.eb_inafecto = $('#eb_inafecto').prop('checked');
 
         self.list_service_doc[index] = detalle_data;
-        console.log(self.list_service_doc);
         var mprefix = $("#method_prefix").val();
         self.setOcultoDetalleServicio(mprefix);
         self.makeTableServiceDoc(mprefix);
@@ -2757,7 +2703,6 @@ var sales = function () {
                     $("#gender").val(data.gender);
                     $("#age").val(data.age);
                     $("#user_date").val(data.fec_nac);
-                    console.log(data);
                     //MAKE TABLE DOCUMENTS
                     if (data_client != '') {
                         self.customer_documents_list = data_client.documents;
@@ -2792,7 +2737,6 @@ var sales = function () {
                         //MAKE TABLE FAMILIARES
                         self.customer_familiares_list = data_client.familiares;
                         self.makeTableDatosFamilares();
-                        console.log(data_client.description);
                         $("#descripcion").val(data_client.description);
                     }
 
@@ -2867,7 +2811,6 @@ var sales = function () {
                 },
                 success: function (res) {
                     var response = JSON.parse(res);
-                    console.log(response);
                     $("#modal_delete_client").modal("hide");
                     if (response.success) {
                         travel.listClients();
@@ -2966,7 +2909,7 @@ var sales = function () {
 }(jQuery);
 
 $(document).ready(function () {
-    $('#modal_views').on('hidden.bs.modal', function (e) {
+    $('#modal_agregar').on('hidden.bs.modal', function (e) {
 
         sales.list_service_doc = [];
         sales.customer_pay_list = [];
