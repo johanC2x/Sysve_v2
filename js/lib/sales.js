@@ -45,6 +45,52 @@ var sales = function () {
 
     self.addServiceDoc = function (mPrefix) {
         var data = {};
+        data.dfs_tarifa_neta_servicios = "";
+        data.quue_servicios = "";
+        data.imp_extranjero_servicios = "";
+        data.dfs_otros_servicios = "";
+        data.exento_fee = "";
+        data.dfs_inafecto_servicios = "";
+        data.porcent18_servicios = "";
+        data.credit_card = "";
+        data.serv_esp = "";
+        data.tua = "";
+        data.dfs_otros = "";
+        data.fee = "";
+        data.dfs_igv = "";
+        data.dfs_total_fee = "";
+        data.cav_agencia = "";
+        data.cav_igual_agencia ="";
+        data.cav_over = "";
+        data.cav_igual_cover = "";
+        data.cav_inafecto = "";
+        data.cav_vendedor = "";
+        data.cav_incentivo = "";
+        data.cav_incentivo_counter = "";
+        data.cav_per_vendedor = "";
+        data.cav_igual_per_vendedor = "";
+        data.cav_f_salida = "";
+        data.cav_horasalida = "";
+        data.cav_nro_vuelo = "";
+        data.cav_clase = "";
+        data.cav_f_retorno = "";
+        data.cav_hora_retorno = "";
+        data.obs_f_solicitada = "";
+        data.obs_monto = "";
+        data.fpa_monto_pago = "";
+        data.fpa_contacto = "";
+        data.fpa_credito = "";
+        data.fpa_tarjeta = "";
+        data.fpa_nro_cheque = "";
+        data.eb_agencia = "";
+        data.eb_igual_agencia = "";
+        data.eb_over = "";
+        data.eb_gual_over = "";
+        data.eb_inafecto = "";
+        
+        
+        
+        
         data.tipo_servicio = $("#" + mPrefix + "tipo_servicio").val();
         data.codigo = $("#" + mPrefix + "codigo").val();
         data.cantidad = $("#" + mPrefix + "cantidad").val();
@@ -63,8 +109,9 @@ var sales = function () {
         data.costo = $("#" + mPrefix + "costo").html();
         data.incentivo = $("#" + mPrefix + "incentivo").val();
         data.observaciones = $("#" + mPrefix + "observaciones").val();
+        
+        
         if (data.tipo_servicio !== '' && data.codigo !== '' && data.cantidad !== '' && data.valor_unitario !== '') {
-
             if (self.current_serice_doc === -1) {
                 self.list_service_doc.push(data);
             } else {
