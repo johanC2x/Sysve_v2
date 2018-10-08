@@ -31,7 +31,7 @@ ysumma.SaleDocument = function () {
             url: "index.php/sales/getSales",
             success: function (res) {
                 var response = JSON.parse(res);
-                ysumma.saleDocument.sale = res;
+                ysumma.saleDocument.sale = response;
                 if (response.success) {
                     var data = response.data[0];
                     if (data.hasOwnProperty("data")) {
@@ -42,12 +42,12 @@ ysumma.SaleDocument = function () {
                                 if (data_sales.detalle_servicio_json !== "")
                                 {
                                     var list_service_doc = JSON.parse(data_sales.detalle_servicio_json);
-                                    ysumma.saleDocument.sale.list_service_doc = list_service_doc;
                                     for (var i = 0; i < list_service_doc.length; i++) {
                                         list_service_doc[i].id=i;
                                         list_service_doc[i].cotizacion_id=$("#sale_cod").val();
                                         ysumma.saleDocument.pintarTablaServicioXTipo(ysumma.saleDocument.servicios[list_service_doc[i].tipo_servicio],list_service_doc[i]);
                                     }
+                                    ysumma.saleDocument.sale.list_service_doc = list_service_doc;
                                 }
                             }
                         }
@@ -90,7 +90,7 @@ ysumma.SaleDocument = function () {
                     </td>
                     <td>
                         <center>
-                            <a href="javascript:void();" onclick="ysumma.saleDocument.deleteClient(` + id + `,false);">
+                            <a href="javascript:void();" onclick="ysumma.saleDocument.deleteServicio(` + id + `,false);">
                                 <i class="fa fa-trash"></i>
                             </a>
                         </center>
@@ -109,6 +109,46 @@ ysumma.SaleDocument = function () {
                         </tr>`;
         $("#" + tabla + " tbody").html(tbody);
     };
+    
+    this.llenarServicios=function(){
+        var servicios=$("#content input[type=checkbox]:checked");
+        if(servicios.length===0){
+            alert("Debe seleccionar al menos un servicio");
+            return false;
+        }
+        $('#modal_factura').modal('show');
+        var tbody="";
+        for (var item=0 ; item< servicios.length;item++) {
+            ysumma.saleDocument.sale.list_service_select[servicios[item].value]=ysumma.saleDocument.sale.list_service_doc[servicios[item].value];
+            
+            tbody += `<tr>
+                    <td>` + ysumma.saleDocument.sale.list_service_doc[servicios[item].value].id + `</td>
+                    <td>` + ysumma.saleDocument.sale.list_service_doc[servicios[item].value].detalle + `</td>
+                    <td>` + ysumma.saleDocument.sale.list_service_doc[servicios[item].value].tipo_servicio + `</td>
+                    <td>` + (ysumma.saleDocument.sale.list_service_doc[servicios[item].value].afectacion || "") + `</td>
+                    <td>` + ysumma.saleDocument.sale.list_service_doc[servicios[item].value].cantidad + `</td>
+                    <td>` + ysumma.saleDocument.sale.list_service_doc[servicios[item].value].valor_unitario + `</td>
+                    <td>` + ysumma.saleDocument.sale.list_service_doc[servicios[item].value].valor_unitario + `</td>
+                    <td>` + ysumma.saleDocument.sale.list_service_doc[servicios[item].value].costo + `</td>
+                    <td>
+                        <center>
+                            <a href="javascript:void();" onclick="ysumma.saleDocument.editServicioSeleccionado(` + ysumma.saleDocument.sale.list_service_doc[servicios[item].value].id + `);">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </center>
+                    </td>
+                    <td>
+                        <center>
+                            <a href="javascript:void();" onclick="ysumma.saleDocument.deleteServicioSeleccionado(` + ysumma.saleDocument.sale.list_service_doc[servicios[item].value].id + `,false);">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </center>
+                    </td>
+                </tr>`;
+
+        $("#table_customer_travel_children tbody").html(tbody);
+        }
+    }
 };
 
 ysumma.saleDocument = new ysumma.SaleDocument();
@@ -177,7 +217,7 @@ $(document).ready(function () {
     $("#print").click(function () {
         $('#modal_print').modal('show');
     });
-    $("#factura").click(function () {
-        $('#modal_factura').modal('show');
+    $("#factura").click(function () {;
+        ysumma.saleDocument.llenarServicios();
     });
 });
