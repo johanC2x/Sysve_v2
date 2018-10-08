@@ -2401,7 +2401,7 @@ var sales = function () {
                                         </td>
                                         <td>
                                             <center>
-                                                <a href="index.php/sales/document/?id=` + id + `&cotizacion_id=` + cotizacion_id + `" onclick="travel.addCoti(` + cotizacion_id + `);">
+                                                <a href="index.php/saleDocument/?id=` + id + `&cotizacion_id=` + cotizacion_id + `" >
                                                     <i class="fa fa-shopping-cart"></i>
                                                 </a>
                                             </center>

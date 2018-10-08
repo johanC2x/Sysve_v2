@@ -1396,7 +1396,6 @@ $name_client = $_GET["name_client"];
         $('#div_feepenalidad').hide();
 
         sales.saveCustomer();
-        //travel.addComision('fee');
         sales.validateFormTravel();
         sales.validateFormUpdateComision();
         sales.formCotizacion();
@@ -1447,20 +1446,16 @@ $name_client = $_GET["name_client"];
     $(document).ready(function () {
         sales.current_url = "<?= base_url(); ?>";
         $("#btn_save_factura").click(function () {
-            //travel.addServicio();
             console.log("btn_save_factura");
             sales.addServiceDoc("");
         });
         $("#edit_btn_save_factura_edit").click(function () {
-            //travel.addServicio();
             sales.addServiceDoc("edit_");
         });
         $("#btn_save_pay").click(function () {
-            //travel.addServicio();
             sales.saveCustomerPay("");
         });
         $("#edit_btn_save_pay_edit").click(function () {
-            //travel.addServicio();
             sales.saveCustomerPay("edit_");
         });
         $("#btn_save_description_detail").click(function () {
