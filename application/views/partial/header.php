@@ -47,7 +47,8 @@
 	<script src="<?php echo base_url();?>js/lib/ysumma.js"></script>
 	<script src='<?php echo base_url();?>/js/lib/utils.js'></script>
 	<script src="<?php echo base_url();?>js/lib/travel.js"></script>
-
+        <script src="<?php echo base_url();?>js/util/mensajes.js"></script>
+        <script src="<?php echo base_url();?>js/util/responseJson.js"></script>
 
 	<style type="text/css">
 		html {

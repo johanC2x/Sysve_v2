@@ -941,7 +941,7 @@ class Sales extends Secure_area {
         curl_close($curl);
 
 // echo "<pre/>";print_r($result);exit();
-
+        
         if ($this->input->post()) {
             $factura = array(
                 'cotizacion_id' => $this->input->post('ref_id'),
@@ -992,14 +992,13 @@ class Sales extends Secure_area {
             );
             $response = $this->Sale->insertPago($pago);
             if (!empty($response) && (int) $response === 1) {
-
-
-                $this->load->view('customers/render', $cliente);
+                
+                return $this->outputjson->writeSuccess("El documento se registró correctamente <br>".$result);
             } else {
-                echo json_encode(array('success' => false, 'message' => "Ha ocurrido un error interno"));
+                return $this->outputjson->writeWarning("Ha ocurrido un error interno  <br>".$result);
             }
         } else {
-            echo json_encode(array('success' => false, 'message' => "No se ha enviado ningún registro"));
+            return $this->outputjson->writeWarning( "No se ha enviado ningún registro  <br>".$result);
         }
     }
 
