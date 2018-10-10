@@ -676,12 +676,13 @@ class Sales extends Secure_area {
     }
 
     public function userDetails() {
-        // POST data
-        $postData = $this->input->post();
-        //load model
+        $tipo=array("01"=>"F001","03"=>"B001","07"=>"NC","08"=>"ND");
+        $postData = $this->input->post("cod_tip_otr_doc_ref");
+        $title_coti = $this->input->post("modal_title_coti");
         $this->load->model('sale');
-        $data = $this->sale->getUserDetails($postData);
-        echo json_encode($data);
+        $correlativo = $this->sale->getSequence("saleDocument_".$tipo[$postData]);
+        $modal_title_coti=$this->sale->getSequence("saleDocCotizaCod_".$title_coti);
+        echo json_encode(array("serie"=>$tipo[$postData],"num_corre_cpe_ref"=>$correlativo[0]["sequence"],"modal_title_coti"=>$modal_title_coti[0]["sequence"]));
     }
 
     function test() {

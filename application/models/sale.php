@@ -448,6 +448,12 @@ class Sale extends CI_Model {
 
         return $response;
     }
+    
+    function getSequence($sequence){
+        $q = $this->db->query("select nextval(?) as sequence;",array($sequence));
+            $response = $q->result_array();
+        return $response;
+    }
 
     function getCotizacionDetails($postData) {
 

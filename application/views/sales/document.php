@@ -605,28 +605,15 @@
     <div id="modal_factura" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
-
-                <?php
-                $caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"; //posibles caracteres a usar
-                $numerodeletras = 4; //numero de letras para generar el texto
-                $cadena = ""; //variable para almacenar la cadena generada
-                for ($i = 0; $i < $numerodeletras; $i++) {
-                    $cadena .= substr($caracteres, rand(0, strlen($caracteres)), 1);
-                }
-                $date1 = date("dm");
-                $asesor_id = $this->lang->lin . strtoupper("$user_info->person_id");
-                $asesor = $this->lang->lin . strtoupper("$user_info->first_name");
-                $ref_id = $asesor . "-" . $cadena . "-" . $date1;
-                ?>
-
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <form id="formGenerarDocumento">
                         <input type="hidden" id="sale_id" value="<?php echo $cotizacion_id ?>">
                         <input type="hidden" id="sale_cod" value="<?php echo $cotizacion_cod ?>">
                         <input type="hidden" id="data" value="">
-                        <h4 class="modal-title">Nro Control: <span id="modal-title-coti"><?php echo $ref_id; ?></span><span id="modal-coti"><?php echo "-V" ?></span></h4></br>
-                        <input type="hidden" name="ref_id" value="<?php echo $ref_id; ?>">
+                        <h4 class="modal-title">Nro Control: <span id="modal-title-coti"><?php echo $cotizacion_cod; ?></span><span id="modal-coti"><?php echo "-V" ?></span></h4></br>
+                        <input type="hidden" id="ref_id_base" value="<?php echo $cotizacion_cod; ?>">
+                        <input type="hidden" name="ref_id" id="ref_id" value="<?php echo $cotizacion_cod; ?>">
                         <div class="col-md-3" class="form-group">
                             <select required id="cod_tip_ope" name="cod_tip_ope" class="form-control">
                                 <option value="">Tipo de Operacion</option>
@@ -1052,35 +1039,22 @@
 
             $('#sel_user').change(function () {
                 var cod_tip_otr_doc_ref = $(this).val();
+                var modal_title_coti=$("#ref_id_base").val();
                 $.ajax({
                     url: 'index.php/sales/userDetails',
                     method: 'post',
-                    data: {cod_tip_otr_doc_ref: cod_tip_otr_doc_ref},
+                    data: {cod_tip_otr_doc_ref: cod_tip_otr_doc_ref,modal_title_coti:modal_title_coti},
                     dataType: 'json',
                     success: function (response) {
-                        var len = response.length;
-                        if (len > 0) {
-                            var serie = response[0].serie;
-                            var cod_tip_otr_doc_ref = response[0].cod_tip_otr_doc_ref;
-                            var num_corre_cpe_ref = (parseInt(response[0].num_corre_cpe_ref) + 1);
+                            var serie = response.serie;
+                            var num_corre_cpe_ref = (parseInt(response.num_corre_cpe_ref));
 
-                            console.log(serie);
                             $('#sserie').html("<option value='"+serie+"'>"+serie+"</option>");
                             $('#sserie').val(serie);
                             $('#serie').val(serie);
-                            $('#scod_tip_otr_doc_ref').text(cod_tip_otr_doc_ref);
-                            $('input[id="scod_tip_otr_doc_ref"]').val(cod_tip_otr_doc_ref);
-                            $('#snum_corre_cpe_ref').text(num_corre_cpe_ref);
-                            $('input[id="snum_corre_cpe_ref"]').val(num_corre_cpe_ref);
-
-                        } else {
-                            $('#serie').text('');
-                            $('select[id="sserie"]').text('');
-                            $('#scod_tip_otr_doc_ref').text('');
-                            $('input[id="scod_tip_otr_doc_ref"]').val('');
-                            $('#snum_corre_cpe_ref').text('');
-                            $('input[id="snum_corre_cpe_ref"]').val('');
-                        }
+                            $("#modal-title-coti").html(modal_title_coti+"-"+response.modal_title_coti);
+                            $("#ref_id").val(modal_title_coti+"-"+response.modal_title_coti);
+                            $('#snum_corre_cpe_ref').val(num_corre_cpe_ref);
 
                     }
                 });
