@@ -1,3 +1,6 @@
+
+text/x-generic modal.php ( UTF-8 Unicode HTML document text )
+
 <div id="modal_customer" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
 
   <div class="modal-dialog modal-lg">
@@ -867,7 +870,8 @@
           </div>
 </div>
       <div class="modal-footer">
-            <input type="button" onclick="printDiv('areaImprimir')" value="Imprimir" />
+            <!-- <input type="button" onclick="printDiv('areaImprimir')" value="Imprimir" /> -->
+            <!-- <input type="button" onclick="imprimirCliente()" value="Imprimir" /> -->
             <!--<button type="submit" id="myBtn" class="btn btn-primary">Guardar Nuevo</button>-->
             <button class="btn btn-primary" >Guardar</button>
           <?php echo form_close();?>
@@ -896,6 +900,11 @@
   ventimp.document.close();
   ventimp.print();
   ventimp.close();
+}
+
+function imprimirCliente(){
+  cliente = $('#client_id').val();
+  var ventimp=window.open('http://turifax.ysumma.com/impresion.php?cliente='+cliente);
 }
 </script>
 <!-- MODAL DE REGISTRO DE VIAJES -->
