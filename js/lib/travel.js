@@ -2184,6 +2184,13 @@ var travel = function () {
                                         </td>
                                         <td>
                                             <center>
+                                                <a href="javascript:window.open('http://turifax.ysumma.com/impresion.php?cliente=`+id+`','','toolbar=yes location=no, directories=no, status=no, menubar=yes, scrollbars=yes, resizable=no, copyhistory=yes, width=800, height=600', '_blank');void 0">
+                                                    <i class="fa fa-print"></i>
+                                                </a>
+                                            </center>
+                                        </td>
+                                        <td>
+                                            <center>
                                                 <a href="javascript:void(0);" onclick="travel.deleteClient(`+id+`,false);">
                                                     <i class="fa fa-trash"></i>
                                                 </a>
